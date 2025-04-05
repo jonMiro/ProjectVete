@@ -1,0 +1,89 @@
+$cliente1 = User::create([
+                'name' => 'Cliente1',
+                'email' => 'cliente1@example.com',
+                'password' => bcrypt('12341234'),
+            ]);
+            $cliente1->userable()->associate(new Cliente([
+                'nombre' => 'Cliente1',
+                'apellidos' => 'Apellido1',
+                'telefono' => '600123456',
+                'direccion' => 'Calle Cliente 1',
+                'correo' => 'cliente1@example.com',
+            ]));
+            $cliente1->save();
+
+            $cliente2 = User::create([
+                'name' => 'Cliente2',
+                'email' => 'cliente2@example.com',
+                'password' => bcrypt('12341234'),
+            ]);
+            $cliente2->userable()->associate(new Cliente([
+                'nombre' => 'Cliente2',
+                'apellidos' => 'Apellido2',
+                'telefono' => '600654321',
+                'direccion' => 'Calle Cliente 2',
+                'correo' => 'cliente2@example.com',
+            ]));
+            $cliente2->save();
+
+            // Veterinarios
+            $vet1 = User::create([
+                'name' => 'Veterinario1',
+                'email' => 'veterinario1@example.com',
+                'password' => bcrypt('12341234'),
+            ]);
+            $vet1->userable()->associate(new Veterinario([
+                'nombre' => 'Veterinario1',
+                'apellidos' => 'Apellido1',
+                'especialidad' => 'Cirugía',
+                'telefono' => '611111111',
+                'direccion' => 'Av. Vet 1',
+                'correo' => 'veterinario1@example.com',
+            ]));
+            $vet1->save();
+
+            $vet2 = User::create([
+                'name' => 'Veterinario2',
+                'email' => 'veterinario2@example.com',
+                'password' => bcrypt('12341234'),
+            ]);
+            $vet2->userable()->associate(new Veterinario([
+                'nombre' => 'Veterinario2',
+                'apellidos' => 'Apellido2',
+                'especialidad' => 'Dermatología',
+                'telefono' => '622222222',
+                'direccion' => 'Av. Vet 2',
+                'correo' => 'veterinario2@example.com',
+            ]));
+            $vet2->save();
+
+            // Auxiliares
+            $aux1 = User::create([
+                'name' => 'Auxiliar1',
+                'email' => 'auxiliar1@example.com',
+                'password' => bcrypt('12341234'),
+            ]);
+            $aux1->userable()->associate(new Auxiliar([
+                'nombre' => 'Auxiliar1',
+                'apellidos' => 'Apellido1',
+                'telefono' => '633333333',
+                'direccion' => 'Calle Auxiliar 1',
+                'correo' => 'auxiliar1@example.com',
+            ]));
+            $aux1->save();
+
+            $aux2 = User::create([
+                'name' => 'Auxiliar2',
+                'email' => 'auxiliar2@example.com',
+                'password' => bcrypt('12341234'),
+            ]);
+            $aux2->userable()->associate(new Auxiliar([
+                'nombre' => 'Auxiliar2',
+                'apellidos' => 'Apellido2',
+                'telefono' => '644444444',
+                'direccion' => 'Calle Auxiliar 2',
+                'correo' => 'auxiliar2@example.com',
+            ]));
+            $aux2->save();
+        }
+    }
