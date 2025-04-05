@@ -40,7 +40,7 @@ const closeModal = () => {
 <template>
     <ActionSection>
         <template #title>
-            Delete Account
+            Borrar cuenta
         </template>
 
         <template #description>
@@ -54,7 +54,7 @@ const closeModal = () => {
 
             <div class="mt-5">
                 <DangerButton @click="confirmUserDeletion">
-                    Delete Account
+                    Eliminar
                 </DangerButton>
             </div>
 

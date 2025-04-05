@@ -1,0 +1,32 @@
+[
+    {
+      "auxiliar_id": 1,
+      "animal_id": 1,
+      "tipo_servicio": "Peluquería",
+      "descripcion": "Corte de pelo para perro, incluye baño y secado.",
+      "duracion": 60,
+      "precio": 30.00,
+      "created_at": "2025-04-05 00:00:00",
+      "updated_at": "2025-04-05 00:00:00"
+    },
+    {
+      "auxiliar_id": 1,
+      "animal_id": 2,
+      "tipo_servicio": "Revisión veterinaria",
+      "descripcion": "Revisión general para verificar el estado de salud del animal.",
+      "duracion": 30,
+      "precio": 50.00,
+      "created_at": "2025-04-05 00:00:00",
+      "updated_at": "2025-04-05 00:00:00"
+    },
+    {
+      "auxiliar_id": 1,
+      "animal_id": 2,
+      "tipo_servicio": "Lavado",
+      "descripcion": "Baño con shampoo especial para la piel sensible del animal.",
+      "duracion": 45,
+      "precio": 20.00,
+      "created_at": "2025-04-05 00:00:00",
+      "updated_at": "2025-04-05 00:00:00"
+    }
+  ]
