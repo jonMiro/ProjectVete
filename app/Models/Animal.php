@@ -1,5 +1,5 @@
 <?php
-// app/Models/Animal.php
+// app/Models/Animales.php
 
 namespace App\Models;
 
@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Animal extends Model
 {
     use HasFactory;
+
+    protected $table = 'animales';
+
 
     protected $fillable = [
         'nombre', 'tipo', 'raza', 'sexo', 'fechaNacimiento', 'imagen', 'observaciones', 'cliente_id'

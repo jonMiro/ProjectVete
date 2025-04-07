@@ -18,6 +18,8 @@ php artisan make:migration create_consultas_table
 app.js Cambiar la info del head.
 Applayout. Registro, login etc...
 Dashboard: importante.
+- Utilizar route() para los links <Link :href="route('workers.search')" class="nav-link text-whitehover:text-blue-400 text-lg">Buscar</Link>
+
 
 ### Memorias 
 
