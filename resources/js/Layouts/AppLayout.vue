@@ -45,8 +45,15 @@ const logout = () => {
                                     <img src="/images/logo.webp" alt="Logo" class="block h-16 w-auto" />
                                 </Link>
                                 <span class="text-xl font-semibold text-gray-800">Vet&Care</span>
+                                <Link :href="route('workers')" class="text-blue-600 hover:underline text-lg block text-center">
+    Workers
+</Link>
+<Link :href="route('clients')" class="text-green-600 hover:underline text-lg block text-center">
+    Clientes
+</Link>
                             </div>
                         </div>
+
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <div class="ms-3 relative">

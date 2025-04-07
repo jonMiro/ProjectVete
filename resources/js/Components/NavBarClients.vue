@@ -1,10 +1,10 @@
 <template>
     <nav class="bg-gray-600 p-3">
       <div class="container mx-auto flex justify-between items-center">
-        <ul class="flex space-x-10 justify-center w-full">
+        <ul class="flex space-x-10 justify-end w-full">
             <li class="nav-item">
-          <!-- Asegúrate de usar `route()` para generar la URL -->
-          <Link :href="route('workers.search')" class="nav-link text-white hover:text-blue-400 text-lg">Conócenos</Link>
+
+          <Link href="" class="nav-link text-white hover:text-blue-400 text-lg">Conócenos</Link>
         </li>
         <li class="nav-item">
             <Link :href="route('animales.index')" class="nav-link text-white hover:text-blue-400 text-lg">Contacto</Link>

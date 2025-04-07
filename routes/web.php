@@ -6,6 +6,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ConsultaController;
+use App\Http\Controllers\ServicioController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -36,6 +38,14 @@ Route::get('/clients', function () {
  //   return Inertia::render('Workers/Search');
 //})->name('workers.search');
 
+Route::prefix('clients')->group(function () {
+    // Rutas para el Dashboard de Workers
+    Route::get('/', function () {
+        return Inertia::render('Clients/ClientsDashboard');
+    })->name('clients');
+
+});
+
 
 Route::prefix('workers')->group(function () {
     // Rutas para el Dashboard de Workers
@@ -43,8 +53,10 @@ Route::prefix('workers')->group(function () {
         return Inertia::render('Workers/WorkersDashboard');
     })->name('workers');
 
-    // Ruta para la búsqueda de trabajadores
-    Route::get('/search', [SearchController::class, 'index'])->name('workers.search');
+
+    Route::resource('search', SearchController::class); // CRUD completo
+    Route::get('search', [SearchController::class, 'index'])->name('search.index');
+
 
     // Rutas para el CRUD de Animales dentro de /workers
     Route::resource('animales', AnimalController::class); // CRUD completo
@@ -55,4 +67,17 @@ Route::prefix('workers')->group(function () {
 
     Route::resource('users', UserController::class);
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+
+    Route::resource('consultas', ConsultaController::class);
+    Route::get('/consultas', [ConsultaController::class, 'index'])->name('consultas.index');
+    // Ruta para mostrar los detalles de una consulta
+    Route::get('/consultas/{id}', [ConsultaController::class, 'show'])->name('consultas.show');
+
+    // routes/web.php
+
+    Route::resource('servicios', ServicioController::class);
+
+
+
 });

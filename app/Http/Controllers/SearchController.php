@@ -2,43 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Animal;
-use App\Models\Auxiliar;
-use App\Models\Veterinario;
+use App\Models\Usuario;
 use App\Models\Cliente;
+use App\Models\Animal;
+use App\Models\Servicio;  // Asegúrate de tener el modelo Servicio importado
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        $searchQuery = $request->get('search', '');
+
+        $searchQuery = $request->get('search', ''); // Pillem el valor del search (label del form)
+
+        // FILTREM EN USUARIOS, ANIMALES, SERVICIOS, CLIENTES
+        $clientes = Cliente::where('nombre', 'like', "%{$searchQuery}%")
+                            ->orWhere('apellidos', 'like', "%{$searchQuery}%")
+                            ->get();
 
         $animales = Animal::where('nombre', 'like', "%{$searchQuery}%")
-                          ->orWhere('tipo', 'like', "%{$searchQuery}%")
-                          ->orWhere('raza', 'like', "%{$searchQuery}%")
-                          ->get();
+                            ->get();
 
-        $auxiliares = Auxiliar::where('nombre', 'like', "%{$searchQuery}%")
-                              ->orWhere('apellidos', 'like', "%{$searchQuery}%")
-                              ->get();
+        $servicios = Servicio::where('tipo_servicio', 'like', "%{$searchQuery}%")
+                            ->get();
 
-        $veterinarios = Veterinario::where('nombre', 'like', "%{$searchQuery}%")
-                                   ->orWhere('apellidos', 'like', "%{$searchQuery}%")
-                                   ->orWhere('especialidad', 'like', "%{$searchQuery}%")
-                                   ->get();
-
-        $clientes = Cliente::where('nombre', 'like', "%{$searchQuery}%")
-                           ->orWhere('apellidos', 'like', "%{$searchQuery}%")
-                           ->get();
-
-                           return Inertia::render('Workers/Search', [
-                            'search' => $searchQuery,
-                            'animales' => $animales,
-                            'auxiliares' => $auxiliares,
-                            'veterinarios' => $veterinarios,
-                            'clientes' => $clientes,
-                        ]);
+        // Pasar los datos como props a la vista
+        return Inertia::render('Search/Index', [
+            'clientes' => $clientes,
+            'animales' => $animales,
+            'servicios' => $servicios,
+            'search' => $searchQuery,
+        ]);
     }
 }

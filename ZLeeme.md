@@ -21,10 +21,7 @@ Dashboard: importante.
 - Utilizar route() para los links <Link :href="route('workers.search')" class="nav-link text-whitehover:text-blue-400 text-lg">Buscar</Link>
 
 
-### Memorias 
+### LOGOS, IMAGENES
 
-# Dia 1-2-3
-Hicimos las migraciones, seeders, y un poco de estilo en el dashboard y welcome, 
-
-### Faltaria por añadir las migraciones de los posts (cliente) y de las guias(veterinarios) 
-
+Si no te entra la imagen o el logo con la ruta nueva utilizar:
+<img :src="require('@/public/icons/tiendas.png')"
