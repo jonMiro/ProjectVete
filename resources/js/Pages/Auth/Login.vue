@@ -24,7 +24,11 @@ const submit = () => {
         ...data,
         remember: form.remember ? 'on' : '',
     })).post(route('login'), {
-        onFinish: () => form.reset('password'),
+        onFinish: () => {
+            form.reset('password');
+            // Redirección después de un login exitoso
+            window.location.href = route('dashboard'); // Cambia 'dashboard' por la ruta que desees
+        },
     });
 };
 </script>

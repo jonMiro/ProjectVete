@@ -6,7 +6,6 @@ import NavBarClients from '@/Components/NavBarClients.vue';
 <template>
     <AppLayout title="Panel de Usuarios">
         <template #header>
-            <NavBarClients/>
         </template>
 
         <div class="p-6 text-gray-700">

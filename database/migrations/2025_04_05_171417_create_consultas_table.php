@@ -12,7 +12,7 @@ return new class extends Migration {
         Schema::create('consultas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('animal_id')->constrained('animales')->onDelete('cascade');
-            $table->foreignId('veterinario_id')->nullable()->constrained('veterinarios');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->date('fecha');
             $table->string('lugar')->nullable();
             $table->float('peso')->nullable();
@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->text('diagnostico')->nullable();
             $table->text('tratamiento')->nullable();
             $table->text('observaciones')->nullable();
+            $table->float('precio');
             $table->timestamps();
         });
     }

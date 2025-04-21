@@ -7,7 +7,7 @@
       "fechaNacimiento": "2018-05-12",
       "imagen": "/images/1.webp",
       "observaciones": "Le gusta correr mucho.",
-      "cliente_id": 1
+      "user_id": 5
     },
     {
       "nombre": "Luna",
@@ -17,7 +17,7 @@
       "fechaNacimiento": "2020-08-25",
       "imagen": "/images/2.jpg",
       "observaciones": "Muy tranquila y amigable.",
-      "cliente_id": 2
+      "user_id": 6
     },
     {
       "nombre": "Max",
@@ -27,5 +27,5 @@
       "fechaNacimiento": "2019-11-07",
       "imagen": "/images/3.jpg",
       "observaciones": "Le gusta jugar con otros perros.",
-      "cliente_id": 2
+      "user_id": 6
     }]

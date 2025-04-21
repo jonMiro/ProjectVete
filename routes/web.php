@@ -8,6 +8,7 @@ use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\PageController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -18,6 +19,7 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -27,6 +29,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
 
 
 
@@ -80,4 +83,10 @@ Route::prefix('workers')->group(function () {
 
 
 
+
 });
+
+Route::get('/aviso-legal', [PageController::class, 'avisoLegal'])->name('aviso-legal');
+Route::get('/politica-privacidad', [PageController::class, 'politicaPrivacidad'])->name('politica-privacidad');
+Route::get('/politica-cookies', [PageController::class, 'politicaCookies'])->name('politica-cookies');
+Route::get('/accesibilidad', [PageController::class, 'accesibilidad'])->name('accesibilidad');

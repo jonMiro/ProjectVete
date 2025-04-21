@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('apellidos');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('userable_id')->nullable(); // Relación polimórfica
-            $table->string('userable_type')->nullable();           // Relación polimórfica
+            $table->string('direccion');
+            $table->string('telefono');
+            $table->enum('tipo', ['veterinario', 'auxiliar', 'cliente'])->default('cliente');
+            $table->boolean('is_worker')->default(false);
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();

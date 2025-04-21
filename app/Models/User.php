@@ -14,7 +14,7 @@ class User extends Authenticatable
 {
     use HasApiTokens;
 
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
@@ -29,6 +29,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'apellidos',
+        'telefono',
+        'direccion',
+        'tipo',
+        'is_worker',
     ];
 
     /**
@@ -64,8 +69,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function userable()
+
+    // Relación con las consultas
+    public function consultas()
     {
-        return $this->morphTo(); // Relación polimórfica
+        return $this->hasMany(Consulta::class);
     }
+
+     // Relación con los animales
+     public function animales()
+     {
+         return $this->hasMany(Animal::class);
+     }
+
+     // Relación con los servicios
+     public function servicios()
+     {
+         return $this->hasMany(Servicio::class);
+     }
 }

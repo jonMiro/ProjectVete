@@ -27,6 +27,13 @@ createInertiaApp({
         faviconLink.href = "/images/logo.webp"; // Ruta del favicon en public/images
         document.head.appendChild(faviconLink);
 
+        // Agregar Font Awesome CDN
+        const fontAwesomeLink = document.createElement("link");
+        fontAwesomeLink.rel = "stylesheet";
+        fontAwesomeLink.href =
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css";
+        document.head.appendChild(fontAwesomeLink);
+
         // Crear la app
         return createApp({ render: () => h(App, props) })
             .use(plugin)

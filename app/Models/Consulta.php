@@ -12,22 +12,20 @@ class Consulta extends Model
     use HasFactory;
 
     protected $fillable = [
-        'animal_id', 'veterinario_id', 'fecha', 'lugar', 'peso', 'tipo_animal', 'raza',
-        'motivo', 'anamnesis', 'examen_fisico', 'diagnostico', 'tratamiento', 'observaciones'
+        'animal_id', 'user_id', 'fecha', 'lugar', 'peso', 'tipo_animal', 'raza',
+        'motivo', 'anamnesis', 'examen_fisico', 'diagnostico', 'tratamiento', 'observaciones', 'precio'
     ];
 
     /**
      * Relación de una consulta con el veterinario
-     * Una consulta es realizada por un veterinario
      */
     public function veterinario()
     {
-        return $this->belongsTo(Veterinario::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
      * Relación de una consulta con el animal
-     * Una consulta es realizada a un animal
      */
     public function animal()
     {

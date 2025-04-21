@@ -14,21 +14,18 @@ class Animal extends Model
 
 
     protected $fillable = [
-        'nombre', 'tipo', 'raza', 'sexo', 'fechaNacimiento', 'imagen', 'observaciones', 'cliente_id'
+        'nombre', 'tipo', 'raza', 'sexo', 'fechaNacimiento', 'imagen', 'observaciones', 'user_id'
     ];
 
-    /**
-     * Relación de pertenencia a un Cliente
-     * Un animal pertenece a un cliente
-     */
+
+     /* Relación de pertenencia a un Cliente*/
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 
     /**
      * Relación de un animal con las consultas
-     * Un animal tiene muchas consultas
      */
     public function consultas()
     {
@@ -37,7 +34,6 @@ class Animal extends Model
 
     /**
      * Relación de un animal con los servicios
-     * Un animal tiene muchos servicios
      */
     public function servicios()
     {

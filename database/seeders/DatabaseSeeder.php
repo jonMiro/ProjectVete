@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Cliente;
-use App\Models\Veterinario;
-use App\Models\Auxiliar;
+use App\Models\Animal;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,102 +15,82 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Creamos un usuario primero
-        $user = new User([
-            'name' => 'Ana López',
-            'email' => 'ana.auxiliar@example.com',
-            'password' => bcrypt('12345678'),
-        ]);
-        $user->save();  // Guardamos el usuario
 
-        // Ahora creamos un auxiliar y lo asociamos al usuario
-        $auxiliar = Auxiliar::create([
-            'nombre' => 'Ana',
-            'apellidos' => 'López',
-            'telefono' => '123456789',
-            'direccion' => 'Calle Luna 123',
-            'correo' => 'ana.auxiliar@example.com',
-            'userable_type' => User::class,
-            'userable_id' => $user->id, // Asignamos el ID del usuario
-        ]);
-         // Crear un veterinario 1
-         $userVet1 = new User([
+        // Crear un veterinario 1
+        $userVet1 = new User([
             'name' => 'Dr. Juan Pérez',
-            'email' => 'juan.veterinario1@example.com',
+            'email' => 'vete1@example.com',
             'password' => bcrypt('12345678'),
-        ]);
-        $userVet1->save();
-
-        // Crear el veterinario 1
-        $veterinario1 = Veterinario::create([
-            'nombre' => 'Juan',
             'apellidos' => 'Pérez',
             'telefono' => '666123456',
-            'especialidad' => 'MedicinaGeneral',
-            'direccion' => 'Calle Veterinario 1',
-            'correo' => 'juan.veterinario1@example.com',
-            'userable_type' => User::class,
-            'userable_id' => $userVet1->id,
+            'direccion' => 'Calle LaFuente 1, Agullent',
+            'tipo' => 'veterinario',
+            'is_worker' => true,
         ]);
+        $userVet1->save();
 
         // Crear un veterinario 2
         $userVet2 = new User([
             'name' => 'Dr. Laura González',
-            'email' => 'laura.veterinario2@example.com',
+            'email' => 'vete2@example.com',
             'password' => bcrypt('12345678'),
-        ]);
-        $userVet2->save();
-
-        // Crear el veterinario 2
-        $veterinario2 = Veterinario::create([
-            'nombre' => 'Laura',
             'apellidos' => 'González',
             'telefono' => '666654321',
-            'especialidad' => 'Cirujía',
-            'direccion' => 'Calle Veterinario 2',
-            'correo' => 'laura.veterinario2@example.com',
-            'userable_type' => User::class,
-            'userable_id' => $userVet2->id,
+            'direccion' => 'Calle Rios, Ontinyent',
+            'tipo' => 'veterinario',
+            'is_worker' => true,
         ]);
+        $userVet2->save();
+         // Crear un auxiliar
+         $userAux = new User([
+            'name' => 'Ana López',
+            'email' => 'auxiliar1@example.com',
+            'password' => bcrypt('12345678'),
+            'apellidos' => 'López',
+            'telefono' => '123456789',
+            'direccion' => 'Calle Luna 123',
+            'tipo' => 'auxiliar',
+            'is_worker' => true,
+        ]);
+        $userAux->save();
+         // Crear un auxiliar
+         $userAux = new User([
+            'name' => 'Juan',
+            'email' => 'auxiliar2@example.com',
+            'password' => bcrypt('12345678'),
+            'apellidos' => 'Cuesta',
+            'telefono' => '675898453',
+            'direccion' => 'Calle Sol 321',
+            'tipo' => 'auxiliar',
+            'is_worker' => true,
+        ]);
+        $userAux->save();
 
         // Crear un cliente 1
         $userClient1 = new User([
             'name' => 'Carlos Díaz',
-            'email' => 'carlos.cliente1@example.com',
+            'email' => 'cliente1@example.com',
             'password' => bcrypt('12345678'),
-        ]);
-        $userClient1->save();
-
-        // Crear el cliente 1
-        $cliente1 = Cliente::create([
-            'nombre' => 'Carlos',
             'apellidos' => 'Díaz',
             'telefono' => '600789123',
-            'direccion' => 'Calle Cliente 1',
-            'correo' => 'carlos.cliente1@example.com',
-            'userable_type' => User::class,
-            'userable_id' => $userClient1->id,
+            'direccion' => 'Calle Ramon y Cajal, 22, Ontinyent',
+            'tipo' => 'cliente',
+            'is_worker' => false,
         ]);
+        $userClient1->save();
 
         // Crear un cliente 2
         $userClient2 = new User([
             'name' => 'Marta Ruiz',
             'email' => 'marta.cliente2@example.com',
             'password' => bcrypt('12345678'),
+            'apellidos' => 'Ruiz',
+            'telefono' => '600321654',
+            'direccion' => 'Calle Rafael Juan Vidal, 10, Ontinyent',
+            'tipo' => 'cliente',
+            'is_worker' => false,
         ]);
         $userClient2->save();
 
-        // Crear el cliente 2
-        $cliente2 = Cliente::create([
-            'nombre' => 'Marta',
-            'apellidos' => 'Ruiz',
-            'telefono' => '600321654',
-            'direccion' => 'Calle Cliente 2',
-            'correo' => 'marta.cliente2@example.com',
-            'userable_type' => User::class,
-            'userable_id' => $userClient2->id,
-        ]);
     }
 }
-
-

@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->text('observaciones')->nullable();
 
             // Relación con Cliente
-            $table->foreignId('cliente_id')->constrained('clientes');
+            $table->foreignId('user_id')->constrained('users');
 
             // Podriem afegir la relació amb el veterinari o auxiliar tb(opcional)
             // $table->foreignId('usuario_id')->nullable()->constrained('usuarios')->onDelete('set null');
