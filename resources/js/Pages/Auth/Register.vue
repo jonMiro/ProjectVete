@@ -1,7 +1,6 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -10,9 +9,13 @@ import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
     name: '',
+    apellidos: '',
     email: '',
     password: '',
     password_confirmation: '',
+    direccion: '',
+    telefono: '',
+    tipo: 'cliente',
     terms: false,
 });
 
@@ -27,13 +30,23 @@ const submit = () => {
     <Head title="Register" />
 
     <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
+  <!-- div logo + titulo -->
+<div class="flex justify-between items-center mb-6">
+    <!-- Logo -->
+    <div>
+        <img src="/images/logo.webp" alt="Logo" class="w-32 h-auto" />
+    </div>
 
-        <form @submit.prevent="submit">
+    <!-- Título del formulario -->
+    <div class="flex-1 text-center">
+        <h1 class="text-3xl font-semibold ml-6">Formulario de Registro</h1>
+    </div>
+</div>
+
+        <form @submit.prevent="submit" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Nombre -->
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Nombre" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -46,7 +59,22 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
-            <div class="mt-4">
+            <!-- Apellidos -->
+            <div>
+                <InputLabel for="apellidos" value="Apellidos" />
+                <TextInput
+                    id="apellidos"
+                    v-model="form.apellidos"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="family-name"
+                />
+                <InputError class="mt-2" :message="form.errors.apellidos" />
+            </div>
+
+            <!-- Email -->
+            <div>
                 <InputLabel for="email" value="Email" />
                 <TextInput
                     id="email"
@@ -59,7 +87,47 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
+            <!-- Dirección -->
+            <div>
+                <InputLabel for="direccion" value="Dirección" />
+                <TextInput
+                    id="direccion"
+                    v-model="form.direccion"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError class="mt-2" :message="form.errors.direccion" />
+            </div>
+
+            <!-- Teléfono -->
+            <div>
+                <InputLabel for="telefono" value="Teléfono" />
+                <TextInput
+                    id="telefono"
+                    v-model="form.telefono"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError class="mt-2" :message="form.errors.telefono" />
+            </div>
+
+
+          <!-- Tipo (fijo a "cliente") -->
+           <div>
+            <InputLabel for="tipo"  />
+            <input
+            type="hidden"
+            id="tipo"
+            v-model="form.tipo"
+            value="cliente"
+                                />
+        </div>
+
+
+            <!-- Contraseña -->
+            <div>
                 <InputLabel for="password" value="Password" />
                 <TextInput
                     id="password"
@@ -72,7 +140,8 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="mt-4">
+            <!-- Confirmar Contraseña -->
+            <div>
                 <InputLabel for="password_confirmation" value="Confirm Password" />
                 <TextInput
                     id="password_confirmation"
@@ -85,26 +154,25 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>
 
-            <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
+            <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="sm:col-span-2 mt-4">
                 <InputLabel for="terms">
                     <div class="flex items-center">
                         <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
-
                         <div class="ms-2">
-                            I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Privacy Policy</a>
+                            Acepto <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Terminos de servicio</a> y <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">las Politicas de Privacidad</a>
                         </div>
                     </div>
                     <InputError class="mt-2" :message="form.errors.terms" />
                 </InputLabel>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end sm:col-span-2 mt-4">
                 <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Already registered?
+                    Ya estas registrado?
                 </Link>
 
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
+                    Registrar
                 </PrimaryButton>
             </div>
         </form>

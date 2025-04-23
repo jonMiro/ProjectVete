@@ -5,145 +5,221 @@
       </template>
 
       <!-- Buscador -->
-      <div class="search-container">
+      <div class="flex justify-center mt-8">
         <input
           v-model="searchQuery"
           @input="handleSearch"
           type="text"
-          class="form-control search-input"
+          class="w-1/2 p-3 border border-gray-300 rounded-lg"
           placeholder="Buscar usuarios, clientes, animales o servicios..."
         />
       </div>
 
-      <!-- grid resultados -->
-      <div class="results mb-6">
-        <h3 class="text-center mt-4 mb-4">DataBase</h3>
-        <div class="container">
-          <div class="row justify-content-center">
+      <!-- Resultados filtrados debajo del buscador -->
+      <div v-if="searchQuery" class="mt-6">
+        <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+          <h4 class="text-lg font-semibold mb-4 text-center">Resultados de búsqueda</h4>
+          <ul class="list-none p-0">
+            <!-- Veterinarios -->
+            <li v-if="filteredVeterinarios.length" class="mb-4">
+              <h5 class="text-lg font-semibold text-center">Veterinarios</h5>
+              <ul>
+                <li v-for="veterinario in filteredVeterinarios" :key="veterinario.id" class="mb-2 text-center">
+                  <Link :href="veterinario.route" class="text-blue-600 hover:underline font-semibold">
+                    {{ veterinario.name }} {{ veterinario.apellidos }}
+                  </Link>
+                </li>
+              </ul>
+            </li>
 
-            <!-- Mostrar clientes -->
-            <div v-if="clientes.length" class="col-12 col-md-6 col-lg-3 mb-4">
-              <div class="grid-item">
-                <h4>Clientes</h4>
-                <ul>
-                  <li v-for="cliente in filteredClientes" :key="cliente.id">
-                    <Link href="" class="custom-link">
-                      {{ cliente.nombre }} {{ cliente.apellidos }}
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <!-- Auxiliares -->
+            <li v-if="filteredAuxiliares.length" class="mb-4">
+              <h5 class="text-lg font-semibold text-center">Auxiliares</h5>
+              <ul>
+                <li v-for="auxiliar in filteredAuxiliares" :key="auxiliar.id" class="mb-2 text-center">
+                  <Link :href="auxiliar.route" class="text-blue-600 hover:underline font-semibold">
+                    {{ auxiliar.name }} {{ auxiliar.apellidos }}
+                  </Link>
+                </li>
+              </ul>
+            </li>
 
-            <!-- Mostrar animales -->
-            <div v-if="animales.length" class="col-12 col-md-6 col-lg-3 mb-4">
-              <div class="grid-item">
-                <h4>Animales</h4>
-                <ul>
-                  <li v-for="animal in filteredAnimales" :key="animal.id">
-                    <Link :href="route('animales.show', animal.id)" class="custom-link">
-                      {{ animal.nombre }}
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <!-- Clientes -->
+            <li v-if="filteredClientes.length" class="mb-4">
+              <h5 class="text-lg font-semibold text-center">Clientes</h5>
+              <ul>
+                <li v-for="cliente in filteredClientes" :key="cliente.id" class="mb-2 text-center">
+                  <Link :href="cliente.route" class="text-blue-600 hover:underline font-semibold">
+                    {{ cliente.name }} {{ cliente.apellidos }}
+                  </Link>
+                </li>
+              </ul>
+            </li>
 
-            <!-- Mostrar servicios -->
-            <div v-if="servicios.length" class="col-12 col-md-6 col-lg-3 mb-4">
-              <div class="grid-item">
-                <h4>Servicios</h4>
-                <ul>
-                  <li v-for="servicio in filteredServicios" :key="servicio.id">
-                    <Link :href="route('servicios.show', servicio.id)" class="custom-link">
-                      {{ servicio.tipo_servicio }}
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+            <!-- Animales -->
+            <li v-if="filteredAnimales.length" class="mb-4">
+              <h5 class="text-lg font-semibold text-center">Animales</h5>
+              <ul>
+                <li v-for="animal in filteredAnimales" :key="animal.id" class="mb-2 text-center">
+                  <Link :href="animal.route" class="text-blue-600 hover:underline font-semibold">
+                    {{ animal.nombre }}
+                  </Link>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Servicios -->
+            <li v-if="filteredServicios.length" class="mb-4">
+              <h5 class="text-lg font-semibold text-center">Servicios</h5>
+              <ul>
+                <li v-for="servicio in filteredServicios" :key="servicio.id" class="mb-2 text-center">
+                  <Link :href="servicio.route" class="text-blue-600 hover:underline font-semibold">
+                    {{ servicio.tipo_servicio }}
+                  </Link>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
 
-      <!-- Footer -->
+      <!-- resultados cuando no se está buscando -->
+      <div v-if="!searchQuery" class="mt-10 mb-6">
+        <div class="container mx-auto px-4">
+          <!-- Mostrar resultados agrupados por tipo -->
+          <div v-if="filteredVeterinarios.length" class="mb-6">
+            <h4 class="text-lg font-semibold text-center">Veterinarios</h4>
+            <ul class="list-none p-0">
+              <li v-for="veterinario in filteredVeterinarios" :key="veterinario.id" class="mb-2 text-center">
+                <Link :href="veterinario.route" class="text-blue-600 hover:underline font-semibold">
+                  {{ veterinario.name }} {{ veterinario.apellidos }}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div v-if="filteredAuxiliares.length" class="mb-6">
+            <h4 class="text-lg font-semibold text-center">Auxiliares</h4>
+            <ul class="list-none p-0">
+              <li v-for="auxiliar in filteredAuxiliares" :key="auxiliar.id" class="mb-2 text-center">
+                <Link :href="auxiliar.route" class="text-blue-600 hover:underline font-semibold">
+                  {{ auxiliar.name }} {{ auxiliar.apellidos }}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div v-if="filteredClientes.length" class="mb-6">
+            <h4 class="text-lg font-semibold text-center">Clientes</h4>
+            <ul class="list-none p-0">
+              <li v-for="cliente in filteredClientes" :key="cliente.id" class="mb-2 text-center">
+                <Link :href="cliente.route" class="text-blue-600 hover:underline font-semibold">
+                  {{ cliente.name }} {{ cliente.apellidos }}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div v-if="filteredAnimales.length" class="mb-6">
+            <h4 class="text-lg font-semibold text-center">Animales</h4>
+            <ul class="list-none p-0">
+              <li v-for="animal in filteredAnimales" :key="animal.id" class="mb-2 text-center">
+                <Link :href="animal.route" class="text-blue-600 hover:underline font-semibold">
+                  {{ animal.nombre }}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div v-if="filteredServicios.length" class="mb-6">
+            <h4 class="text-lg font-semibold text-center">Servicios</h4>
+            <ul class="list-none p-0">
+              <li v-for="servicio in filteredServicios" :key="servicio.id" class="mb-2 text-center">
+                <Link :href="servicio.route" class="text-blue-600 hover:underline font-semibold">
+                  {{ servicio.tipo_servicio }}
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </AppLayout>
   </template>
 
   <script setup>
   import { ref, computed } from 'vue';
   import { Link } from '@inertiajs/inertia-vue3';
- import AppLayout from '@/Layouts/AppLayout.vue';
- import NavBar from '@/Components/NavBar.vue';
+  import AppLayout from '@/Layouts/AppLayout.vue';
+  import NavBar from '@/Components/NavBar.vue';
 
-  // Pasem els props
   const props = defineProps({
-    clientes: Array,
-    animales: Array,
-    servicios: Array,
-    search: String,
+    clientes: { type: Array, default: () => [] },
+    veterinarios: { type: Array, default: () => [] },
+    auxiliares: { type: Array, default: () => [] },
+    animales: { type: Array, default: () => [] },
+    servicios: { type: Array, default: () => [] },
+    search: { type: String, default: '' },
   });
 
-  const searchQuery = ref(props.search); //El ref actualitza els resultats de forma dinamica sense recarregar
+  const searchQuery = ref(props.search);
 
   const handleSearch = () => {};
 
-  // Filtres computed. Utilitzem filter y lowercase.El computed fa que siga reactiu, j (jon, juan), o (jon)
-
-
+  // Filtros por tipo de usuario
   const filteredClientes = computed(() => {
-    return props.clientes.filter(cliente =>
-      cliente.nombre.toLowerCase().startsWith(searchQuery.value.toLowerCase())
+    return props.clientes.filter(user =>
+      user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    );
+  });
+
+  const filteredVeterinarios = computed(() => {
+    return props.veterinarios.filter(user =>
+      user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    );
+  });
+
+  const filteredAuxiliares = computed(() => {
+    return props.auxiliares.filter(user =>
+      user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
   });
 
   const filteredAnimales = computed(() => {
     return props.animales.filter(animal =>
-      animal.nombre.toLowerCase().startsWith(searchQuery.value.toLowerCase())
+      animal.nombre.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
   });
 
   const filteredServicios = computed(() => {
     return props.servicios.filter(servicio =>
-      servicio.tipo_servicio.toLowerCase().startsWith(searchQuery.value.toLowerCase())
+      servicio.tipo_servicio.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
+  });
+
+  // Resultados combinados
+  const filteredResults = computed(() => {
+    const combinedResults = [
+      ...filteredClientes.value,
+      ...filteredVeterinarios.value,
+      ...filteredAuxiliares.value,
+      ...filteredAnimales.value,
+      ...filteredServicios.value,
+    ];
+
+    return combinedResults.map(item => {
+      if (item.name) {
+        return { ...item, route: '#' }; // Ajusta la ruta según corresponda
+      }
+      if (item.nombre) {
+        return { ...item, route: route('animales.show', item.id) };
+      }
+      if (item.tipo_servicio) {
+        return { ...item, route: route('servicios.show', item.id) };
+      }
+    });
   });
   </script>
 
   <style scoped>
-  .search-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .search-input {
-    width: 50%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-
-  .results {
-    margin-top: 20px;
-  }
-
-  .grid-item {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .custom-link {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .custom-link:hover {
-    text-decoration: underline;
-    color: #0056b3;
-  }
+  /* Puedes eliminar el CSS personalizado ya que todo está cubierto por Tailwind */
   </style>

@@ -3,13 +3,76 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBarVolver from '@/Components/NavBarVolver.vue';
 import Footer from '@/Components/Footer.vue';
 import Contacto from '@/Components/Contacto.vue';
+import { Link } from '@inertiajs/vue3';
+
+
+defineProps({
+        canLogin: {
+            type: Boolean,
+        },
+        canRegister: {
+            type: Boolean,
+        },
+        laravelVersion: {
+            type: String,
+            required: true,
+        },
+        phpVersion: {
+            type: String,
+            required: true,
+        },
+    });
 </script>
 
 <template>
-  <AppLayout title="Política de Privacidad - Vet&Care">
-    <template #header>
-      <NavBarVolver />
-    </template>
+
+  <div class="min-h-screen bg-white">
+    <nav class="bg-white border-b border-gray-100">
+      <!-- Primary Navigation Menu -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <!-- Logo and Title -->
+            <div class="shrink-0 flex items-center space-x-3 -ml-px">
+              <Link :href="route('dashboard')">
+                <img src="/images/logo.webp" alt="Logo" class="block h-16 w-auto" />
+              </Link>
+              <span class="text-xl font-semibold text-gray-800">Vet&Care</span>
+            </div>
+          </div>
+
+          <!-- Login / Register / Dashboard -->
+          <div v-if="canLogin" class="flex items-center space-x-4">
+            <template v-if="$page.props.auth.user">
+              <Link
+                :href="route('dashboard')"
+                class="rounded-md px-4 py-2 text-gray-400 hover:text-gray-600 transition"
+              >
+                Dashboard
+              </Link>
+            </template>
+
+            <template v-else>
+              <Link
+                :href="route('login')"
+                class="rounded-md px-4 py-2 text-gray-400 hover:text-gray-600 transition"
+              >
+                Log in
+              </Link>
+
+              <Link
+                v-if="canRegister"
+                :href="route('register')"
+                class="rounded-md px-4 py-2 text-gray-400 hover:text-gray-600 transition"
+              >
+                Register
+              </Link>
+            </template>
+          </div>
+        </div>
+      </div>
+    </nav>
+<NavBarVolver />
 
     <div class="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
       <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">Política de Privacidad</h1>
@@ -21,7 +84,7 @@ import Contacto from '@/Components/Contacto.vue';
         </p>
 
         <p>
-          En esta web y en las demás webs que son titularidad de Clínica Veterinaria Hiroc (DAVID FRANCÉS BORRÀS), se respetan y cuidan los datos personales de los usuarios. Como usuario debes saber que tus derechos están garantizados. Queremos compartir nuestros principios respecto a tu privacidad:
+          En esta web y en las demás webs que son titularidad de Vet&Care (JONATHAN ALCOBENDAS MIRÓ), se respetan y cuidan los datos personales de los usuarios. Como usuario debes saber que tus derechos están garantizados. Queremos compartir nuestros principios respecto a tu privacidad:
         </p>
 
         <ul class="list-disc pl-5 space-y-2">
@@ -32,17 +95,17 @@ import Contacto from '@/Components/Contacto.vue';
         </ul>
 
         <p>
-          Esta política será aplicable en caso de que los usuarios decidan rellenar cualquiera de nuestros formularios de contacto donde se recaben datos personales. Clínica Veterinaria Hiroc (DAVID FRANCÉS BORRÀS) ha adecuado esta web a las exigencias del Reglamento (UE) 2016/679 (RGPD).
+          Esta política será aplicable en caso de que los usuarios decidan rellenar cualquiera de nuestros formularios de contacto donde se recaben datos personales. Vet&Care (JONATHAN ALCOBENDAS MIRÓ) ha adecuado esta web a las exigencias del Reglamento (UE) 2016/679 (RGPD).
         </p>
 
         <h2 class="text-2xl font-semibold text-center text-gray-700 mb-3">Responsable del Tratamiento de Tus Datos Personales</h2>
         <p>
           Responsable: JONATHAN ALCOBENDAS MIRÓ <br>
-          Nombre comercial: Clínica Veterinaria Hiroc <br>
+          Nombre comercial: Vet&Care Society <br>
           NIF/CIF: 48604293A <br>
           Dirección: C/ Falsa, 123, 46870 Ontinyent, (Valencia) – España <br>
           Correo electrónico: <a href="mailto:cvvet&care@hotmail.com" class="text-blue-600 hover:text-blue-800">cvvet&care@hotmail.com</a><br>
-          Actividad: Clínica Veterinaria Hiroc
+          Actividad: Desarrollo ecosistemas virtuales ámbito veterinario.
         </p>
 
         <h2 class="text-2xl font-semibold text-center text-gray-700 mb-3">Principios Relacionados con el Tratamiento de tu Información Personal</h2>
@@ -99,7 +162,8 @@ import Contacto from '@/Components/Contacto.vue';
     <div class="mt-10">
       <Contacto />
     </div>
+</div>
 
     <Footer />
-  </AppLayout>
+
 </template>

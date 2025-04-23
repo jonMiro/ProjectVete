@@ -7,15 +7,16 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 const props = defineProps({
   consulta: Object,  // Recibe el objeto consulta para editar
   animales: Array,
-  veterinarios: Array,
+  users: Array,
 });
 
 const form = useForm({
   animal_id: props.consulta.animal_id || '',
-  veterinario_id: props.consulta.veterinario_id || '',
+  user_id: props.consulta.user_id || '',
   fecha: props.consulta.fecha || '',
   lugar: props.consulta.lugar || '',
   peso: props.consulta.peso || '',
+  precio: props.consulta.precio || '',
   tipo_animal: props.consulta.tipo_animal || '',
   raza: props.consulta.raza || '',
   motivo: props.consulta.motivo || '',
@@ -62,13 +63,13 @@ const submit = () => {
 
           <div class="mb-4">
             <label for="veterinario_id" class="block text-gray-700 font-medium">Veterinario</label>
-            <select v-model="form.veterinario_id" id="veterinario_id" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
+            <select v-model="form.user_id" id="user_id" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
               <option value="">Seleccione un veterinario</option>
-              <option v-for="veterinario in props.veterinarios" :key="veterinario.id" :value="veterinario.id">
-                {{ veterinario.nombre }}
+              <option v-for="user in props.users" :key="user.id" :value="user.id">
+                {{ user.name }}
               </option>
             </select>
-            <div v-if="form.errors.veterinario_id" class="text-red-500 text-sm mt-1">{{ form.errors.veterinario_id }}</div>
+            <div v-if="form.errors.user_id" class="text-red-500 text-sm mt-1">{{ form.errors.user_id }}</div>
           </div>
 
           <div class="mb-4">
@@ -124,6 +125,13 @@ const submit = () => {
             <textarea v-model="form.observaciones" id="observaciones" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
             <div v-if="form.errors.observaciones" class="text-red-500 text-sm mt-1">{{ form.errors.observaciones }}</div>
           </div>
+
+          <div class="mb-4">
+  <label for="precio" class="block text-gray-700 font-medium">Precio</label>
+  <input v-model="form.precio" type="number" step="0.01" id="precio" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+  <div v-if="form.errors.precio" class="text-red-500 text-sm mt-1">{{ form.errors.precio }}</div>
+</div>
+
 
           <div class="flex justify-center gap-4">
             <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none">Actualizar Consulta</button>

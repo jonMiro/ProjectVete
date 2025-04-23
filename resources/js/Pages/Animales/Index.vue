@@ -46,8 +46,8 @@ const isListView = ref(false);
 
               <!-- Información del cliente -->
               <p class="text-lg"><strong>Cliente:</strong>
-                id: {{ animal.cliente.id }}
-                Nombre: {{ animal.cliente.nombre }} {{ animal.cliente.apellidos }}
+                id: {{ animal.user.id }}
+                Nombre: {{ animal.user.name }} {{ animal.user.apellidos }}
               </p>
 
               <!-- Imagen del animal -->
@@ -85,7 +85,7 @@ const isListView = ref(false);
                 <td class="border px-4 py-2">{{ animal.raza }}</td>
                 <td class="border px-4 py-2">{{ animal.sexo }}</td>
                 <td class="border px-4 py-2">{{ animal.fechaNacimiento }}</td>
-                <td class="border px-4 py-2">{{ animal.cliente.nombre }} {{ animal.cliente.apellidos }}</td>
+                <td class="border px-4 py-2">{{ animal.user.name }} {{ animal.user.apellidos }}</td>
                 <td class="border px-4 py-2">
                   <Link :href="route('animales.show', animal.id)" class="bg-blue-500 text-white text-sm py-1 px-1 rounded-lg hover:bg-blue-600">Mostrar</Link>
                 </td>

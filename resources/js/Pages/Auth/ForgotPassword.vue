@@ -24,13 +24,16 @@ const submit = () => {
     <Head title="Forgot Password" />
 
     <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
+                 <!-- Contenedor con flex para logo y título -->
+<div class="flex justify-center items-center mb-6">
+    <!-- Logo -->
+    <div>
+        <img src="/images/logo.webp" alt="Logo" class="w-32 h-auto" />
+    </div>
+</div>
 
         <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-        </div>
+            Olvidaste tu contraseña? Dejanos tu dirección de correo y te mandaremos un codigo para resetearla        </div>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}

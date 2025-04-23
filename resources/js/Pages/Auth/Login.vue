@@ -26,8 +26,8 @@ const submit = () => {
     })).post(route('login'), {
         onFinish: () => {
             form.reset('password');
-            // Redirección después de un login exitoso
-            window.location.href = route('dashboard'); // Cambia 'dashboard' por la ruta que desees
+            // Redirección a dashboard
+            window.location.href = route('dashboard');
         },
     });
 };
@@ -37,9 +37,13 @@ const submit = () => {
     <Head title="Log in" />
 
     <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
+          <!-- Contenedor Logo, titulo-->
+<div class="flex justify-center items-center mb-6">
+    <!-- Logo -->
+    <div>
+        <img src="/images/logo.webp" alt="Logo" class="w-32 h-auto" />
+    </div>
+    </div>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
@@ -61,7 +65,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Contraseña" />
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -76,17 +80,17 @@ const submit = () => {
             <div class="block mt-4">
                 <label class="flex items-center">
                     <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
+                    <span class="ms-2 text-sm text-gray-600">Recordar</span>
                 </label>
             </div>
 
             <div class="flex items-center justify-end mt-4">
                 <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Forgot your password?
+                    Has olvidado tu contraseña?
                 </Link>
 
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
+                    Entrar
                 </PrimaryButton>
             </div>
         </form>

@@ -6,17 +6,16 @@ import { ref, watch } from 'vue';
 
 const props = defineProps({
   animales: Array,
-  veterinarios: Array,
-  clientes: Array,
+  users: Array,
 });
 
 const form = useForm({
   animal_id: '',
-  veterinario_id: '',
-  cliente_id: '',
+  user_id: '',
   fecha: '',
   lugar: '',
   peso: '',
+  precio: '',
   tipo_animal: '',
   raza: '',
   motivo: '',
@@ -27,23 +26,16 @@ const form = useForm({
   observaciones: '',
 });
 
-const clienteNombre = ref('');
-const clienteApellido = ref('');
 
 watch(() => form.animal_id, (animalId) => {
   const selected = props.animales.find(animal => animal.id === parseInt(animalId));
-  if (selected && selected.cliente) {
+  if (selected && selected.user) {
     form.tipo_animal = selected.tipo;
     form.raza = selected.raza;
-    form.cliente_id = selected.cliente.id; // Aquí deberías usar `id` y no solo el nombre
-    clienteNombre.value = selected.cliente.nombre;
-    clienteApellido.value = selected.cliente.apellidos // Aquí asignas el nombre correctamente
+    form.user_id = selected.user.id; // Aquí deberías usar `id` y no solo el nombre
   } else {
     form.tipo_animal = '';
     form.raza = '';
-    form.cliente_id = '';
-    clienteNombre.value = '';
-    clienteApellido.value = '';
   }
 });
 </script>
@@ -76,8 +68,8 @@ watch(() => form.animal_id, (animalId) => {
           <label class="block mb-1 font-semibold">Veterinario</label>
           <select v-model="form.veterinario_id" class="w-full border rounded px-3 py-2">
             <option value="">Seleccione un veterinario</option>
-            <option v-for="vet in props.veterinarios" :key="vet.id" :value="vet.id">
-              {{ vet.nombre }} {{ vet.apellidos }}
+            <option v-for="user in props.users" :key="user.id" :value="user.id">
+              {{ user.name }} {{ user.apellidos }}
             </option>
           </select>
         </div>
@@ -110,12 +102,6 @@ watch(() => form.animal_id, (animalId) => {
         <div>
           <label class="block mb-1 font-semibold">Raza</label>
           <input type="text" v-model="form.raza" class="w-full border rounded px-3 py-2 bg-gray-100" readonly />
-        </div>
-
-        <!-- Cliente (auto) -->
-        <div>
-          <label class="block mb-1 font-semibold">Cliente</label>
-          <input type="text" :value="`${clienteNombre} ${clienteApellido}`" class="w-full border rounded px-3 py-2 bg-gray-100" readonly />
         </div>
 
         <!-- Motivo -->
@@ -153,6 +139,12 @@ watch(() => form.animal_id, (animalId) => {
           <label class="block mb-1 font-semibold">Observaciones</label>
           <textarea v-model="form.observaciones" class="w-full border rounded px-3 py-2" rows="2"></textarea>
         </div>
+
+        <!-- Precio -->
+<div>
+  <label class="block mb-1 font-semibold">Precio (€)</label>
+  <input type="number" step="0.01" v-model="form.precio" class="w-full border rounded px-3 py-2" />
+</div>
 
         <!-- Botón -->
         <div class="md:col-span-2 text-center mt-4">

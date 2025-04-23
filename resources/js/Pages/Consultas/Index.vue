@@ -50,7 +50,7 @@ const deleteConsulta = (id) => {
             <h5 class="text-xl font-semibold text-blue-500 mb-2">Consulta ID: {{ consulta.id }}</h5>
             <p class="text-lg"><strong>Fecha:</strong> {{ consulta.fecha }}</p>
             <p class="text-lg"><strong>Animal:</strong> {{ consulta.animal.nombre }} ({{ consulta.raza }})</p>
-            <p class="text-lg"><strong>Veterinario:</strong> {{ consulta.veterinario.nombre }} {{ consulta.veterinario.apellidos }}</p>
+            <p class="text-lg"><strong>Veterinario:</strong> {{ consulta.user.name }} {{ consulta.user.apellidos }}</p>
             <p class="text-lg"><strong>Motivo:</strong> {{ consulta.motivo }}</p>
             <p class="text-lg"><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
             <p class="text-lg"><strong>Observaciones:</strong> {{ consulta.observaciones }}</p>
@@ -80,7 +80,7 @@ const deleteConsulta = (id) => {
               <td class="border px-4 py-2">{{ consulta.id }}</td>
               <td class="border px-4 py-2">{{ consulta.fecha }}</td>
               <td class="border px-4 py-2">{{ consulta.animal.nombre }}</td>
-              <td class="border px-4 py-2">{{ consulta.veterinario.nombre }} {{ consulta.veterinario.apellidos }}</td>
+              <td class="border px-4 py-2">{{ consulta.user.name }} {{ consulta.user.apellidos }}</td>
               <td class="border px-4 py-2">{{ consulta.motivo }}</td>
               <td class="border px-4 py-2">{{ consulta.tratamiento }}</td>
               <td class="border px-4 py-2">

@@ -19,7 +19,7 @@ class Consulta extends Model
     /**
      * Relación de una consulta con el veterinario
      */
-    public function veterinario()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

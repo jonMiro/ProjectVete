@@ -19,7 +19,7 @@ class Animal extends Model
 
 
      /* Relación de pertenencia a un Cliente*/
-    public function cliente()
+    public function user()
     {
         return $this->belongsTo(User::class,'user_id');
     }

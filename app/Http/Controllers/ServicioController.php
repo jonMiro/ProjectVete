@@ -5,7 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Servicio;
-use App\Models\Auxiliar;
+use App\Models\User;
 use App\Models\Animal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,7 +15,7 @@ class ServicioController extends Controller
     // Función index: muestra todos los servicios
     public function index()
     {
-        $servicios = Servicio::with(['auxiliar', 'animal'])->latest()->get();  // Obtener todos los servicios con sus relaciones
+        $servicios = Servicio::with(['user', 'animal'])->latest()->get();  // Obtener todos los servicios con sus relaciones
 
         return Inertia::render('Servicios/Index', [
             'servicios' => $servicios,
@@ -36,7 +36,7 @@ class ServicioController extends Controller
     public function create()
     {
         // Obtener auxiliares y animales disponibles
-        $auxiliares = Auxiliar::all();
+        $auxiliares = User::all();
         $animales = Animal::all();
 
         return Inertia::render('Servicios/Create', [
@@ -50,7 +50,7 @@ class ServicioController extends Controller
     {
         // Validar los datos del formulario
         $validated = $request->validate([
-            'auxiliar_id' => 'required|exists:auxiliares,id',
+            'user_id' => 'required|exists:auxiliares,id',
             'animal_id' => 'required|exists:animales,id',
             'tipo_servicio' => 'required|string',
             'descripcion' => 'nullable|string',
@@ -68,12 +68,12 @@ class ServicioController extends Controller
     public function edit(Servicio $servicio)
     {
         // Obtener los auxiliares y animales disponibles
-        $auxiliares = Auxiliar::all();
+        $users = User::all();
         $animales = Animal::all();
 
         return Inertia::render('Servicios/Edit', [
             'servicio' => $servicio,
-            'auxiliares' => $auxiliares,
+            'users' => $users,
             'animales' => $animales,
         ]);
     }
@@ -83,7 +83,7 @@ class ServicioController extends Controller
     {
         // Validar los datos del formulario
         $validated = $request->validate([
-            'auxiliar_id' => 'required|exists:auxiliares,id',
+            'user_id' => 'required|exists:auxiliares,id',
             'animal_id' => 'required|exists:animales,id',
             'tipo_servicio' => 'required|string',
             'descripcion' => 'nullable|string',

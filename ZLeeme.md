@@ -14,6 +14,7 @@ php artisan make:migration create_animales_table
 php artisan make:migration create_servicios_table
 php artisan make:migration create_consultas_table
 
+Para el registro. actions, fortify, createNewUser.
 
 app.js Cambiar la info del head.
 Applayout. Registro, login etc...

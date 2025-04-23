@@ -5,7 +5,7 @@ import { useForm } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 const props = defineProps({
-    clientes: Array,
+    users: Array,
 });
 
 const form = useForm({
@@ -14,7 +14,7 @@ const form = useForm({
     raza: '',
     sexo: '', // Agregado campo de sexo
     fechaNacimiento: '',
-    cliente_id: '',
+    user_id: '',
     imagen: null,
     observaciones: '',
 });
@@ -78,11 +78,11 @@ const submit = () => {
                     <div class="mb-4">
                         <label for="cliente_id" class="block text-gray-700 font-medium">Cliente</label>
                         <select v-model="form.cliente_id" id="cliente_id" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
-                            <option v-for="cliente in props.clientes" :key="cliente.id" :value="cliente.id">
-                                {{ cliente.nombre }} {{ cliente.apellidos }}
+                            <option v-for="user in props.users" :key="user.id" :value="user.id">
+                                {{ user.name }} {{ user.apellidos }}
                             </option>
                         </select>
-                        <div v-if="form.errors.cliente_id" class="text-red-500 text-sm mt-1">{{ form.errors.cliente_id }}</div>
+                        <div v-if="form.errors.user_id" class="text-red-500 text-sm mt-1">{{ form.errors.user_id }}</div>
                     </div>
 
                     <div class="mb-4">

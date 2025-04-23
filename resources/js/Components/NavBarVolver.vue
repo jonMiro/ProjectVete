@@ -4,7 +4,7 @@
       <div class="container mx-auto flex justify-between items-center">
         <ul class="flex space-x-10 justify-center w-full">
           <li class="nav-item">
-            <Link :href="route('dashboard')">
+            <Link href="/">
                 <a href="#portal" class="nav-link text-white hover:text-blue-400 text-lg">Volver</a>
                                 </Link>
 

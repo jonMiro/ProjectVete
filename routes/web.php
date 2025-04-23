@@ -69,8 +69,6 @@ Route::prefix('workers')->group(function () {
     Route::delete('animales/{id}', [AnimalController::class, 'destroy'])->name('animales.destroy');
 
     Route::resource('users', UserController::class);
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-
 
     Route::resource('consultas', ConsultaController::class);
     Route::get('/consultas', [ConsultaController::class, 'index'])->name('consultas.index');

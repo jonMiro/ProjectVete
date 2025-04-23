@@ -4,7 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
-use App\Models\Cliente;
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,7 @@ class AnimalController extends Controller
 {
     public function index()
     {
-        $animales = Animal::with(['cliente'])->get(); // Relación con cliente (no es necesario usuario)
+        $animales = Animal::with(['user'])->get(); // Relación con cliente
         return Inertia::render('Animales/Index', [
             'animales' => $animales,
         ]);
@@ -20,7 +20,7 @@ class AnimalController extends Controller
 
     public function show($id)
     {
-        $animal = Animal::with(['cliente'])->findOrFail($id); // Trae el animal con su relación cliente
+        $animal = Animal::with(['user'])->findOrFail($id); // Trae el animal con su relación cliente
         return Inertia::render('Animales/Show', [
             'animal' => $animal,
         ]);
@@ -28,10 +28,10 @@ class AnimalController extends Controller
 
     public function create()
     {
-        $clientes = Cliente::all(); // Traemos todos los clientes
+        $users = User::all(); // Traemos todos los clientes
 
         return Inertia::render('Animales/Create', [
-            'clientes' => $clientes,
+            'users' => $users,
         ]);
     }
 
@@ -41,9 +41,9 @@ class AnimalController extends Controller
             'nombre' => 'required|string|max:255',
             'tipo' => 'required|string|max:255',
             'raza' => 'required|string|max:255',
-            'sexo' => 'nullable|string|max:255', // El sexo es opcional
+            'sexo' => 'nullable|string|max:255',
             'fechaNacimiento' => 'required|date',
-            'cliente_id' => 'required|exists:clientes,id', // Validación para el cliente
+            'user_id' => 'required|exists:users,id', // Validación para el cliente
             'imagen' => 'nullable|image', // Validación para la imagen (opcional)
             'observaciones' => 'nullable|string',
         ]);
@@ -55,11 +55,11 @@ class AnimalController extends Controller
     public function edit($id)
     {
         $animal = Animal::findOrFail($id);
-        $clientes = Cliente::all();
+        $users = User::all();
 
         return Inertia::render('Animales/Edit', [
             'animal' => $animal,
-            'clientes' => $clientes,
+            'users' => $users,
         ]);
     }
 
@@ -71,7 +71,7 @@ class AnimalController extends Controller
             'raza' => 'required|string|max:255',
             'sexo' => 'nullable|string|max:255',
             'fechaNacimiento' => 'required|date',
-            'cliente_id' => 'required|exists:clientes,id',
+            'user_id' => 'required|exists:users,id',
             'imagen' => 'nullable|image',
             'observaciones' => 'nullable|string',
         ]);

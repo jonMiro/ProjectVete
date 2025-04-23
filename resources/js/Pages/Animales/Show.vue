@@ -44,8 +44,8 @@ const eliminarAnimal = () => {
                         <p class="mb-2 text-base"><strong>Sexo:</strong> {{ animal.sexo }}</p>
                         <p class="mb-2 text-base"><strong>Fecha de Nacimiento:</strong> {{ animal.fechaNacimiento }}</p>
                         <p class="mb-2 text-base"><strong>Cliente:</strong>
-                            <span v-if="animal.cliente">
-                                {{ animal.cliente.nombre }} {{ animal.cliente.apellidos }}
+                            <span v-if="animal.user">
+                                {{ animal.user.name }} {{ animal.user.apellidos }}
                             </span>
                             <span v-else>No asignado</span>
                         </p>

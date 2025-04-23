@@ -3,13 +3,83 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBarVolver from '@/Components/NavBarVolver.vue';
 import Footer from '@/Components/Footer.vue';
 import Contacto from '@/Components/Contacto.vue';
+import { Link } from '@inertiajs/vue3';
+
+
+
+defineProps({
+        canLogin: {
+            type: Boolean,
+        },
+        canRegister: {
+            type: Boolean,
+        },
+        laravelVersion: {
+            type: String,
+            required: true,
+        },
+        phpVersion: {
+            type: String,
+            required: true,
+        },
+    });
 </script>
 
 <template>
-  <AppLayout title="Aviso Legal - Vet&Care">
-    <template #header>
-      <NavBarVolver />
-    </template>
+
+  <div class="min-h-screen bg-white">
+    <nav class="bg-white border-b border-gray-100">
+      <!-- Primary Navigation Menu -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <!-- Logo and Title -->
+            <div class="shrink-0 flex items-center space-x-3 -ml-px">
+              <Link :href="route('dashboard')">
+                <img src="/images/logo.webp" alt="Logo" class="block h-16 w-auto" />
+              </Link>
+              <span class="text-xl font-semibold text-gray-800">Vet&Care</span>
+              <Link :href="route('workers')" class="text-blue-600 hover:underline text-lg block text-center">
+                Workers
+              </Link>
+              <Link :href="route('clients')" class="text-green-600 hover:underline text-lg block text-center">
+                Clientes
+              </Link>
+            </div>
+          </div>
+
+          <!-- Login / Register / Dashboard -->
+          <div v-if="canLogin" class="flex items-center space-x-4">
+            <template v-if="$page.props.auth.user">
+              <Link
+                :href="route('dashboard')"
+                class="rounded-md px-4 py-2 text-gray-400 hover:text-gray-600 transition"
+              >
+                Dashboard
+              </Link>
+            </template>
+
+            <template v-else>
+              <Link
+                :href="route('login')"
+                class="rounded-md px-4 py-2 text-gray-400 hover:text-gray-600 transition"
+              >
+                Log in
+              </Link>
+
+              <Link
+                v-if="canRegister"
+                :href="route('register')"
+                class="rounded-md px-4 py-2 text-gray-400 hover:text-gray-600 transition"
+              >
+                Register
+              </Link>
+            </template>
+          </div>
+        </div>
+      </div>
+    </nav>
+<NavBarVolver />
 
     <div class="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
       <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">Aviso Legal</h1>
@@ -78,7 +148,7 @@ import Contacto from '@/Components/Contacto.vue';
     <div class="mt-10">
       <Contacto />
     </div>
+</div>
 
     <Footer />
-  </AppLayout>
 </template>

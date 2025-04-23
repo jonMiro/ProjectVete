@@ -4,7 +4,8 @@
             <slot name="logo" />
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <!-- Cambiado el max-width para hacerlo más ancho -->
+        <div class="w-full max-w-[60%] mx-auto mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <slot />
         </div>
     </div>
