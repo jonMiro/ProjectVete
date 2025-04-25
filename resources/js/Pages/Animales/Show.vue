@@ -52,7 +52,7 @@ const eliminarAnimal = () => {
                         <p class="mb-2 text-base"><strong>Observaciones:</strong> {{ animal.observaciones || 'No hay observaciones' }}</p>
                     </div>
 
-                    <!-- Imagen del animal a la derecha -->
+                    <!-- Imagen del animal -->
                     <div v-if="animal.imagen" class="lg:w-1/2 mt-6 lg:mt-0">
                         <img :src="animal.imagen" alt="Imagen del animal" class="w-full h-auto rounded-lg shadow-md">
                     </div>
@@ -64,7 +64,6 @@ const eliminarAnimal = () => {
                         Editar
                     </Link>
 
-                    <!-- El botón de eliminación con el mismo estilo que los demás -->
                     <button @click="eliminarAnimal" class="bg-red-500 text-white py-2 px-4 mb-4 rounded-lg hover:bg-red-600 text-sm">
                         Eliminar
                     </button>

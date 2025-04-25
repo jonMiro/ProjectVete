@@ -9,6 +9,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\FacturacionController;
+use App\Http\Controllers\EstadisticasController;
+use App\Http\Controllers\CalendarController;
+
+Route::middleware('auth:sanctum')->get('/api/events', [CalendarController::class, 'getEvents']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -37,6 +42,51 @@ Route::get('/clients', function () {
     return Inertia::render('Clients/ClientsDashboard');
 })->name('clients');
 
+
+
+Route::prefix('workers')->group(function () {
+    // Dashboard
+    Route::get('/', function () {
+        return Inertia::render('Workers/WorkersDashboard');
+    })->name('workers');
+
+    // Búsqueda
+    Route::resource('search', SearchController::class)->only(['index']);
+
+    // Animales
+    Route::resource('animales', AnimalController::class);
+
+    // Usuarios
+    Route::resource('users', UserController::class);
+
+    // Consultas
+    Route::resource('consultas', ConsultaController::class);
+    Route::put('/consultas/{consulta}', [ConsultaController::class, 'update'])->name('consultas.update');
+
+
+
+    // Servicios
+    Route::resource('servicios', ServicioController::class);
+    // routes/web.php
+Route::delete('/servicios/{servicio}', [ServicioController::class, 'destroy'])->name('servicios.destroy');
+
+
+    // Facturación
+    Route::get('facturacion', [FacturacionController::class, 'index'])->name('facturacion.index');
+
+    Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas.index');
+
+
+});
+
+
+
+
+Route::get('/aviso-legal', [PageController::class, 'avisoLegal'])->name('aviso-legal');
+Route::get('/politica-privacidad', [PageController::class, 'politicaPrivacidad'])->name('politica-privacidad');
+Route::get('/politica-cookies', [PageController::class, 'politicaCookies'])->name('politica-cookies');
+Route::get('/accesibilidad', [PageController::class, 'accesibilidad'])->name('accesibilidad');
+
 //Route::get('/workers/search', function () {
  //   return Inertia::render('Workers/Search');
 //})->name('workers.search');
@@ -50,7 +100,7 @@ Route::prefix('clients')->group(function () {
 });
 
 
-Route::prefix('workers')->group(function () {
+/*Route::prefix('workers')->group(function () {
     // Rutas para el Dashboard de Workers
     Route::get('/', function () {
         return Inertia::render('Workers/WorkersDashboard');
@@ -79,12 +129,8 @@ Route::prefix('workers')->group(function () {
 
     Route::resource('servicios', ServicioController::class);
 
+    // routes/web.php
 
+Route::get('/facturacion', [App\Http\Controllers\FacturacionController::class, 'index'])->name('facturacion.index');
 
-
-});
-
-Route::get('/aviso-legal', [PageController::class, 'avisoLegal'])->name('aviso-legal');
-Route::get('/politica-privacidad', [PageController::class, 'politicaPrivacidad'])->name('politica-privacidad');
-Route::get('/politica-cookies', [PageController::class, 'politicaCookies'])->name('politica-cookies');
-Route::get('/accesibilidad', [PageController::class, 'accesibilidad'])->name('accesibilidad');
+});*/

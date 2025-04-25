@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Consulta;
@@ -12,7 +11,7 @@ class ConsultaController extends Controller
 {
     public function index()
     {
-        $consultas = Consulta::with(['animal', 'user'])->latest()->get();
+        $consultas = Consulta::with(['animal', 'user'])->latest()->paginate(10);
 
         return Inertia::render('Consultas/Index', [
             'consultas' => $consultas
@@ -21,29 +20,23 @@ class ConsultaController extends Controller
 
     public function show($id)
     {
-        // Obtener la consulta por ID
         $consulta = Consulta::with(['animal', 'user'])->findOrFail($id);
 
-        // Retornar la vista Inertia con los datos de la consulta
         return Inertia::render('Consultas/Show', [
             'consulta' => $consulta
         ]);
     }
 
-
-
     public function create()
-{
-    $animales = Animal::with('user')->get(); // Carga explícitamente la relación 'cliente'
-    $users = User::all();
+    {
+        $animales = Animal::with('user')->get();
+        $users = User::where('tipo', 'veterinario')->get();  // Filtrem veterinaris
 
-
-    return Inertia::render('Consultas/Create', [
-        'animales' => $animales,
-        'users' => $users,
-
-    ]);
-}
+        return Inertia::render('Consultas/Create', [
+            'animales' => $animales,
+            'users' => $users,
+        ]);
+    }
 
     public function store(Request $request)
     {
@@ -51,6 +44,7 @@ class ConsultaController extends Controller
             'animal_id' => 'required|exists:animales,id',
             'user_id' => 'required|exists:users,id',
             'fecha' => 'required|date',
+            'hora' => 'required|date_format:H:i',
             'lugar' => 'nullable|string',
             'precio' => 'required|numeric',
             'peso' => 'nullable|numeric',
@@ -71,9 +65,13 @@ class ConsultaController extends Controller
 
     public function edit(Consulta $consulta)
     {
-        $consulta->load(['animal', 'user']);
+        //Autoasignem hora
+        if (!$consulta->hora) {
+            $consulta->hora = now()->format('H:i');
+        }
+
         $animales = Animal::all();
-        $users = User::all();
+        $users = User::where('tipo', 'veterinario')->get();
 
         return Inertia::render('Consultas/Edit', [
             'consulta' => $consulta,
@@ -84,10 +82,11 @@ class ConsultaController extends Controller
 
     public function update(Request $request, Consulta $consulta)
     {
+        // El problema es que si no cambiava l' hora no hem deixava fer el update, hora-nullable
         $validated = $request->validate([
             'animal_id' => 'required|exists:animales,id',
             'user_id' => 'required|exists:users,id',
-            'fecha' => 'required|date',
+            'fecha' => 'nullable|date',
             'lugar' => 'nullable|string',
             'peso' => 'nullable|numeric',
             'precio' => 'required|numeric',
@@ -101,6 +100,10 @@ class ConsultaController extends Controller
             'observaciones' => 'nullable|string',
         ]);
 
+        // Asignar la hora desde el backend
+        $consulta->hora = now()->format('H:i');
+
+
         $consulta->update($validated);
 
         return redirect()->route('consultas.index')->with('success', 'Consulta actualizada correctamente.');
@@ -113,4 +116,3 @@ class ConsultaController extends Controller
         return redirect()->route('consultas.index')->with('success', 'Consulta eliminada correctamente.');
     }
 }
-

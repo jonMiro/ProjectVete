@@ -12,13 +12,13 @@ class Servicio extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'animal_id', 'tipo_servicio', 'descripcion', 'duracion', 'precio'
+        'user_id', 'animal_id','fecha','hora', 'tipo_servicio', 'descripcion', 'duracion', 'precio'
     ];
 
     /**
      * Relación de un servicio con el auxiliar
      */
-    public function auxiliar()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

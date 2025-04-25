@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Relación con auxiliares
             $table->foreignId('animal_id')->constrained('animales')->onDelete('cascade'); // Relación con animales
-            $table->string('tipo_servicio'); //Peluqueria, pedicura, lavado, revisión...
+            $table->string('tipo_servicio'); //Peluqueria, pedicura, lavado, consulta...
+            $table->date('fecha');
+            $table->time('hora');
             $table->text('descripcion');
             $table->integer('duracion');
             $table->decimal('precio', 8, 2);

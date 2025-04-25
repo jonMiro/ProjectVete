@@ -21,11 +21,12 @@
           </li>
 
           <li class="nav-item">
-            <Link href="" class="nav-link text-white hover:text-blue-400 text-lg">Facturación</Link>
-          </li>
+  <Link :href="route('facturacion.index')" class="nav-link text-white hover:text-blue-400 text-lg">Facturación</Link>
+</li>
+
 
           <li class="nav-item">
-            <Link href="" class="nav-link text-white hover:text-blue-400 text-lg">DataAnalisis</Link>
+            <Link :href="route('estadisticas.index')" class="nav-link text-white hover:text-blue-400 text-lg">DataAnalisis</Link>
           </li>
 
 

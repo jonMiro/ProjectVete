@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->foreignId('animal_id')->constrained('animales')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->date('fecha');
+            $table->time('hora');
             $table->string('lugar')->nullable();
             $table->float('peso')->nullable();
             $table->string('tipo_animal');

@@ -167,34 +167,60 @@
 
   // Filtros por tipo de usuario
   const filteredClientes = computed(() => {
-    return props.clientes.filter(user =>
+  return props.clientes
+    .filter(user =>
       user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-  });
+    )
+    .map(user => ({
+      ...user,
+      route: route('users.show', user.id),
+    }));
+});
 
-  const filteredVeterinarios = computed(() => {
-    return props.veterinarios.filter(user =>
+const filteredVeterinarios = computed(() => {
+  return props.veterinarios
+    .filter(user =>
       user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-  });
+    )
+    .map(user => ({
+      ...user,
+      route: route('users.show', user.id),
+    }));
+});
 
-  const filteredAuxiliares = computed(() => {
-    return props.auxiliares.filter(user =>
+const filteredAuxiliares = computed(() => {
+  return props.auxiliares
+    .filter(user =>
       user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-  });
+    )
+    .map(user => ({
+      ...user,
+      route: route('users.show', user.id),
+    }));
+});
 
-  const filteredAnimales = computed(() => {
-    return props.animales.filter(animal =>
+const filteredAnimales = computed(() => {
+  return props.animales
+    .filter(animal =>
       animal.nombre.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-  });
+    )
+    .map(animal => ({
+      ...animal,
+      route: route('animales.show', animal.id),
+    }));
+});
 
-  const filteredServicios = computed(() => {
-    return props.servicios.filter(servicio =>
+const filteredServicios = computed(() => {
+  return props.servicios
+    .filter(servicio =>
       servicio.tipo_servicio.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-  });
+    )
+    .map(servicio => ({
+      ...servicio,
+      route: route('servicios.show', servicio.id),
+    }));
+});
+
 
   // Resultados combinados
   const filteredResults = computed(() => {

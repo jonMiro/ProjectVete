@@ -10,11 +10,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Muestra el dashboard de usuarios con veterinarios, auxiliares, clientes y animales.
-     *
-     * @return \Inertia\Response
-     */
+
     public function index()
     {
         // Filtrar usuarios por tipo
@@ -22,7 +18,7 @@ class UserController extends Controller
         $auxiliares   = User::where('tipo', 'auxiliar')->get();
         $clientes     = User::where('tipo', 'cliente')->get();
 
-        // Obtener todos los animales
+
         $animales = Animal::with('user')->get();
 
         return Inertia::render('Users/Index', [
@@ -61,7 +57,7 @@ class UserController extends Controller
         'direccion'  => 'nullable|string|max:255',
         'tipo'       => 'required|in:cliente,veterinario,auxiliar',
         'is_worker'  => 'boolean',
-        // 'password' puede ser opcional, según tu lógica
+        // 'password' puede ser opcional,
     ]);
 
     $user->update($validated);

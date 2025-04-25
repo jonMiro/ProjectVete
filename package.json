@@ -21,6 +21,15 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
-        "@inertiajs/inertia-vue3": "^0.6.0"
+        "@fullcalendar/core": "^6.1.17",
+        "@fullcalendar/daygrid": "^6.1.17",
+        "@fullcalendar/interaction": "^6.1.17",
+        "@fullcalendar/timegrid": "^6.1.17",
+        "@fullcalendar/vue3": "^6.1.17",
+        "@inertiajs/inertia-vue3": "^0.6.0",
+        "chart.js": "^4.4.9",
+        "jspdf": "^3.0.1",
+        "recharts": "^2.15.3",
+        "vue-chartjs": "^5.3.2"
     }
 }

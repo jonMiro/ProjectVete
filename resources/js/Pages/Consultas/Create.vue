@@ -13,6 +13,7 @@ const form = useForm({
   animal_id: '',
   user_id: '',
   fecha: '',
+  hora: '',
   lugar: '',
   peso: '',
   precio: '',
@@ -32,7 +33,7 @@ watch(() => form.animal_id, (animalId) => {
   if (selected && selected.user) {
     form.tipo_animal = selected.tipo;
     form.raza = selected.raza;
-    form.user_id = selected.user.id; // Aquí deberías usar `id` y no solo el nombre
+    form.user_id = selected.user.id; 
   } else {
     form.tipo_animal = '';
     form.raza = '';
@@ -79,6 +80,12 @@ watch(() => form.animal_id, (animalId) => {
           <label class="block mb-1 font-semibold">Fecha</label>
           <input type="date" v-model="form.fecha" class="w-full border rounded px-3 py-2" />
         </div>
+
+        <!-- Hora -->
+<div>
+  <label class="block mb-1 font-semibold">Hora</label>
+  <input type="time" v-model="form.hora" class="w-full border rounded px-3 py-2" />
+</div>
 
         <!-- Lugar -->
         <div>

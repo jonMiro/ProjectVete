@@ -12,7 +12,7 @@ class AnimalController extends Controller
 {
     public function index()
     {
-        $animales = Animal::with(['user'])->get(); // Relación con cliente
+        $animales = Animal::with(['user'])->get(); // Relacionem y portem animal en el user
         return Inertia::render('Animales/Index', [
             'animales' => $animales,
         ]);
@@ -20,7 +20,7 @@ class AnimalController extends Controller
 
     public function show($id)
     {
-        $animal = Animal::with(['user'])->findOrFail($id); // Trae el animal con su relación cliente
+        $animal = Animal::with(['user'])->findOrFail($id);
         return Inertia::render('Animales/Show', [
             'animal' => $animal,
         ]);
@@ -28,7 +28,7 @@ class AnimalController extends Controller
 
     public function create()
     {
-        $users = User::all(); // Traemos todos los clientes
+        $users = User::all();
 
         return Inertia::render('Animales/Create', [
             'users' => $users,
@@ -43,12 +43,12 @@ class AnimalController extends Controller
             'raza' => 'required|string|max:255',
             'sexo' => 'nullable|string|max:255',
             'fechaNacimiento' => 'required|date',
-            'user_id' => 'required|exists:users,id', // Validación para el cliente
-            'imagen' => 'nullable|image', // Validación para la imagen (opcional)
+            'user_id' => 'required|exists:users,id',
+            'imagen' => 'nullable|image',
             'observaciones' => 'nullable|string',
         ]);
 
-        Animal::create($data); // Guardamos el animal
+        Animal::create($data);
         return redirect()->route('animales.index');
     }
 
@@ -77,14 +77,14 @@ class AnimalController extends Controller
         ]);
 
         $animal = Animal::findOrFail($id);
-        $animal->update($data); // Actualizamos el animal con los nuevos datos
+        $animal->update($data);
         return redirect()->route('animales.index');
     }
 
     public function destroy($id)
     {
         $animal = Animal::findOrFail($id);
-        $animal->delete(); // Eliminamos el animal
+        $animal->delete();
 
         return redirect()->route('animales.index')->with('success', 'Animal eliminado');
     }

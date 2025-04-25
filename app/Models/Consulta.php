@@ -12,7 +12,7 @@ class Consulta extends Model
     use HasFactory;
 
     protected $fillable = [
-        'animal_id', 'user_id', 'fecha', 'lugar', 'peso', 'tipo_animal', 'raza',
+        'animal_id', 'user_id', 'fecha','hora', 'lugar', 'peso', 'tipo_animal', 'raza',
         'motivo', 'anamnesis', 'examen_fisico', 'diagnostico', 'tratamiento', 'observaciones', 'precio'
     ];
 

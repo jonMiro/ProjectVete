@@ -6,6 +6,8 @@
       "descripcion": "Corte de pelo para perro, incluye baño y secado.",
       "duracion": 60,
       "precio": 30.00,
+      "fecha": "2025-04-05",
+      "hora": "10:00",
       "created_at": "2025-04-05 00:00:00",
       "updated_at": "2025-04-05 00:00:00"
     },
@@ -16,6 +18,8 @@
       "descripcion": "Revisión general para verificar el estado de salud del animal.",
       "duracion": 30,
       "precio": 50.00,
+      "fecha": "2025-04-05",
+      "hora": "11:30",
       "created_at": "2025-04-05 00:00:00",
       "updated_at": "2025-04-05 00:00:00"
     },
@@ -26,7 +30,21 @@
       "descripcion": "Baño con shampoo especial para la piel sensible del animal.",
       "duracion": 45,
       "precio": 20.00,
+      "fecha": "2025-04-05",
+      "hora": "13:00",
       "created_at": "2025-04-05 00:00:00",
       "updated_at": "2025-04-05 00:00:00"
+    },
+    {
+      "user_id": 4,
+      "animal_id": 1,
+      "tipo_servicio": "Pedicura",
+      "descripcion": "Corte y limado de uñas para perro, incluye limpieza de almohadillas.",
+      "duracion": 25,
+      "precio": 15.00,
+      "fecha": "2025-04-06",
+      "hora": "09:00",
+      "created_at": "2025-04-06 00:00:00",
+      "updated_at": "2025-04-06 00:00:00"
     }
   ]

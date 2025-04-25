@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/ServicioController.php
-
 namespace App\Http\Controllers;
 
 use App\Models\Servicio;
@@ -12,32 +10,33 @@ use Inertia\Inertia;
 
 class ServicioController extends Controller
 {
-    // Función index: muestra todos los servicios
     public function index()
     {
-        $servicios = Servicio::with(['user', 'animal'])->latest()->get();  // Obtener todos los servicios con sus relaciones
+        $servicios = Servicio::with(['user', 'animal'])
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return Inertia::render('Servicios/Index', [
             'servicios' => $servicios,
         ]);
     }
 
-    // Función show: muestra un solo servicio
     public function show($id)
     {
-        $servicio = Servicio::with(['auxiliar', 'animal'])->findOrFail($id);
+        $servicio = Servicio::with(['user', 'animal'])->findOrFail($id);
 
         return Inertia::render('Servicios/Show', [
             'servicio' => $servicio,
         ]);
     }
 
-    // Función create: muestra el formulario de creación de un servicio
     public function create()
     {
-        // Obtener auxiliares y animales disponibles
-        $auxiliares = User::all();
-        $animales = Animal::all();
+        $auxiliares = User::where('tipo', 'auxiliar')->get();
+
+
+        $animales = Animal::with('user')->get();
 
         return Inertia::render('Servicios/Create', [
             'auxiliares' => $auxiliares,
@@ -45,29 +44,27 @@ class ServicioController extends Controller
         ]);
     }
 
-    // Función store: guarda un nuevo servicio
+
     public function store(Request $request)
     {
-        // Validar los datos del formulario
         $validated = $request->validate([
-            'user_id' => 'required|exists:auxiliares,id',
+            'user_id' => 'required|exists:users,id',
             'animal_id' => 'required|exists:animales,id',
             'tipo_servicio' => 'required|string',
             'descripcion' => 'nullable|string',
             'duracion' => 'required|integer',
             'precio' => 'required|numeric',
+            'fecha' => 'required|date',
+            'hora' => 'required|date_format:H:i',
         ]);
 
-        // Crear el nuevo servicio
         Servicio::create($validated);
 
         return redirect()->route('servicios.index')->with('success', 'Servicio creado correctamente.');
     }
 
-    // Función edit: muestra el formulario de edición de un servicio
     public function edit(Servicio $servicio)
     {
-        // Obtener los auxiliares y animales disponibles
         $users = User::all();
         $animales = Animal::all();
 
@@ -78,26 +75,23 @@ class ServicioController extends Controller
         ]);
     }
 
-    // Función update: actualiza un servicio
     public function update(Request $request, Servicio $servicio)
     {
-        // Validar los datos del formulario
         $validated = $request->validate([
-            'user_id' => 'required|exists:auxiliares,id',
+            'user_id' => 'required|exists:users,id',
             'animal_id' => 'required|exists:animales,id',
             'tipo_servicio' => 'required|string',
             'descripcion' => 'nullable|string',
             'duracion' => 'required|integer',
             'precio' => 'required|numeric',
+            'fecha' => 'nullable|date',
         ]);
 
-        // Actualizar el servicio
         $servicio->update($validated);
 
         return redirect()->route('servicios.index')->with('success', 'Servicio actualizado correctamente.');
     }
 
-    // Función destroy: elimina un servicio
     public function destroy(Servicio $servicio)
     {
         $servicio->delete();
@@ -105,4 +99,3 @@ class ServicioController extends Controller
         return redirect()->route('servicios.index')->with('success', 'Servicio eliminado correctamente.');
     }
 }
-

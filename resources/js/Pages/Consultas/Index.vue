@@ -2,23 +2,26 @@
 import NavBar from '@/Components/NavBar.vue';
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia'; // Asegúrate de importar Inertia
+import { Inertia } from '@inertiajs/inertia';
 
 defineProps({
-  consultas: Array,
+  consultas: Object,
 });
-
-const isListView = ref(false);
 
 const deleteConsulta = (id) => {
   if (confirm('¿Estás seguro de que deseas eliminar esta consulta?')) {
     Inertia.delete(route('consultas.destroy', id), {
       onSuccess: () => {
-        Inertia.visit(route('consultas.index')); // Redirige a la lista de consultas
+        Inertia.visit(route('consultas.index'));
       }
     });
   }
+};
+
+// Función para formatear la fecha
+const formatDate = (date) => {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  return new Date(date).toLocaleDateString('es-ES', options); // 'es-ES' para formato español (día-mes-año)
 };
 </script>
 
@@ -28,41 +31,18 @@ const deleteConsulta = (id) => {
       <NavBar />
     </template>
 
-    <!--Botón de crear nueva consulta -->
+    <!-- Botón de crear nueva consulta -->
     <div class="flex justify-end mb-4">
-      <Link :href="route('consultas.create')" class="text-sm bg-blue-400 text-blue-900 px-3 py-1 m-6 mr-5 rounded-md hover:bg-blue-500 transition shadow-sm mr-2">+ Nueva Consulta</Link>
+      <Link :href="route('consultas.create')" class="text-sm bg-blue-400 text-blue-900 px-3 py-1 m-6 mr-5 rounded-md hover:bg-blue-500 transition shadow-sm mr-2">
+        + Nueva Consulta
+      </Link>
     </div>
 
     <div class="container mx-auto mt-4 px-4 mb-10">
       <h2 class="text-center text-3xl font-semibold mb-8">Listado de Consultas</h2>
 
-      <!-- Toggle entre modo grid y tabla -->
-      <div class="flex items-center justify-center mb-6">
-        <label for="toggle-view" class="mr-2 text-lg">Modo de vista</label>
-        <input type="checkbox" id="toggle-view" v-model="isListView" class="h-4 w-4" />
-        <span class="ml-2">Modo Grid / Modo Tabla</span>
-      </div>
-
-      <!-- Vista en tarjetas -->
-      <div v-if="isListView && consultas.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="consulta in consultas" :key="consulta.id" class="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div class="p-6">
-            <h5 class="text-xl font-semibold text-blue-500 mb-2">Consulta ID: {{ consulta.id }}</h5>
-            <p class="text-lg"><strong>Fecha:</strong> {{ consulta.fecha }}</p>
-            <p class="text-lg"><strong>Animal:</strong> {{ consulta.animal.nombre }} ({{ consulta.raza }})</p>
-            <p class="text-lg"><strong>Veterinario:</strong> {{ consulta.user.name }} {{ consulta.user.apellidos }}</p>
-            <p class="text-lg"><strong>Motivo:</strong> {{ consulta.motivo }}</p>
-            <p class="text-lg"><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
-            <p class="text-lg"><strong>Observaciones:</strong> {{ consulta.observaciones }}</p>
-          </div>
-          <div class="bg-gray-100 text-center py-4">
-            <Link :href="route('consultas.show', consulta.id)" class="bg-blue-400 text-white py-2 px-4 rounded-lg hover:bg-blue-500">Ver detalles</Link>
-          </div>
-        </div>
-      </div>
-
       <!-- Vista en tabla -->
-      <div v-else-if="!isListView && consultas.length > 0">
+      <div v-if="consultas.data.length > 0">
         <table class="table-auto w-full text-center border-collapse">
           <thead class="bg-blue-100">
             <tr>
@@ -76,9 +56,9 @@ const deleteConsulta = (id) => {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="consulta in consultas" :key="consulta.id" class="hover:bg-blue-50">
+            <tr v-for="consulta in consultas.data" :key="consulta.id" class="hover:bg-blue-50">
               <td class="border px-4 py-2">{{ consulta.id }}</td>
-              <td class="border px-4 py-2">{{ consulta.fecha }}</td>
+              <td class="border px-4 py-2">{{ formatDate(consulta.fecha) }}</td> <!-- Usamos la función para formatear la fecha -->
               <td class="border px-4 py-2">{{ consulta.animal.nombre }}</td>
               <td class="border px-4 py-2">{{ consulta.user.name }} {{ consulta.user.apellidos }}</td>
               <td class="border px-4 py-2">{{ consulta.motivo }}</td>
@@ -93,6 +73,54 @@ const deleteConsulta = (id) => {
             </tr>
           </tbody>
         </table>
+
+        <!-- Paginación personalizada -->
+        <div class="flex justify-center mt-6 space-x-2">
+          <!-- Botón Anterior -->
+          <Link
+            v-if="consultas.prev_page_url"
+            :href="consultas.prev_page_url"
+            class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600"
+          >
+            Anterior
+          </Link>
+          <span
+            v-else
+            class="px-3 py-1 border rounded text-sm text-gray-500 cursor-default"
+          >
+            Anterior
+          </span>
+
+          <!-- Páginas numéricas -->
+          <span v-for="(link, index) in consultas.links" :key="index">
+            <Link
+              v-if="link.url"
+              :href="link.url"
+              class="px-3 py-1 border rounded text-sm"
+              :class="{
+                'bg-blue-500 text-white': link.active,
+                'text-gray-500 cursor-default': !link.url
+              }"
+            >
+              {{ link.label }}
+            </Link>
+          </span>
+
+          <!-- Botón Siguiente -->
+          <Link
+            v-if="consultas.next_page_url"
+            :href="consultas.next_page_url"
+            class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600"
+          >
+            Siguiente
+          </Link>
+          <span
+            v-else
+            class="px-3 py-1 border rounded text-sm text-gray-500 cursor-default"
+          >
+            Siguiente
+          </span>
+        </div>
       </div>
 
       <!-- Mensaje si no hay consultas -->

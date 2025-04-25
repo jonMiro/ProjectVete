@@ -8,7 +8,7 @@ defineProps({
   animales: Array,
 });
 
-// Estado para controlar el modo de visualización (lista o tabla)
+// Tabla/grid
 const isListView = ref(false);
 </script>
 
@@ -33,7 +33,7 @@ const isListView = ref(false);
           <span class="ml-2">Modo Grid / Modo Tabla</span>
         </div>
 
-        <!-- Si el array de animales es mayor que 0, mostrar los animales -->
+        <!-- mostrar los animales -->
         <div v-if="isListView && animales.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div v-for="animal in animales" :key="animal.id" class="bg-white shadow-lg rounded-lg overflow-hidden">
             <div class="p-6">
@@ -94,7 +94,7 @@ const isListView = ref(false);
           </table>
         </div>
 
-        <!-- Si no hay animales, mostrar mensaje -->
+        <!-- Si no hay animales....-->
         <p v-else class="text-center text-lg text-gray-500">No hay animales registrados.</p>
       </div>
     </AppLayout>
