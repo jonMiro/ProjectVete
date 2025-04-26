@@ -12,37 +12,45 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8  # image mysql8 per a la bd
+        image: mysql:8  # Imagen de MySQL 8 para la base de datos
         env:
           MYSQL_DATABASE: veterinaria
           MYSQL_ROOT_PASSWORD: password
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3  # Espera hasta que MySQL esté listo para aceptar conexiones
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3  # Espera a que MySQL esté listo para aceptar conexiones
 
     steps:
-    - uses: actions/checkout@v4  # Clona el repositori
+    - name: Clonar el repositorio
+      uses: actions/checkout@v4  # Clona el repositorio en el entorno de ejecución de GitHub Actions
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2  # Configura PHP
+    - name: Configurar PHP
+      uses: shivammathur/setup-php@v2  # Configura el entorno PHP en el runner
       with:
         php-version: '8.2'
 
-    - name: Set up Node
-      uses: actions/setup-node@v4  # Configura Node.js
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4  # Configura el entorno Node.js en el runner
       with:
         node-version: '20'
 
-    - name: Install PHP dependencies
-      run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts  # Instala dependencies de PHP amb Composer
+    - name: Instalar dependencias PHP
+      run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts  # Instala dependencias de PHP con Composer
 
-    - name: Install NPM dependencies
-      run: npm install  # Instala dependencies de JavaScript (Vue, Inertia, etc.)
+    - name: Instalar dependencias NPM
+      run: npm install  # Instala dependencias de JavaScript (Vue, Inertia, etc.)
 
-    - name: Build assets
+    - name: Compilar los assets
       run: npm run build  # Compila los assets de Vue.js (Frontend) para producción
 
-    - name: Run Laravel tests
+    - name: Esperar a que MySQL esté listo
+      run: |
+        while ! mysqladmin ping -h"127.0.0.1" --silent; do
+          echo "Esperando a que MySQL esté listo..."
+          sleep 2
+        done
+
+    - name: Ejecutar migraciones y pruebas de Laravel
       env:
         DB_CONNECTION: mysql
         DB_HOST: 127.0.0.1
@@ -53,5 +61,10 @@ jobs:
       run: |
         cp .env.example .env  # Copia el archivo .env.example a .env
         php artisan key:generate  # Genera una nueva clave de aplicación para Laravel
-        php artisan migrate --force  # Ejecuta las migraciones en la base de datos (usando el flag --force para evitar confirmaciones)
+        php artisan migrate --force  # Ejecuta las migraciones en la base de datos (usando --force para evitar confirmaciones)
         php artisan test  # Corre los tests de Laravel
+
+
+#actions/checkout@v4 Clona tu repositorio en el entorno de ejecución de GitHub Actions.
+#shivammathur/setup-php@v2 Configura el entorno PHP en el runner de GitHub Actions, lo que permite ejecutar comandos de PHP como composer install, php artisan, etc.
+#actions/setup-node@v4 Configura el entorno Node.js para el runner, lo que es necesario para ejecutar los comandos de npm (instalar dependencias de JavaScript, construir assets, etc.).

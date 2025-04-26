@@ -28,11 +28,14 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'apellidos' => fake()->lastName(), // Agregado el campo apellidos
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'two_factor_secret' => null,
-            'two_factor_recovery_codes' => null,
+            'direccion' => fake()->address(), // Agregado el campo direccion
+            'telefono' => fake()->phoneNumber(), // Agregado el campo telefono
+            'tipo' => fake()->randomElement(['veterinario', 'auxiliar', 'cliente']), // Agregado tipo
+            'is_worker' => fake()->boolean(), // Agregado is_worker
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
