@@ -1,6 +1,8 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBarClients from '@/Components/NavBarClients.vue';
+import { Link } from '@inertiajs/vue3';
+import Footer from '@/Components/Footer.vue'
 </script>
 
 <template>
@@ -39,13 +41,16 @@ import NavBarClients from '@/Components/NavBarClients.vue';
                 </div>
 
                 <!-- Sección 4: Servicios -->
-                <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full">
-                    <img src="/icons/social.png" alt="Logo Servicios" class="w-16 h-16 mb-4">
-                    <div class="text-center">
-                        <h3 class="text-xl font-semibold">Servicios</h3>
-                        <p class="text-gray-600">Explora los servicios que ofrecemos para ti y tus mascotas.</p>
-                    </div>
-                </div>
+                <Link href="clients/eventos/create" class="block">
+    <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full cursor-pointer hover:shadow-lg transition-shadow">
+        <img src="/icons/social.png" alt="Logo Servicios" class="w-16 h-16 mb-4">
+        <div class="text-center">
+            <h3 class="text-xl font-semibold">Servicios</h3>
+            <p class="text-gray-600">Explora los servicios que ofrecemos para ti y tus mascotas.</p>
+        </div>
+    </div>
+    </Link>
+
 
                 <!-- Sección 5: Consulta -->
                 <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full">
@@ -67,5 +72,6 @@ import NavBarClients from '@/Components/NavBarClients.vue';
 
             </div>
         </div>
+        <Footer />
     </AppLayout>
 </template>

@@ -1,29 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import NavBar from '@/Components/NavBar.vue';
-
-import FullCalendar from '@fullcalendar/vue3';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import axios from 'axios';
-
-const events = ref([]);
-
-onMounted(async () => {
-    events.value = [
-        {
-            title: 'Consulta - Firulais',
-            start: '2025-04-25T10:00:00',
-            end: '2025-04-25T11:00:00',
-        },
-        {
-            title: 'Servicio - Vacunación',
-            start: '2025-04-26T14:00:00',
-        },
-    ];
-});
+import AppLayout from '@/Layouts/AppLayout.vue'
+import NavBar from '@/Components/NavBar.vue'
+import Calendario from '@/Components/Calendario.vue'
+import Footer from '@/Components/Footer.vue'
+import AgendaDiaria from '@/Components/AgendaDiaria.vue'
 </script>
 
 <template>
@@ -32,24 +12,42 @@ onMounted(async () => {
             <NavBar />
         </template>
 
-        <div class="p-6 text-gray-700">
-            <h2 class="text-2xl mb-4">Calendario de Consultas y Servicios</h2>
+        <div class="dashboard-container">
+            <!-- Agenda diaria -->
+            <div class="agenda-section">
+             <AgendaDiaria />
+            </div>
 
-            <FullCalendar
-                :plugins="[dayGridPlugin, timeGridPlugin, interactionPlugin]"
-                :events="events"
-                :initialView="'dayGridMonth'"
-                :headerToolbar="{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }"
-                height="600px"
-            />
+
+            <!-- Calendario -->
+            <div class="calendar-section">
+                <Calendario />
+            </div>
         </div>
+        <Footer />
     </AppLayout>
 </template>
 
 <style scoped>
-/* Agrega personalización si querés */
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+}
+
+.agenda-section {
+  flex: 1;
+  padding: 20px;
+  border-right: 1px solid #e2e8f0;
+}
+
+.calendar-section {
+  flex: 1;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
 </style>

@@ -11,9 +11,9 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\FacturacionController;
 use App\Http\Controllers\EstadisticasController;
-use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\EventController;
 
-Route::middleware('auth:sanctum')->get('/api/events', [CalendarController::class, 'getEvents']);
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -37,11 +37,18 @@ Route::middleware([
 
 
 
+Route::prefix('clients')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Clients/ClientsDashboard');
+    })->name('clients');
 
-Route::get('/clients', function () {
-    return Inertia::render('Clients/ClientsDashboard');
-})->name('clients');
+    Route::resource('eventos', EventController::class);
 
+});
+
+    // Crear un evento
+   // Route::get('/eventos/create', [EventController::class, 'create'])->name('clients.events.create');
+    //Route::post('/eventos', [EventController::class, 'store'])->name('clients.storeEvent');
 
 
 Route::prefix('workers')->group(function () {
@@ -91,13 +98,7 @@ Route::get('/accesibilidad', [PageController::class, 'accesibilidad'])->name('ac
  //   return Inertia::render('Workers/Search');
 //})->name('workers.search');
 
-Route::prefix('clients')->group(function () {
-    // Rutas para el Dashboard de Workers
-    Route::get('/', function () {
-        return Inertia::render('Clients/ClientsDashboard');
-    })->name('clients');
 
-});
 
 
 /*Route::prefix('workers')->group(function () {
