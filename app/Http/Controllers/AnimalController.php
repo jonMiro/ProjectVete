@@ -7,6 +7,7 @@ use App\Models\Animal;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AnimalController extends Controller
 {
@@ -88,4 +89,27 @@ class AnimalController extends Controller
 
         return redirect()->route('animales.index')->with('success', 'Animal eliminado');
     }
+
+    public function showForUser()
+    {
+        // Obtener el usuario autenticado
+        $user = Auth::user();
+
+        // Verificar si el usuario está autenticado
+        if (!$user) {
+            return redirect()->route('login'); // Redirige al login si el usuario no está autenticado
+        }
+
+        // Obtener el primer animal asociado al usuario, cargando la relación 'user'
+        $animal = Animal::with('user')->where('user_id', $user->id)->first();
+
+        if (!$animal) {
+            return redirect()->route('animales.create')->with('message', 'Aún no tienes animales asociados.');
+        }
+
+        return Inertia::render('Animales/ShowForUser', [
+            'animal' => $animal, // Pasamos el animal a la vista
+        ]);
+    }
+
 }

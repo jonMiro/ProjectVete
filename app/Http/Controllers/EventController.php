@@ -17,10 +17,10 @@ class EventController extends Controller
         return Inertia::render('Calendario/Index');
     }
 
-    // Obtener todos los eventos
+    //getEvents
     public function getEvents()
     {
-        // Obtenemos eventos y los transformamos
+
         return Event::all()->map(function ($event) {
             return [
                 'id'         => $event->id,
@@ -37,19 +37,19 @@ class EventController extends Controller
         });
     }
 
-    // Crear un nuevo evento
+    // Create view render
     public function create()
     {
         return Inertia::render('Eventos/Create');
 
     }
 
-    // Almacenar un nuevo evento
+    // store
     public function store(Request $request)
 {
     $request->validate([
         'title' => 'required|string',
-        'fecha' => 'required|date_format:d-m-Y', // Asegúrate de que es el formato dd-mm-yyyy
+        'fecha' => 'required|date_format:d-m-Y', // formato dd-mm-yyyy
         'start' => 'required|date',
         'end' => 'nullable|date',
         'tipo' => 'required|string',

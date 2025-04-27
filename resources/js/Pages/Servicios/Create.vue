@@ -18,7 +18,7 @@ const form = useForm({
   precio: '',
   fecha: '',
   hora: '',
-  cliente: '', 
+  cliente: '',
 });
 
 // Watcher para actualizar el campo user_id y cliente según el animal seleccionado

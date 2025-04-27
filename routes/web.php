@@ -12,6 +12,9 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\FacturacionController;
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\AnimalUserController;
+use App\Http\Controllers\PostController;
+
 
 
 
@@ -44,7 +47,17 @@ Route::prefix('clients')->group(function () {
 
     Route::resource('eventos', EventController::class);
 
-});
+      // Mostrar los animales asociados al cliente
+      Route::get('animales', [AnimalUserController::class, 'index'])->name('clients.animales.index');
+
+      // Editar un animal
+      Route::get('animales/{animal}/edit', [AnimalUserController::class, 'edit'])->name('clients.animales.edit');
+      Route::put('animales/{animal}', [AnimalUserController::class, 'update'])->name('clients.animales.update');
+
+      Route::middleware('auth')->get('posts/myposts', [PostController::class, 'myPosts'])->name('posts.myposts');
+      Route::resource('posts', PostController::class);
+    });
+
 
     // Crear un evento
    // Route::get('/eventos/create', [EventController::class, 'create'])->name('clients.events.create');

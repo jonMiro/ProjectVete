@@ -16,7 +16,12 @@ const props = defineProps({
 const form = useForm({
     _method: 'PUT',
     name: props.user.name,
+    apellidos: props.user.apellidos,
     email: props.user.email,
+    direccion: props.user.direccion,
+    telefono: props.user.telefono,
+    tipo: props.user.tipo,
+    is_worker: props.user.is_worker,
     photo: null,
 });
 
@@ -88,7 +93,6 @@ const clearPhotoFileInput = () => {
         <template #form>
             <!-- Profile Photo -->
             <div v-if="$page.props.jetstream.managesProfilePhotos" class="col-span-6 sm:col-span-4">
-                <!-- Profile Photo File Input -->
                 <input
                     id="photo"
                     ref="photoInput"
@@ -97,14 +101,12 @@ const clearPhotoFileInput = () => {
                     @change="updatePhotoPreview"
                 >
 
-                <InputLabel for="photo" value="Photo" />
+                <InputLabel for="photo" value="Foto" />
 
-                <!-- Current Profile Photo -->
                 <div v-show="! photoPreview" class="mt-2">
                     <img :src="user.profile_photo_url" :alt="user.name" class="rounded-full size-20 object-cover">
                 </div>
 
-                <!-- New Profile Photo Preview -->
                 <div v-show="photoPreview" class="mt-2">
                     <span
                         class="block rounded-full size-20 bg-cover bg-no-repeat bg-center"
@@ -128,7 +130,7 @@ const clearPhotoFileInput = () => {
                 <InputError :message="form.errors.photo" class="mt-2" />
             </div>
 
-            <!-- Name -->
+            <!-- Nombre -->
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="name" value="Nombre" />
                 <TextInput
@@ -137,9 +139,21 @@ const clearPhotoFileInput = () => {
                     type="text"
                     class="mt-1 block w-full"
                     required
-                    autocomplete="name"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />
+            </div>
+
+            <!-- Apellidos -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="apellidos" value="Apellidos" />
+                <TextInput
+                    id="apellidos"
+                    v-model="form.apellidos"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError :message="form.errors.apellidos" class="mt-2" />
             </div>
 
             <!-- Email -->
@@ -151,30 +165,67 @@ const clearPhotoFileInput = () => {
                     type="email"
                     class="mt-1 block w-full"
                     required
-                    autocomplete="username"
                 />
                 <InputError :message="form.errors.email" class="mt-2" />
-
-                <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
-                    <p class="text-sm mt-2">
-                        Tu email necesita verificación
-
-                        <Link
-                            :href="route('verification.send')"
-                            method="post"
-                            as="button"
-                            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            @click.prevent="sendEmailVerification"
-                        >
-                            Clic aqui para reenviar el email de verificación.
-                        </Link>
-                    </p>
-
-                    <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-green-600">
-                        Un nuevo enlace ha sido enviado a tu email
-                    </div>
-                </div>
             </div>
+
+            <!-- Dirección -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="direccion" value="Dirección" />
+                <TextInput
+                    id="direccion"
+                    v-model="form.direccion"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError :message="form.errors.direccion" class="mt-2" />
+            </div>
+
+            <!-- Teléfono -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="telefono" value="Teléfono" />
+                <TextInput
+                    id="telefono"
+                    v-model="form.telefono"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                />
+                <InputError :message="form.errors.telefono" class="mt-2" />
+            </div>
+
+            <!-- Tipo de usuario -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="tipo" value="Tipo de usuario" />
+                <select
+                    id="tipo"
+                    v-model="form.tipo"
+                    class="mt-1 block w-full"
+                    required
+                >
+                    <option value="veterinario">Veterinario</option>
+                    <option value="auxiliar">Auxiliar</option>
+                    <option value="cliente">Cliente</option>
+                </select>
+                <InputError :message="form.errors.tipo" class="mt-2" />
+            </div>
+
+            <!-- ¿Es trabajador? -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="is_worker" value="¿Es trabajador?" />
+                <select
+                    id="is_worker"
+                    v-model="form.is_worker"
+                    class="mt-1 block w-full"
+                    required
+                >
+                    <option value="true">Sí</option>
+                    <option value="false">No</option>
+                </select>
+                <InputError :message="form.errors.is_worker" class="mt-2" />
+            </div>
+
         </template>
 
         <template #actions>

@@ -1,34 +1,33 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import NavBar from '@/Components/NavBar.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 
 // Formulario
 const form = useForm({
   title: '',
-  fecha: '', // dd-mm-yyyy
+  fecha: '', // dd-mm-yyy
   start: '', // HH:mm
-  end: '',   // HH:mm (automáticamente calculado)
+  end: '',   // HH:mm
   tipo: '',
   descripcion: '',
   comentario: '',
   precio: '',
 });
 
-// Función para convertir la fecha de dd-mm-yyyy a yyyy-mm-dd
+//Convertir la fecha de dd-mm-yyyy a yyyy-mm-dd
 function convertToISODate(date) {
   const [day, month, year] = date.split('-');
-  return `${year}-${month}-${day}`; // yyyy-mm-dd
+  return `${year}-${month}-${day}`;
 }
 
-// Método para actualizar los valores de start y end
+// Actualizar los valores de start y end
 function updateStartEnd() {
   if (form.fecha) {
     const formattedDate = convertToISODate(form.fecha);
     // Establecer las horas predeterminadas sin exponer formattedDate
-    form.start = `09:00`;  // Solo hora
-    form.end = `10:00`;    // Solo hora
+    form.start = `09:00`;
+    form.end = `10:00`;    
   }
 }
 
@@ -57,7 +56,6 @@ function updateEndTime() {
 <template>
   <AppLayout title="Nuevo Evento">
     <template #header>
-      <NavBar />
     </template>
 
     <div class="max-w-4xl mx-auto px-6 py-10 bg-white rounded-lg shadow mt-8">
