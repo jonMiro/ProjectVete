@@ -1,0 +1,42 @@
+public function store(Request $request)
+{
+    Log::info('Iniciando proceso de creación del animal'); // Esto debería aparecer en los logs
+
+    $data = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'tipo' => 'required|string|max:255',
+        'raza' => 'required|string|max:255',
+        'sexo' => 'nullable|string|max:255',
+        'fechaNacimiento' => 'required|date',
+        'user_id' => 'required|exists:users,id',
+        'imagen' => 'nullable|image',
+        'observaciones' => 'nullable|string',
+    ]);
+
+    Log::info('Datos recibidos en el store:', $data);  // Loguea los datos recibidos
+
+    // Crear el animal en la base de datos
+    $animal = Animal::create($data);
+
+    if ($request->hasFile('imagen')) {
+        // Obtener la extensión del archivo
+        $extension = $request->file('imagen')->getClientOriginalExtension();
+        // Crear el nombre de la imagen con la extensión
+        $nombre = $animal->nombre . '-' . $request->file('imagen')->getClientOriginalName();
+        $nombreConExtension = pathinfo($nombre, PATHINFO_FILENAME) . '.' . $extension; // Aseguramos que tiene la extensión
+
+        // Guardar la imagen en storage/app/public/img
+        $request->file('imagen')->storeAs('public/img', $nombreConExtension);
+
+        // Guardar la ruta correcta en la base de datos (la ruta pública accesible)
+        $animal->imagen = '/storage/img/' . $nombreConExtension;
+        $animal->save();
+    }
+    Log::info('Imagen guardada en: ' . storage_path('app/public/img/' . $nombreConExtension));
+
+
+    Log::info('Animal creado exitosamente');  // Loguea cuando el animal es creado
+
+    return redirect()->route('animales.index');
+}
+

@@ -15,6 +15,37 @@ const form = useForm({
   precio: '',
 });
 
+//Actualizar la descripción, duración y precio según el tipo de servicio
+watch(() => form.tipo, (newTipoEvento) => {
+  switch (newTipoEvento) {
+    case 'pedicura':
+      form.descripcion = 'Corte y limado de uñas para perro, incluye limpieza de almohadillas.';
+      form.precio = 10;
+      break;
+    case 'peluqueria':
+      form.descripcion = 'Corte de pelo para perro, incluye baño y secado.';
+      form.precio = 30;
+      break;
+    case 'lavado':
+      form.descripcion = 'Baño con shampoo especial para la piel sensible del animal.';
+      form.precio = 25;
+      break;
+    case 'cita veterinaria':
+      form.descripcion = 'Consulta veterinaria general, los precios pueden variar según los requerimientos de la consulta. Consulta mínima visita:30 euros';
+      form.precio = 30;
+      break;
+    case 'vacunacion':
+      form.descripcion = 'El precio varia dependiendo del tipo de vacunación.';
+      form.precio = 30;
+      break;
+    default:
+      form.descripcion = '';
+      form.duracion = '';
+      form.precio = '';
+      break;
+  }
+});
+
 //Convertir la fecha de dd-mm-yyyy a yyyy-mm-dd
 function convertToISODate(date) {
   const [day, month, year] = date.split('-');
@@ -27,7 +58,7 @@ function updateStartEnd() {
     const formattedDate = convertToISODate(form.fecha);
     // Establecer las horas predeterminadas sin exponer formattedDate
     form.start = `09:00`;
-    form.end = `10:00`;    
+    form.end = `10:00`;
   }
 }
 
@@ -41,7 +72,7 @@ function updateStartTime() {
   }
 }
 
-// Método para actualizar la hora de fin (sumando una hora a la hora de inicio)
+// Método para actualizar la hora de fin (sumando una hora la hora de inicio)
 function updateEndTime() {
   if (form.start) {
     const [startDate, startTime] = form.start.split(' '); // Separar fecha y hora
@@ -80,9 +111,11 @@ function updateEndTime() {
           <label class="block mb-1 font-semibold">Tipo de Evento</label>
           <select v-model="form.tipo" class="w-full border rounded px-3 py-2">
             <option value="">Seleccione un tipo</option>
-            <option value="peluqueria">Pelu</option>
-            <option value="consulta">Consulta</option>
-            <option value="otro">Otro</option>
+            <option value="peluqueria">Servicio Peluqueria</option>
+            <option value="pedicura">Servicio Pedicura</option>
+            <option value="lavado">Servicio Lavado</option>
+            <option value="cita veterinaria">Cita Veterinaria</option>
+            <option value="vacunacion">Vacunación</option>
           </select>
         </div>
 
@@ -92,10 +125,10 @@ function updateEndTime() {
           <input type="text" v-model="form.start" class="w-full border rounded px-3 py-2" @change="updateStartTime" />
         </div>
 
-        <!-- Hora de fin (NO editable) -->
+        <!-- Hora de fin (editable) -->
         <div>
           <label class="block mb-1 font-semibold">Fin (Hora)</label>
-          <input type="text" :value="form.end" class="w-full border rounded px-3 py-2" disabled />
+          <input type="text" :value="form.end" class="w-full border rounded px-3 py-2" />
         </div>
 
         <!-- Descripción -->

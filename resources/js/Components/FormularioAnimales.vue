@@ -1,77 +1,64 @@
 <script setup>
-import NavBar from '@/Components/NavBar.vue';
 import { defineProps } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 const props = defineProps({
-    users: Array,
-    animal: Object, // Recibe el objeto animal para editar
+    clientes: Array,
 });
 
+// FormData
 const form = useForm({
-    nombre: props.animal.nombre || '',
-    tipo: props.animal.tipo || '',
-    raza: props.animal.raza || '',
-    sexo: props.animal.sexo || '',
-    fechaNacimiento: props.animal.fechaNacimiento || '',
-    user_id: props.animal.user_id || '',
-    observaciones: props.animal.observaciones || '',
+    nombre: '',
+    tipo: '',
+    raza: '',
+    sexo: '',
+    fechaNacimiento: '',
+    user_id: '',
+    imagen: null,
+    observaciones: '',
 });
 
-const submit = () => {
-    // Verificar si hay una imagen seleccionada
-    if (form.imagen) {
-        // Usar FormData si estamos enviando una imagen
-        const formData = new FormData();
-        formData.append('nombre', form.nombre);
-        formData.append('tipo', form.tipo);
-        formData.append('raza', form.raza);
-        formData.append('sexo', form.sexo);
-        formData.append('fechaNacimiento', form.fechaNacimiento);
-        formData.append('imagen', form.imagen); // La imagen será añadida si se seleccionó
-        formData.append('observaciones', form.observaciones);
-
-        // Enviar el FormData con el método PUT
-        form.put(route('animales.update', props.animal.id), formData, {
-            onSuccess: () => {
-                alert("¡Animal actualizado correctamente!");
-            },
-            onError: (errors) => {
-                console.log(errors);
-            }
-        });
-    } else {
-        // Si no hay imagen, solo enviar los datos sin imagen
-        form.put(route('animales.update', props.animal.id), {
-            nombre: form.nombre,
-            tipo: form.tipo,
-            raza: form.raza,
-            sexo: form.sexo,
-            fechaNacimiento: form.fechaNacimiento,
-            observaciones: form.observaciones,
-        });
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        form.imagen = file;
     }
 };
-const getUserName = (userId) => {
-    const user = props.users.find(u => u.id === userId);
-    return user ? `${user.name} ${user.apellidos}` : 'Usuario no encontrado';
-};
 
+const submit = () => {
+    const data = new FormData();
+
+    // Afegim les dades al form
+    data.append('nombre', form.nombre);
+    data.append('tipo', form.tipo);
+    data.append('raza', form.raza);
+    data.append('sexo', form.sexo);
+    data.append('fechaNacimiento', form.fechaNacimiento);
+    data.append('user_id', form.user_id);
+    data.append('observaciones', form.observaciones);
+
+    // image
+    if (form.imagen) {
+        data.append('imagen', form.imagen);
+    }
+
+    form.post(route('animales.store'), {
+        data,
+        forceFormData: true, // per a la imatge
+        onSuccess: () => {
+            alert("¡Animal registrado correctamente!");
+        },
+        onError: (errors) => {
+            console.log(errors);
+        }
+    });
+};
 </script>
 
-
 <template>
-    <AppLayout title="Editar Animal">
-        <template #header>
-            <NavBar />
-        </template>
+    <form @submit.prevent="submit">
 
-        <div class="container mx-auto my-12">
-            <div class="max-w-3xl mx-auto bg-white p-8 shadow-lg rounded-lg">
-                <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Editar Animal</h2>
-
-                <form @submit.prevent="submit">
                     <div class="mb-4">
                         <label for="nombre" class="block text-gray-700 font-medium">Nombre</label>
                         <input v-model="form.nombre" type="text" id="nombre" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
@@ -105,6 +92,23 @@ const getUserName = (userId) => {
                         <div v-if="form.errors.fechaNacimiento" class="text-red-500 text-sm mt-1">{{ form.errors.fechaNacimiento }}</div>
                     </div>
 
+                    <div class="mb-4">
+                        <label for="user_id" class="block text-gray-700 font-medium">Cliente</label>
+                        <select v-model="form.user_id" id="user_id" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
+                            <option v-for="clientes in props.clientes" :key="clientes.id" :value="clientes.id">
+                                {{ clientes.name }} {{ clientes.apellidos }}
+                            </option>
+                        </select>
+                        <div v-if="form.errors.user_id" class="text-red-500 text-sm mt-1">{{ form.errors.user_id }}</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="imagen" class="block text-gray-700 font-medium">Imagen</label>
+                        <input id="imagen" name="imagen" type="file"
+                               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                               @change="handleFileChange" />
+                        <div v-if="form.errors.imagen" class="text-red-500 text-sm mt-1">{{ form.errors.imagen }}</div>
+                    </div>
 
                     <div class="mb-4">
                         <label for="observaciones" class="block text-gray-700 font-medium">Observaciones</label>
@@ -113,11 +117,8 @@ const getUserName = (userId) => {
                     </div>
 
                     <div class="flex justify-center gap-4">
-                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none">Actualizar Animal</button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none">Registrar Animal</button>
                         <a :href="route('animales.index')" class="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 focus:outline-none">Volver</a>
                     </div>
-                </form>
-            </div>
-        </div>
-    </AppLayout>
+        </form>
 </template>

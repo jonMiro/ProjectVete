@@ -6,12 +6,11 @@
           <!-- Asegúrate de usar `route()` para generar la URL -->
           <Link :href="route('search.index')" class="nav-link text-white hover:text-blue-400 text-lg">Buscar</Link>
         </li>
+
         <li class="nav-item">
-            <Link :href="route('animales.index')" class="nav-link text-white hover:text-blue-400 text-lg">Animales</Link>
+            <Link :href="route('alta.index')" class="nav-link text-white hover:text-blue-400 text-lg">Altas</Link>
           </li>
-          <li class="nav-item">
-            <Link :href="route('users.index')" class="nav-link text-white hover:text-blue-400 text-lg">Usuarios</Link>
-          </li>
+
           <li class="nav-item">
             <Link :href="route('consultas.index')" class="nav-link text-white hover:text-blue-400 text-lg">Consultas</Link>
           </li>
@@ -30,7 +29,7 @@
           </li>
 
 
-          <!-- Admin con margen y color verde -->
+
         </ul>
       </div>
     </nav>

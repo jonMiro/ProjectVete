@@ -18,6 +18,13 @@ const isListView = ref(false);
         <NavBar />
       </template>
 
+      <!-- Botón de crear nueva consulta -->
+    <div class="flex justify-end mb-4">
+      <Link :href="route('animales.create')" class="text-sm bg-blue-400 text-blue-900 px-3 py-1 m-6 mr-5 rounded-md hover:bg-blue-500 transition shadow-sm mr-2">
+        + Nuevo
+      </Link>
+    </div>
+
       <div class="container mx-auto mt-10 px-4">
         <h2 class="text-center text-3xl font-semibold mb-8">Listado de Animales</h2>
 

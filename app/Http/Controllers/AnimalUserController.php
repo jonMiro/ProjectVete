@@ -43,7 +43,6 @@ public function update(Request $request, $id)
             'sexo' => 'nullable|string|max:255',
             'fechaNacimiento' => 'required|date',
             'user_id' => 'required|exists:users,id',
-            'imagen' => 'nullable|image',
             'observaciones' => 'nullable|string',
         ]);
 

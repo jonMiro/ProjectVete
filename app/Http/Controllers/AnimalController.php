@@ -8,6 +8,7 @@ use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AnimalController extends Controller
 {
@@ -37,21 +38,40 @@ class AnimalController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'tipo' => 'required|string|max:255',
-            'raza' => 'required|string|max:255',
-            'sexo' => 'nullable|string|max:255',
-            'fechaNacimiento' => 'required|date',
-            'user_id' => 'required|exists:users,id',
-            'imagen' => 'nullable|image',
-            'observaciones' => 'nullable|string',
-        ]);
+{
+    Log::info('Iniciando proceso de creación del animal'); // Esto debería aparecer en los logs
 
-        Animal::create($data);
-        return redirect()->route('animales.index');
+    $data = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'tipo' => 'required|string|max:255',
+        'raza' => 'required|string|max:255',
+        'sexo' => 'nullable|string|max:255',
+        'fechaNacimiento' => 'required|date',
+        'user_id' => 'required|exists:users,id',
+        'imagen' => 'nullable|image',
+        'observaciones' => 'nullable|string',
+    ]);
+
+    Log::info('Datos recibidos en el store:', $data);  // Loguea los datos recibidos
+
+    // Crear el animal en la base de datos
+    $animal = Animal::create($data);
+
+    if ($request->hasFile('imagen')) {
+
+        $nombre = $animal->nombre. '.' .$request->file('imagen')->getClientOriginalExtension();
+        $img = $request->file('imagen')->storeAs('public/img',$nombre);
+        $animal->imagen = 'storage/img/'.$nombre;
+        $animal->save();
+
     }
+
+
+    Log::info('Animal creado exitosamente');  // Loguea cuando el animal es creado
+
+    return redirect()->route('animales.index');
+}
+
 
     public function edit($id)
     {
@@ -73,7 +93,6 @@ class AnimalController extends Controller
             'sexo' => 'nullable|string|max:255',
             'fechaNacimiento' => 'required|date',
             'user_id' => 'required|exists:users,id',
-            'imagen' => 'nullable|image',
             'observaciones' => 'nullable|string',
         ]);
 

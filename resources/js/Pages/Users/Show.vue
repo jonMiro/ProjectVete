@@ -1,21 +1,19 @@
 <script setup>
-import { Link, Inertia } from '@inertiajs/inertia-vue3';
 import NavBar from '@/Components/NavBar.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/vue3';
+
 
 defineProps({
     user: Object,
 });
 
-const eliminarUsuario = () => {
+const deleteUser = (id) => {
     if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
-        Inertia.delete(route('users.destroy', user.id), {
+        Inertia.delete(route('users.destroy',id), {
             onSuccess: () => {
-                alert("¡Usuario eliminado correctamente!");
                 Inertia.visit(route('users.index'));
-            },
-            onError: (errors) => {
-                console.log(errors);
             },
         });
     }
@@ -51,14 +49,14 @@ const eliminarUsuario = () => {
                         Editar
                     </Link>
 
-                    <!-- El botón de eliminación con el mismo estilo que los demás -->
-                    <button @click="eliminarUsuario" class="bg-red-500 text-white py-2 px-4 mb-4 rounded-lg hover:bg-red-600 text-sm">
-                        Eliminar
-                    </button>
-
                     <Link :href="route('users.index')" class="bg-gray-600 text-white mb-4 py-2 px-4 rounded-lg hover:bg-gray-700 text-sm">
                         Volver
                     </Link>
+
+                    <!-- El botón de eliminación con el mismo estilo que los demás -->
+                    <button @click="deleteUser(user.id)" class="bg-red-500 text-white text-sm py-1 px-2 rounded-lg hover:bg-red-600">Eliminar</button>
+
+
                 </div>
             </div>
 

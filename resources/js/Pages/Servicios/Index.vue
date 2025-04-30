@@ -2,8 +2,8 @@
 import NavBar from '@/Components/NavBar.vue';
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { ref } from 'vue';
-import axios from 'axios';
+import { Inertia } from '@inertiajs/inertia';
+
 
 defineProps({
   servicios: Object, // paginated
@@ -26,16 +26,11 @@ const formatTime = (time) => {
 // Función para eliminar un servicio
 const deleteServicio = (id) => {
   if (confirm('¿Estás seguro de que deseas eliminar este servicio?')) {
-    axios.delete(route('servicios.destroy', id))
-      .then(() => {
-        // Refrescar la lista de servicios o manejar la respuesta
-        alert('Servicio eliminado correctamente');
-        // Puedes actualizar la lista de servicios aquí, o redirigir a otra página
-      })
-      .catch((error) => {
-        console.error('Error al eliminar el servicio:', error);
-        alert('Hubo un problema al eliminar el servicio.');
-      });
+    Inertia.delete(route('servicios.destroy', id),{
+    onSuccess: () => {
+        Inertia.visit(route('sevicios.index'));
+      }
+    });
   }
 };
 </script>

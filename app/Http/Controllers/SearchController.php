@@ -37,14 +37,12 @@ class SearchController extends Controller
             ->get();
 
         $animales = Animal::where('nombre', 'like', "%{$searchQuery}%")->get();
-        $servicios = Servicio::where('tipo_servicio', 'like', "%{$searchQuery}%")->get();
 
         return Inertia::render('Search/Index', [
             'veterinarios' => $veterinarios,
             'auxiliares' => $auxiliares,
             'clientes' => $clientes,
             'animales' => $animales,
-            'servicios' => $servicios,
             'search' => $searchQuery,
         ]);
     }

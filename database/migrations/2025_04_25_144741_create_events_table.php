@@ -16,7 +16,7 @@ class CreateEventsTable extends Migration
             $table->date('fecha');
             $table->timestamp('start');
             $table->timestamp('end')->nullable();
-            $table->enum('tipo', ['peluqueria', 'pedicura', 'lavado', 'cita veterinaria', 'vacunación']);
+            $table->enum('tipo', ['peluqueria', 'pedicura', 'lavado', 'cita veterinaria', 'vacunacion']);
             $table->text('descripcion')->nullable();
             $table->string('comentario')->nullable();
             $table->decimal('precio', 8, 2)->nullable(); // <-- Aquí el cambio

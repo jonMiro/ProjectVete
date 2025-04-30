@@ -7,6 +7,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConsultaController;
+use App\Http\Controllers\AltaController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\FacturacionController;
@@ -78,6 +79,7 @@ Route::prefix('workers')->group(function () {
 
     // Usuarios
     Route::resource('users', UserController::class);
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
     // Consultas
     Route::resource('consultas', ConsultaController::class);
@@ -95,6 +97,15 @@ Route::delete('/servicios/{servicio}', [ServicioController::class, 'destroy'])->
     Route::get('facturacion', [FacturacionController::class, 'index'])->name('facturacion.index');
 
     Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas.index');
+
+
+
+    Route::get('alta', [AltaController::class, 'index'])->name('alta.index');
+    Route::post('alta/user', [AltaController::class, 'storeUser'])->name('alta.storeUser');
+    Route::post('alta/animal', [AltaController::class, 'storeAnimal'])->name('alta.storeAnimal');
+    Route::post('alta/servicio', [AltaController::class, 'storeServicio'])->name('alta.storeServicio');
+    Route::post('alta/consulta', [AltaController::class, 'storeConsulta'])->name('alta.storeConsulta');
+
 
 
 });

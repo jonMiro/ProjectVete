@@ -8,19 +8,46 @@ const props = defineProps({
     users: Array,
 });
 
+// Usamos FormData para manejar la subida de archivos
 const form = useForm({
     nombre: '',
     tipo: '',
     raza: '',
-    sexo: '', // Agregado campo de sexo
+    sexo: '',
     fechaNacimiento: '',
     user_id: '',
-    imagen: null,
+    imagen: null,  // Inicializamos el campo de imagen como null
     observaciones: '',
 });
 
+const handleFileChange = (event) => {
+    const file = event.target.files[0];  // Obtenemos el archivo
+    if (file) {
+        form.imagen = file;  // Asignamos el archivo al campo imagen
+    }
+};
+
 const submit = () => {
+    const data = new FormData();
+
+    // Añadimos los datos del formulario
+    data.append('nombre', form.nombre);
+    data.append('tipo', form.tipo);
+    data.append('raza', form.raza);
+    data.append('sexo', form.sexo);
+    data.append('fechaNacimiento', form.fechaNacimiento);
+    data.append('user_id', form.user_id);
+    data.append('observaciones', form.observaciones);
+
+    // Si hay una imagen, la añadimos también
+    if (form.imagen) {
+    data.append('imagen', form.imagen);
+}
+
+    // Enviamos los datos utilizando POST y FormData
     form.post(route('animales.store'), {
+        data,  // Pasamos los datos con FormData
+        forceFormData: true, // Habilitamos el uso de FormData
         onSuccess: () => {
             alert("¡Animal registrado correctamente!");
         },
@@ -30,6 +57,7 @@ const submit = () => {
     });
 };
 </script>
+
 
 <template>
     <AppLayout title="Panel de animales">
@@ -76,8 +104,8 @@ const submit = () => {
                     </div>
 
                     <div class="mb-4">
-                        <label for="cliente_id" class="block text-gray-700 font-medium">Cliente</label>
-                        <select v-model="form.cliente_id" id="cliente_id" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
+                        <label for="user_id" class="block text-gray-700 font-medium">Cliente</label>
+                        <select v-model="form.user_id" id="user_id" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required>
                             <option v-for="user in props.users" :key="user.id" :value="user.id">
                                 {{ user.name }} {{ user.apellidos }}
                             </option>
@@ -86,8 +114,10 @@ const submit = () => {
                     </div>
 
                     <div class="mb-4">
-                        <label for="imagen" class="block text-gray-700 font-medium">Imagen (Opcional)</label>
-                        <input type="file" @change="e => form.imagen = e.target.files[0]" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
+                        <label for="imagen" class="block text-gray-700 font-medium">Imagen</label>
+                        <input id="imagen" name="imagen" type="file"
+                               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                               @change="handleFileChange" />
                         <div v-if="form.errors.imagen" class="text-red-500 text-sm mt-1">{{ form.errors.imagen }}</div>
                     </div>
 
