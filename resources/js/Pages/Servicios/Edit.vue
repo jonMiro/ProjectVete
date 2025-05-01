@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
+
 
 const props = defineProps({
   servicio: Object,
@@ -38,7 +40,7 @@ const submit = () => {
       <h2 class="text-2xl font-semibold text-gray-800">Editar Servicio</h2>
     </template>
 
-    <div class="max-w-4xl mx-auto px-6 py-10 bg-white rounded-lg shadow">
+    <div class="max-w-4xl mx-auto px-6 py-10 mt-8 bg-white rounded-lg shadow">
       <h2 class="text-2xl font-bold text-center mb-8">Editar Servicio</h2>
 
       <form @submit.prevent="submit" class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -137,5 +139,6 @@ const submit = () => {
         </div>
       </form>
     </div>
+    <FooterWorkers />
   </AppLayout>
 </template>

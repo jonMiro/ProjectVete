@@ -79,6 +79,7 @@
           Total General: {{ totalGeneral }} €
         </div>
       </div>
+      <FooterWorkers />
     </AppLayout>
 </template>
 
@@ -87,6 +88,7 @@ import NavBar from '@/Components/NavBar.vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { defineProps } from 'vue'
 import { Link } from '@inertiajs/vue3'
+import FooterWorkers from '@/Components/FooterWorkers.vue'
 
 defineProps(['servicios', 'consultas', 'totalServicios', 'totalConsultas', 'totalGeneral'])
 
@@ -95,13 +97,13 @@ const formatDate = (value) => {
   if (!value) return ''
   const date = new Date(value)
 
-  // Asegura que la fecha sea válida
+  // te que ser date
   if (isNaN(date)) return 'Fecha inválida'
 
-  const day = String(date.getDate()).padStart(2, '0')  // Asegura 2 dígitos para el día
-  const month = String(date.getMonth() + 1).padStart(2, '0')  // Ajuste de 0 a 11 para el mes
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0')
   const year = date.getFullYear()
 
-  return `${day}-${month}-${year}` 
+  return `${day}-${month}-${year}`
 }
 </script>

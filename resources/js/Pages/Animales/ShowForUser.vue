@@ -14,7 +14,6 @@
           <h3>Propietario</h3>
           <p><strong>Nombre:</strong> {{ animal.user.nombre }}</p>
           <p><strong>Email:</strong> {{ animal.user.email }}</p>
-          <!-- Agrega más detalles del usuario si lo deseas -->
         </div>
       </div>
 
@@ -33,5 +32,4 @@
   </script>
 
   <style scoped>
-  /* Estilos específicos para esta vista */
   </style>

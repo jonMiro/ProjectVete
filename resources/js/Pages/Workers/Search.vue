@@ -81,6 +81,7 @@
         </div>
 
       </div>
+
     </div>
 
 </AppLayout>
@@ -92,6 +93,7 @@ import { ref, computed } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBar from '@/Components/NavBar.vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
 
 
 // Recibimos los props

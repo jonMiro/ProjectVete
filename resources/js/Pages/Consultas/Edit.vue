@@ -3,6 +3,8 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBar from '@/Components/NavBar.vue';
 import { useForm } from '@inertiajs/vue3';
 import { watch } from 'vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
+
 
 const props = defineProps({
   consulta: Object,
@@ -48,7 +50,7 @@ watch(() => form.animal_id, (animalId) => {
       <NavBar />
     </template>
 
-    <div class="max-w-4xl mx-auto px-6 py-10 bg-white rounded-lg shadow">
+    <div class="max-w-4xl mx-auto px-6 py-10 mt-8 bg-white rounded-lg shadow">
       <h2 class="text-2xl font-bold text-center mb-8">Editar Consulta</h2>
 
       <form @submit.prevent="form.put(route('consultas.update', { consulta: form.id }))" class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -164,5 +166,6 @@ watch(() => form.animal_id, (animalId) => {
 
       </form>
     </div>
+    <FooterWorkers />
   </AppLayout>
 </template>

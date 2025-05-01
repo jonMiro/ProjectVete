@@ -6,6 +6,7 @@ import FormularioUsuario from '@/Components/FormularioUsuario.vue';
 import FormularioAnimales from '@/Components/FormularioAnimales.vue';
 import FormularioServicio from '@/Components/FormularioServicio.vue';
 import FormularioConsulta from '@/Components/FormularioConsulta.vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
 
 const currentSection = ref('usuario');
 
@@ -57,5 +58,6 @@ const props = defineProps({
       </div>
 
     </div>
+    <FooterWorkers />
   </AppLayout>
 </template>

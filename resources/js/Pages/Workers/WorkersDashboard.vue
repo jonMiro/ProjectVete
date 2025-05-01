@@ -2,8 +2,9 @@
 import AppLayout from '@/Layouts/AppLayout.vue'
 import NavBar from '@/Components/NavBar.vue'
 import Calendario from '@/Components/Calendario.vue'
-import Footer from '@/Components/Footer.vue'
 import AgendaDiaria from '@/Components/AgendaDiaria.vue'
+import FooterWorkers from '@/Components/FooterWorkers.vue'
+
 </script>
 
 <template>
@@ -24,7 +25,7 @@ import AgendaDiaria from '@/Components/AgendaDiaria.vue'
                 <Calendario />
             </div>
         </div>
-        <Footer />
+        <FooterWorkers />
     </AppLayout>
 </template>
 

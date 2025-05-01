@@ -1,7 +1,7 @@
 <script setup>
 import { jsPDF } from 'jspdf';
 import NavBar from '@/Components/NavBar.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
 
@@ -56,6 +56,16 @@ const generatePDF = () => {
 
   doc.save(`servicio_${props.servicio.id}.pdf`);
 };
+
+const deleteServicio = () => {
+    if (confirm('¿Estás seguro de que deseas eliminar este servicio?')) {
+      router.delete(route('clients.historial.destroyServicio', props.servicio.id), {
+        onSuccess: () => {
+          alert('Servicio eliminada correctamente.');
+        },
+      });
+    }
+  };
 </script>
 
 <template>
@@ -116,6 +126,9 @@ const generatePDF = () => {
         <Link :href="route('servicios.index')" class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition">
           Volver al listado de Servicios
         </Link>
+        <button @click="deleteServicio" class="bg-red-600 text-white py-2 px-4 rounded-md">
+            Eliminar
+          </button>
       </div>
     </div>
     <FooterWorkers />

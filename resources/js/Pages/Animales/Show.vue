@@ -1,11 +1,14 @@
 <script setup>
-import { Link, Inertia } from '@inertiajs/inertia-vue3';
+import { Link } from '@inertiajs/inertia-vue3';
 import NavBar from '@/Components/NavBar.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { Inertia } from '@inertiajs/inertia';
 
-defineProps({
+const props = defineProps({
     animal: Object,
 });
+
+const animal = props.animal;
 
 const eliminarAnimal = () => {
     if (confirm("¿Estás seguro de que deseas eliminar este animal?")) {
@@ -25,7 +28,6 @@ const eliminarAnimal = () => {
 <template>
     <AppLayout title="Panel de Animales">
         <template #header>
-            <!--NavBar component-->
             <NavBar />
         </template>
 
@@ -58,7 +60,7 @@ const eliminarAnimal = () => {
                     </div>
                 </div>
 
-                <!-- Botones de editar, eliminar y volver -->
+                <!-- Botones -->
                 <div class="flex justify-center gap-4 mt-4">
                     <Link :href="route('animales.edit', animal.id)" class="bg-yellow-500 text-white mb-4 py-2 px-4 rounded-lg hover:bg-yellow-600 text-sm">
                         Editar

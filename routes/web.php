@@ -15,6 +15,8 @@ use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\AnimalUserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\HistorialController;
+
 
 
 
@@ -51,9 +53,22 @@ Route::prefix('clients')->group(function () {
       // Mostrar los animales asociados al cliente
       Route::get('animales', [AnimalUserController::class, 'index'])->name('clients.animales.index');
 
-      // Editar un animal
+      // Editar, crear un animal
       Route::get('animales/{animal}/edit', [AnimalUserController::class, 'edit'])->name('clients.animales.edit');
       Route::put('animales/{animal}', [AnimalUserController::class, 'update'])->name('clients.animales.update');
+      Route::get('animales/create', [AnimalUserController::class, 'create'])->name('clients.animales.create');
+      Route::post('animales', [AnimalUserController::class, 'store'])->name('clients.animales.store');
+
+      Route::get('historial', [HistorialController::class, 'index'])->name('clients.historial.index');
+      Route::get('historial/consulta/{id}', [HistorialController::class, 'showConsulta'])->name('clients.historial.showConsulta');
+      Route::get('historial/servicio/{id}', [HistorialController::class, 'showServicio'])->name('clients.historial.showServicio');
+      Route::get('historial/evento/{id}', [HistorialController::class, 'showEvento'])->name('clients.historial.showEvento');
+
+      Route::delete('historial/consulta/{id}', [HistorialController::class, 'destroyConsulta'])->name('clients.historial.destroyConsulta');
+      Route::delete('historial/servicio/{id}', [HistorialController::class, 'destroyServicio'])->name('clients.historial.destroyServicio');
+      Route::delete('historial/evento/{id}', [HistorialController::class, 'destroyEvento'])->name('clients.historial.destroyEvento');
+
+
 
       Route::middleware('auth')->get('posts/myposts', [PostController::class, 'myPosts'])->name('posts.myposts');
       Route::resource('posts', PostController::class);

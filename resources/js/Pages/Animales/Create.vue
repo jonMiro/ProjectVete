@@ -8,7 +8,6 @@ const props = defineProps({
     users: Array,
 });
 
-// Usamos FormData para manejar la subida de archivos
 const form = useForm({
     nombre: '',
     tipo: '',
@@ -16,21 +15,20 @@ const form = useForm({
     sexo: '',
     fechaNacimiento: '',
     user_id: '',
-    imagen: null,  // Inicializamos el campo de imagen como null
+    imagen: null,
     observaciones: '',
 });
 
 const handleFileChange = (event) => {
-    const file = event.target.files[0];  // Obtenemos el archivo
+    const file = event.target.files[0];
     if (file) {
-        form.imagen = file;  // Asignamos el archivo al campo imagen
+        form.imagen = file;
     }
 };
 
 const submit = () => {
     const data = new FormData();
 
-    // Añadimos los datos del formulario
     data.append('nombre', form.nombre);
     data.append('tipo', form.tipo);
     data.append('raza', form.raza);
@@ -39,15 +37,13 @@ const submit = () => {
     data.append('user_id', form.user_id);
     data.append('observaciones', form.observaciones);
 
-    // Si hay una imagen, la añadimos también
     if (form.imagen) {
     data.append('imagen', form.imagen);
 }
 
-    // Enviamos los datos utilizando POST y FormData
     form.post(route('animales.store'), {
-        data,  // Pasamos los datos con FormData
-        forceFormData: true, // Habilitamos el uso de FormData
+        data,
+        forceFormData: true, 
         onSuccess: () => {
             alert("¡Animal registrado correctamente!");
         },

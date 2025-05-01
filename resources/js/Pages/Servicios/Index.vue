@@ -3,10 +3,12 @@ import NavBar from '@/Components/NavBar.vue';
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Inertia } from '@inertiajs/inertia';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
+
 
 
 defineProps({
-  servicios: Object, // paginated
+  servicios: Object,
 });
 
 // Función para formatear la fecha
@@ -23,7 +25,7 @@ const formatTime = (time) => {
   return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 };
 
-// Función para eliminar un servicio
+// Delete
 const deleteServicio = (id) => {
   if (confirm('¿Estás seguro de que deseas eliminar este servicio?')) {
     Inertia.delete(route('servicios.destroy', id),{
@@ -43,14 +45,14 @@ const deleteServicio = (id) => {
     </template>
 
     <!-- Botón de crear nueva consulta -->
-    <div class="flex justify-end mb-4">
+    <div class="flex justify-end mb-0">
       <Link :href="route('servicios.create')" class="text-sm bg-blue-400 text-blue-900 px-3 py-1 m-6 mr-5 rounded-md hover:bg-blue-500 transition shadow-sm mr-2">
         + Nuevo
       </Link>
     </div>
 
-    <div class="container mx-auto mt-10 px-4 mb-10">
-      <h2 class="text-center text-3xl font-semibold mb-8">Listado de Servicios</h2>
+    <div class="container mx-auto mt-2 px-4 mb-2">
+      <h2 class="text-center text-3xl font-semibold mb-5">Listado de Servicios</h2>
 
       <div v-if="servicios.data.length > 0">
         <table class="table-auto w-full text-center border-collapse">
@@ -141,5 +143,6 @@ const deleteServicio = (id) => {
 
       <p v-else class="text-center text-lg text-gray-500">No hay servicios registrados.</p>
     </div>
+    <FooterWorkers />
   </AppLayout>
 </template>

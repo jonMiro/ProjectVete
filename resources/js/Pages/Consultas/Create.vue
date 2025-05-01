@@ -3,6 +3,8 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBar from '@/Components/NavBar.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
+
 
 const props = defineProps({
   animales: Array,
@@ -33,7 +35,7 @@ watch(() => form.animal_id, (animalId) => {
   if (selected && selected.user) {
     form.tipo_animal = selected.tipo;
     form.raza = selected.raza;
-    form.user_id = selected.user.id; 
+    form.user_id = selected.user.id;
   } else {
     form.tipo_animal = '';
     form.raza = '';
@@ -48,7 +50,7 @@ watch(() => form.animal_id, (animalId) => {
       <NavBar />
     </template>
 
-    <div class="max-w-4xl mx-auto px-6 py-10 bg-white rounded-lg shadow">
+    <div class="max-w-4xl mx-auto px-6 py-10 mt-8 bg-white rounded-lg shadow">
       <h2 class="text-2xl font-bold text-center mb-8">Registrar Nueva Consulta</h2>
 
       <form @submit.prevent="form.post(route('consultas.store'))" class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -162,5 +164,6 @@ watch(() => form.animal_id, (animalId) => {
 
       </form>
     </div>
+    <FooterWorkers />
   </AppLayout>
 </template>

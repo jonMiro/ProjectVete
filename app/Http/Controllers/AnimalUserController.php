@@ -3,37 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
 class AnimalUserController extends Controller
 {
-    // Muestra los animales del usuario
     public function index()
     {
-        $user = Auth::user(); // Obtén el usuario autenticado
-        $animales = $user->animales; // Obtén los animales asociados al usuario
+        $user = Auth::user();
+        $animales = $user->animales;
 
         return Inertia::render('AnimalesUser/Index', [
             'animales' => $animales,
         ]);
     }
 
-// Muestra el formulario de edición de un animal
 public function edit($id)
 {
     $animal = Animal::findOrFail($id);
     $user = Auth::user();
 
-    $animal = Animal::findOrFail($id); // Encuentra el animal por ID
+    $animal = Animal::findOrFail($id);
     return Inertia::render('AnimalesUser/Edit', [
         'animal' => $animal,
         'user'   => $user,
     ]);
 }
 
-// Actualiza los datos de un animal
 public function update(Request $request, $id)
     {
         $data = $request->validate([
@@ -52,13 +50,38 @@ public function update(Request $request, $id)
     }
 
 
-// Elimina un animal
 public function destroy($id)
 {
     $animal = Animal::findOrFail($id);
-    $animal->delete(); // Elimina el animal
-
-    return redirect()->route('clients.animales.index'); // Redirige después de eliminar
+    $animal->delete();
+    return redirect()->route('clients.animales.index');
 }
+public function create()
+{
+    $clientes = User::where('tipo', 'cliente')->get();
+    $user = Auth::user();
+
+    return Inertia::render('AnimalesUser/Create', [
+        'clientes' => $clientes,
+        'user' => $user,
+    ]);
+}
+public function store(Request $request)
+{
+    $data = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'tipo' => 'required|string|max:255',
+        'raza' => 'required|string|max:255',
+        'sexo' => 'nullable|string|max:255',
+        'fechaNacimiento' => 'required|date',
+        'user_id' => 'required|exists:users,id',
+        'observaciones' => 'nullable|string',
+    ]);
+
+    Animal::create($data);
+
+    return redirect()->route('clients.animales.index')->with('success', 'Animal creado correctamente');
+}
+
 }
 

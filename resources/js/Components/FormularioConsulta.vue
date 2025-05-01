@@ -32,12 +32,10 @@ watch(() => form.animal_id, (animalId) => {
   if (selected && selected.user) {
     form.tipo_animal = selected.tipo;
     form.raza = selected.raza;
-    form.peso = selected.peso;
     form.user_id = selected.user.id;
   } else {
     form.tipo_animal = '';
     form.raza = '';
-    form.peso = '';
   }
 });
 </script>
@@ -87,7 +85,7 @@ watch(() => form.animal_id, (animalId) => {
       <!-- Peso -->
       <div>
         <label for="peso" class="block mb-1 font-semibold">Peso (kg)</label>
-        <input id="peso" name="peso" type="number" step="0.01" v-model="form.peso" class="w-full border rounded px-3 py-2" readonly />
+        <input id="peso" name="peso" type="number" step="0.01" v-model="form.peso" class="w-full border rounded px-3 py-2"  />
       </div>
 
       <!-- Tipo de Animal -->

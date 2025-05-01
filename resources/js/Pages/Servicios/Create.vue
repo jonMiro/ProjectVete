@@ -3,6 +3,8 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBar from '@/Components/NavBar.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
+
 
 const props = defineProps({
   auxiliares: Array,
@@ -155,5 +157,6 @@ watch(() => form.tipo_servicio, (newTipoServicio) => {
 
       </form>
     </div>
+    <FooterWorkers />
   </AppLayout>
 </template>

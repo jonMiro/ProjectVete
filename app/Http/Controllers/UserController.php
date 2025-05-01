@@ -55,14 +55,14 @@ class UserController extends Controller
         'email'      => 'required|email|unique:users,email,' . $user->id,
         'telefono'   => 'nullable|string|max:20',
         'direccion'  => 'nullable|string|max:255',
-        'tipo'       => 'required|in:cliente,veterinario,auxiliar',
-        'is_worker'  => 'boolean',
+        'tipo'       => 'nullable|in:cliente,veterinario,auxiliar',
+        'is_worker'  => 'nullable|boolean',
         // 'password' puede ser opcional,
     ]);
 
     $user->update($validated);
 
-    return redirect()->route('users.index')->with('success', 'Usuario editado');}
+    return redirect()->route('clients')->with('success', 'Usuario editado');}
 
     public function destroy(User $user)
     {

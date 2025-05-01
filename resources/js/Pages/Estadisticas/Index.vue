@@ -55,7 +55,7 @@
         </div>
       </div>
 
-      <Footer />
+      <FooterWorkers />
     </AppLayout>
   </template>
 
@@ -67,7 +67,8 @@
   import TiposUsuarioChart from '@/Components/TiposUsuarioChart.vue';
   import AppLayout from '@/Layouts/AppLayout.vue';
   import NavBar from '@/Components/NavBar.vue';
-  import Footer from '@/Components/Footer.vue';
+  import FooterWorkers from '@/Components/FooterWorkers.vue';
+
 
   const props = defineProps({
     consultasCount: Number,

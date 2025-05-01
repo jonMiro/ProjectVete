@@ -107,6 +107,7 @@ class AltaController extends Controller
 }
 
 
+
 //CREAR CONSULTA
 public function storeConsulta(Request $request)
 {

@@ -18,24 +18,33 @@ class EventController extends Controller
     }
 
     //getEvents
-    public function getEvents()
-    {
+    public function getEvents(Request $request)
+{
+    $date = $request->query('date');
 
-        return Event::all()->map(function ($event) {
-            return [
-                'id'         => $event->id,
-                'user_id'    => $event->user_id,
-                'title'      => $event->title,
-                'fecha'      => $event->fecha,
-                'start'      => $event->start,
-                'end'        => $event->end,
-                'tipo'       => $event->tipo,
-                'descripcion'=> $event->descripcion,
-                'comentario' => $event->comentario,
-                'precio'     => $event->precio,
-            ];
-        });
+    $eventsQuery = Event::query();
+
+    if ($date) {
+        $eventsQuery->whereDate('start', '=', Carbon::parse($date)->format('Y-m-d'));
     }
+
+    $events = $eventsQuery->get();
+
+    return $events->map(function ($event) {
+        return [
+            'id'          => $event->id,
+            'user_id'     => $event->user_id,
+            'title'       => $event->title,
+            'fecha'       => $event->fecha,
+            'start'       => $event->start,
+            'end'         => $event->end,
+            'tipo'        => $event->tipo,
+            'descripcion' => $event->descripcion,
+            'comentario'  => $event->comentario,
+            'precio'      => $event->precio,
+        ];
+    });
+}
 
     // Create view render
     public function create()
@@ -58,14 +67,12 @@ class EventController extends Controller
         'precio' => 'nullable|numeric',
     ]);
 
-    // Convertir fecha de dd-mm-yyyy a yyyy-mm-dd
     $fecha = \Carbon\Carbon::createFromFormat('d-m-Y', $request->fecha)->format('Y-m-d');
 
-    // Crear el evento asignando al usuario autenticado
     $event = Event::create([
         'user_id'    => Auth::user()->id,
         'title'      => $request->title,
-        'fecha'      => $fecha, // Usar la fecha convertida
+        'fecha'      => $fecha, 
         'start'      => $request->start,
         'end'        => $request->end,
         'tipo'       => $request->tipo,
@@ -77,5 +84,6 @@ class EventController extends Controller
     return redirect()->route('clients')->with('success', 'Servicio contratado con éxito');
 }
 
-
 }
+
+

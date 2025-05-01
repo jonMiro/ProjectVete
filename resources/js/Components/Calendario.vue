@@ -1,6 +1,22 @@
 <template>
     <div class="calendar-container">
       <FullCalendar :options="calendarOptions" />
+
+      <!-- Modal para mostrar los eventos del día -->
+      <div v-if="showModal" class="modal-overlay" @click="closeModal">
+        <div class="modal-content" @click.stop>
+          <h3>Eventos para el día {{ selectedDate }}</h3>
+          <ul>
+            <li v-for="event in eventsOnSelectedDate" :key="event.id">
+              <strong>{{ event.title }}</strong>
+              <p>{{ event.description }}</p>
+              <p>Tipo: {{ event.tipo }}</p>
+              <p>Precio: {{ event.precio || 'Por determinar' }}</p>
+            </li>
+          </ul>
+          <button @click="closeModal">Cerrar</button>
+        </div>
+      </div>
     </div>
   </template>
 
@@ -16,6 +32,9 @@
     },
     setup() {
       const events = ref([])  // Declaramos los eventos
+      const showModal = ref(false)  // Para mostrar/ocultar el modal
+      const selectedDate = ref('')  // Fecha seleccionada
+      const eventsOnSelectedDate = ref([])  // Eventos del día seleccionado
 
       // Función para obtener los eventos desde la API
       const fetchEvents = async () => {
@@ -60,11 +79,26 @@
 
       // Función cuando se hace clic en una fecha
       function handleDateClick(arg) {
-        alert('Fecha clickeada: ' + arg.dateStr)
+        selectedDate.value = arg.dateStr  // Guardamos la fecha seleccionada
+        // Filtramos los eventos para mostrar solo los que ocurren en esta fecha
+        eventsOnSelectedDate.value = events.value.filter(event => {
+          const eventDate = new Date(event.start).toLocaleDateString()
+          return eventDate === arg.dateStr
+        })
+        showModal.value = true  // Mostramos el modal
+      }
+
+      // Función para cerrar el modal
+      function closeModal() {
+        showModal.value = false
       }
 
       return {
-        calendarOptions
+        calendarOptions,
+        showModal,
+        selectedDate,
+        eventsOnSelectedDate,
+        closeModal
       }
     }
   }
@@ -74,8 +108,41 @@
   .calendar-container {
     width: 100%;
     height: 100%;
-    /* Ajusta el tamaño del calendario */
-    max-width: 800px;  /* Puedes cambiar esto para hacer el calendario más pequeño */
+    max-width: 800px;
     margin: 0 auto;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0056b3;
   }
   </style>

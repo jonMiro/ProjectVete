@@ -14,7 +14,7 @@ class AnimalController extends Controller
 {
     public function index()
     {
-        $animales = Animal::with(['user'])->get(); // Relacionem y portem animal en el user
+        $animales = Animal::with(['user'])->get();
         return Inertia::render('Animales/Index', [
             'animales' => $animales,
         ]);
@@ -39,8 +39,7 @@ class AnimalController extends Controller
 
     public function store(Request $request)
 {
-    Log::info('Iniciando proceso de creación del animal'); // Esto debería aparecer en los logs
-
+    Log::info('Iniciando proceso de creación del animal');
     $data = $request->validate([
         'nombre' => 'required|string|max:255',
         'tipo' => 'required|string|max:255',
@@ -52,9 +51,8 @@ class AnimalController extends Controller
         'observaciones' => 'nullable|string',
     ]);
 
-    Log::info('Datos recibidos en el store:', $data);  // Loguea los datos recibidos
+    Log::info('Datos recibidos en el store:', $data);
 
-    // Crear el animal en la base de datos
     $animal = Animal::create($data);
 
     if ($request->hasFile('imagen')) {
@@ -67,7 +65,7 @@ class AnimalController extends Controller
     }
 
 
-    Log::info('Animal creado exitosamente');  // Loguea cuando el animal es creado
+    Log::info('Animal creado exitosamente');
 
     return redirect()->route('animales.index');
 }
@@ -111,15 +109,12 @@ class AnimalController extends Controller
 
     public function showForUser()
     {
-        // Obtener el usuario autenticado
         $user = Auth::user();
 
-        // Verificar si el usuario está autenticado
         if (!$user) {
-            return redirect()->route('login'); // Redirige al login si el usuario no está autenticado
+            return redirect()->route('login');
         }
 
-        // Obtener el primer animal asociado al usuario, cargando la relación 'user'
         $animal = Animal::with('user')->where('user_id', $user->id)->first();
 
         if (!$animal) {
@@ -127,7 +122,7 @@ class AnimalController extends Controller
         }
 
         return Inertia::render('Animales/ShowForUser', [
-            'animal' => $animal, // Pasamos el animal a la vista
+            'animal' => $animal, 
         ]);
     }
 

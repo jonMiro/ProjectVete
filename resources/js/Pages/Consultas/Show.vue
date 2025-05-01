@@ -7,7 +7,7 @@
       <div class="max-w-4xl mx-auto p-6 mt-6 mb-6 bg-white shadow-md rounded-lg">
         <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Detalles de la Consulta</h2>
 
-        <!-- Mostrar los datos de la consulta -->
+        <!--consulta -->
         <div class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -57,16 +57,19 @@
           </Link>
         </div>
       </div>
+      <FooterWorkers />
     </AppLayout>
   </template>
-  
+
 <script setup>
 import { jsPDF } from 'jspdf';
 import NavBar from '@/Components/NavBar.vue';
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
 
-// Recibimos la propiedad consulta
+
+//propiedad consulta
 const props = defineProps({
   consulta: Object,
 });

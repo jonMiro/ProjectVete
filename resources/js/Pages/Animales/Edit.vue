@@ -6,7 +6,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 
 const props = defineProps({
     users: Array,
-    animal: Object, // Recibe el objeto animal para editar
+    animal: Object,
 });
 
 const form = useForm({
@@ -20,19 +20,16 @@ const form = useForm({
 });
 
 const submit = () => {
-    // Verificar si hay una imagen seleccionada
     if (form.imagen) {
-        // Usar FormData si estamos enviando una imagen
         const formData = new FormData();
         formData.append('nombre', form.nombre);
         formData.append('tipo', form.tipo);
         formData.append('raza', form.raza);
         formData.append('sexo', form.sexo);
         formData.append('fechaNacimiento', form.fechaNacimiento);
-        formData.append('imagen', form.imagen); // La imagen será añadida si se seleccionó
+        formData.append('imagen', form.imagen);
         formData.append('observaciones', form.observaciones);
 
-        // Enviar el FormData con el método PUT
         form.put(route('animales.update', props.animal.id), formData, {
             onSuccess: () => {
                 alert("¡Animal actualizado correctamente!");
@@ -42,7 +39,6 @@ const submit = () => {
             }
         });
     } else {
-        // Si no hay imagen, solo enviar los datos sin imagen
         form.put(route('animales.update', props.animal.id), {
             nombre: form.nombre,
             tipo: form.tipo,
