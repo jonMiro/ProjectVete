@@ -63,7 +63,7 @@ jobs:
         php artisan key:generate  # Genera una nueva clave de aplicación para Laravel
         php artisan migrate --force  # Ejecuta las migraciones en la base de datos (usando --force para evitar confirmaciones)
         php artisan db:seed --force  #Seeders
-       # php artisan test  # Corre los tests de Laravel
+        php artisan test  # Tests
 
 
 #actions/checkout@v4 Clona tu repositorio en el entorno de ejecución de GitHub Actions.
