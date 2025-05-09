@@ -20,10 +20,10 @@ const deleteConsulta = (id) => {
   }
 };
 
-// Función para formatear la fecha
+// Formatejar fecha
 const formatDate = (date) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  return new Date(date).toLocaleDateString('es-ES', options); // 'es-ES' para formato español (día-mes-año)
+  return new Date(date).toLocaleDateString('es-ES', options); // 'es-ES'format español (día-mes-año)
 };
 </script>
 
@@ -33,50 +33,41 @@ const formatDate = (date) => {
       <NavBar />
     </template>
 
-    <!-- Botón de crear nueva consulta -->
-    <div class="flex justify-end mb-2">
-      <Link :href="route('consultas.create')" class="text-sm bg-blue-400 text-blue-900 px-3 py-1 m-6 mr-5 rounded-md hover:bg-blue-500 transition shadow-sm mr-2">
-        + Nueva Consulta
-      </Link>
-    </div>
-
     <div class="container mx-auto mt-2 px-4 mb-2">
-      <h2 class="text-center text-3xl font-semibold mb-4">Listado de Consultas</h2>
+      <h2 class="text-center text-3xl font-semibold text-gray-700 mb-6 mt-6">Listado de Consultas</h2>
 
       <!-- Vista en tabla -->
       <div v-if="consultas.data.length > 0">
         <table class="table-auto w-full text-center border-collapse">
           <thead class="bg-blue-100">
             <tr>
-              <th class="px-4 py-2 border-b-2 border-blue-400">ID</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400">Fecha</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400">Animal</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400">Veterinario</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400">Motivo</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400">Tratamiento</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400">Acción</th>
+              <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">ID</th>
+              <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Fecha</th>
+              <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Animal</th>
+              <th class="border-b-2 border-blue-400 text-gray-700">Veterinario</th>
+              <th class="border-b-2 border-blue-400 text-gray-700">Motivo</th>
+              <th class="border-b-2 border-blue-400 text-gray-700">Acción</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="consulta in consultas.data" :key="consulta.id" class="hover:bg-blue-50">
               <td class="border px-4 py-2">{{ consulta.id }}</td>
-              <td class="border px-4 py-2">{{ formatDate(consulta.fecha) }}</td> <!-- Usamos la función para formatear la fecha -->
+              <td class="border px-4 py-2">{{ formatDate(consulta.fecha) }}</td>
               <td class="border px-4 py-2">{{ consulta.animal.nombre }}</td>
               <td class="border px-4 py-2">{{ consulta.user.name }} {{ consulta.user.apellidos }}</td>
               <td class="border px-4 py-2">{{ consulta.motivo }}</td>
-              <td class="border px-4 py-2">{{ consulta.tratamiento }}</td>
               <td class="border px-4 py-2">
                 <div class="flex space-x-2 justify-center">
-                  <Link :href="route('consultas.show', consulta.id)" class="bg-blue-500 text-white text-sm py-1 px-2 rounded-lg hover:bg-blue-600">Ver</Link>
-                  <Link :href="route('consultas.edit', consulta.id)" class="bg-yellow-500 text-white text-sm py-1 px-2 rounded-lg hover:bg-yellow-600">Editar</Link>
-                  <button @click="deleteConsulta(consulta.id)" class="bg-red-500 text-white text-sm py-1 px-2 rounded-lg hover:bg-red-600">Eliminar</button>
+                  <Link :href="route('consultas.show', consulta.id)" class="bg-blue-100 text-blue-800 text-sm py-1 px-2 rounded-lg hover:bg-blue-200">Mostrar</Link>
+                  <Link :href="route('consultas.edit', consulta.id)" class="bg-gray-200 text-gray-800 text-sm py-1 px-2 rounded-lg hover:bg-gray-300">Editar</Link>
+                  <button @click="deleteConsulta(consulta.id)" class="bg-red-200 text-red-800 text-sm py-1 px-2 rounded-lg hover:bg-red-300">Eliminar</button>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
 
-        <!-- Paginación personalizada -->
+        <!-- Paginació -->
         <div class="flex justify-center mt-6 space-x-2">
           <!-- Botón Anterior -->
           <Link
@@ -93,7 +84,7 @@ const formatDate = (date) => {
             Anterior
           </span>
 
-          <!-- Páginas numéricas -->
+          <!-- Págines -->
           <span v-for="(link, index) in consultas.links" :key="index">
             <Link
               v-if="link.url"
@@ -125,7 +116,6 @@ const formatDate = (date) => {
         </div>
       </div>
 
-      <!-- Mensaje si no hay consultas -->
       <p v-else class="text-center text-lg text-gray-500">No hay consultas registradas.</p>
     </div>
     <FooterWorkers />

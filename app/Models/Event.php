@@ -21,6 +21,8 @@ class Event extends Model
         'precio',
     ];
 
+    /*Event perteneix a user*/
+    
     public function user()
     {
         return $this->belongsTo(User::class);

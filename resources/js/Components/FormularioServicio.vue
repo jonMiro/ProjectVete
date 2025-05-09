@@ -63,87 +63,99 @@ watch(() => form.tipo_servicio, (newTipoServicio) => {
       break;
   }
 });
+
+const autoResize = (event) => {
+  const textarea = event.target;
+  textarea.style.height = "auto"; // Reset
+  textarea.style.height = textarea.scrollHeight + "px"; // Ajuste dinámico
+};
+
 </script>
 
 <template>
-    <form @submit.prevent="form.post(route('servicios.store'))" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form @submit.prevent="form.post(route('servicios.store'))" class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-      <!-- Animal -->
-      <div>
-        <label for="animal_id" class="block mb-1 font-semibold">Animal</label>
-        <select id="animal_id" name="animal_id" v-model="form.animal_id" class="w-full border rounded px-3 py-2">
-          <option value="">Seleccione un animal</option>
-          <option v-for="animal in props.animales" :key="animal.id" :value="animal.id">
-            {{ animal.nombre }}
-          </option>
-        </select>
-      </div>
+        <!-- Animal -->
+        <div class="relative z-0 w-full group">
+          <select v-model="form.animal_id" id="animal_id" name="animal_id" class="peer block py-2.5 pl-3 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600">
+            <option disabled value="">Seleccione un animal</option>
+            <option v-for="animal in props.animales" :key="animal.id" :value="animal.id">{{ animal.nombre }}</option>
+          </select>
+          <label for="animal_id" class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-focus:text-blue-600">Animal</label>
+        </div>
 
-      <!-- Cliente (nombre y apellidos) -->
-      <div>
-        <label for="cliente" class="block mb-1 font-semibold">Cliente</label>
-        <input id="cliente" name="cliente" type="text" v-model="form.cliente" class="w-full border rounded px-3 py-2" readonly />
-      </div>
+        <!-- Cliente -->
+        <div class="relative z-0 w-full group">
+          <input v-model="form.cliente" type="text" id="cliente" name="cliente" class="peer block py-2.5 pl-3 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600" readonly />
+          <label for="cliente" class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-focus:text-blue-600">Cliente</label>
+        </div>
 
-      <!-- Auxiliar -->
-      <div>
-        <label for="user_id" class="block mb-1 font-semibold">Auxiliar</label>
-        <select id="user_id" name="user_id" v-model="form.user_id" class="w-full border rounded px-3 py-2">
-          <option value="">Seleccione un auxiliar</option>
-          <option v-for="user in props.auxiliares" :key="user.id" :value="user.id">
-            {{ user.name }} {{ user.apellidos }}
-          </option>
-        </select>
-      </div>
+        <!-- Auxiliar -->
+        <div class="relative z-0 w-full group">
+          <select v-model="form.user_id" id="user_id" name="user_id" class="peer block py-2.5 pl-3 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600">
+            <option disabled value="">Seleccione un auxiliar</option>
+            <option v-for="user in props.auxiliares" :key="user.id" :value="user.id">{{ user.name }} {{ user.apellidos }}</option>
+          </select>
+          <label for="user_id" class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-focus:text-blue-600">Auxiliar</label>
+        </div>
 
-      <!-- Tipo de Servicio -->
-      <div>
-        <label for="tipo_servicio" class="block mb-1 font-semibold">Tipo de Servicio</label>
-        <select id="tipo_servicio" name="tipo_servicio" v-model="form.tipo_servicio" class="w-full border rounded px-3 py-2">
-          <option value="">Seleccione un tipo de servicio</option>
-          <option value="peluqueria">Peluquería</option>
-          <option value="pedicura">Pedicura</option>
-          <option value="lavado">Lavado</option>
-          <option value="cita_veterinario">Cita Veterinario</option>
-        </select>
+        <!-- Tipo de Servicio -->
+        <div class="relative z-0 w-full group">
+          <select v-model="form.tipo_servicio" id="tipo_servicio" name="tipo_servicio" class="peer block py-2.5 pl-3 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600">
+            <option disabled value="">Seleccione un tipo de servicio</option>
+            <option value="peluqueria">Peluquería</option>
+            <option value="pedicura">Pedicura</option>
+            <option value="lavado">Lavado</option>
+            <option value="cita_veterinario">Cita Veterinario</option>
+          </select>
+          <label for="tipo_servicio" class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-focus:text-blue-600">Tipo de Servicio</label>
+        </div>
+
+        <!-- Duración -->
+        <div class="relative z-0 w-full group">
+          <input v-model="form.duracion" type="number" id="duracion" name="duracion" class="peer block py-2.5 pl-3 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600" />
+          <label for="duracion" class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-focus:text-blue-600">Duración (minutos)</label>
+        </div>
+
+        <!-- Precio -->
+        <div class="relative z-0 w-full group">
+          <input v-model="form.precio" type="number" step="0.01" id="precio" name="precio" class="peer block py-2.5 pl-3 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600" />
+          <label for="precio" class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-focus:text-blue-600">Precio (€)</label>
+        </div>
+
+        <!-- Fecha -->
+        <div class="relative z-0 w-full group">
+          <input v-model="form.fecha" type="date" id="fecha" name="fecha" class="peer block py-2.5 pl-3 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600" />
+          <label for="fecha" class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-focus:text-blue-600">Fecha</label>
+        </div>
+
+        <!-- Hora -->
+        <div class="relative z-0 w-full group">
+          <input v-model="form.hora" type="time" id="hora" name="hora" class="peer block py-2.5 pl-3 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600" />
+          <label for="hora" class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-focus:text-blue-600">Hora</label>
+        </div>
       </div>
 
       <!-- Descripción -->
-      <div class="md:col-span-2">
-        <label for="descripcion" class="block mb-1 font-semibold">Descripción</label>
-        <textarea id="descripcion" name="descripcion" v-model="form.descripcion" class="w-full border rounded px-3 py-2" rows="2"></textarea>
-      </div>
-
-      <!-- Duración -->
-      <div>
-        <label for="duracion" class="block mb-1 font-semibold">Duración (minutos)</label>
-        <input id="duracion" name="duracion" type="number" v-model="form.duracion" class="w-full border rounded px-3 py-2" />
-      </div>
-
-      <!-- Precio -->
-      <div>
-        <label for="precio" class="block mb-1 font-semibold">Precio (€)</label>
-        <input id="precio" name="precio" type="number" step="0.01" v-model="form.precio" class="w-full border rounded px-3 py-2" />
-      </div>
-
-      <!-- Fecha -->
-      <div>
-        <label for="fecha" class="block mb-1 font-semibold">Fecha</label>
-        <input id="fecha" name="fecha" type="date" v-model="form.fecha" class="w-full border rounded px-3 py-2" />
-      </div>
-
-      <!-- Hora -->
-      <div>
-        <label for="hora" class="block mb-1 font-semibold">Hora</label>
-        <input id="hora" name="hora" type="time" v-model="form.hora" class="w-full border rounded px-3 py-2" />
+      <div class="relative z-0 w-full group">
+        <textarea
+    v-model="form.descripcion"
+    id="descripcion"
+    name="descripcion"
+    rows="1"
+    @input="autoResize($event)"
+    class="block overflow-hidden resize-none py-2.5 pl-3 w-full text-lg text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+    placeholder=" "
+  ></textarea>
+    <label for="descripcion" class="peer-focus:font-medium absolute text-lg text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-focus:text-blue-600">Descripción</label>
       </div>
 
       <!-- Botón -->
-      <div class="md:col-span-2 text-center mt-4">
-        <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+      <div class="text-center pt-4">
+        <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300">
           Guardar Servicio
         </button>
       </div>
-
     </form>
   </template>

@@ -92,7 +92,7 @@ import FooterWorkers from '@/Components/FooterWorkers.vue'
 
 defineProps(['servicios', 'consultas', 'totalServicios', 'totalConsultas', 'totalGeneral'])
 
-// Filtro para formatear fechas en formato 'DD-MM-YYYY'
+// formato 'DD-MM-YYYY'
 const formatDate = (value) => {
   if (!value) return ''
   const date = new Date(value)

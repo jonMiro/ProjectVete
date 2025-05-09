@@ -26,6 +26,13 @@ const form = useForm({
   observaciones: '',
 });
 
+// Redimensionar el textarea (vaja aumentant tamany)
+const autoResize = (event) => {
+  const textarea = event.target;
+  textarea.style.height = "auto"; // Reset
+  textarea.style.height = textarea.scrollHeight + "px"; // Ajust dinámic
+};
+
 // Plenar info al form
 watch(() => form.animal_id, (animalId) => {
   const selected = props.animales.find(animal => animal.id === parseInt(animalId));
@@ -39,114 +46,250 @@ watch(() => form.animal_id, (animalId) => {
   }
 });
 </script>
+
 <template>
+  <div class="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
     <form @submit.prevent="form.post(route('alta.storeConsulta'))" class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
       <!-- Animal -->
-      <div>
-        <label for="animal_id" class="block mb-1 font-semibold">Animal</label>
-        <select id="animal_id" name="animal_id" v-model="form.animal_id" class="w-full border rounded px-3 py-2">
-          <option value="">Seleccione un animal</option>
+      <div class="relative">
+        <select
+          id="animal_id"
+          name="animal_id"
+          v-model="form.animal_id"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6"
+        >
+          <option value="" disabled selected>Seleccione un animal</option>
           <option v-for="animal in props.animales" :key="animal.id" :value="animal.id">
             {{ animal.nombre }}
           </option>
         </select>
+        <label for="animal_id" class="absolute left-0 top-1 ml-2 text-gray-500 text-sm transition-all peer-focus:text-blue-600">
+          Animal
+        </label>
       </div>
 
       <!-- Veterinario -->
-      <div>
-        <label for="user_id" class="block mb-1 font-semibold">Veterinario</label>
-        <select id="user_id" name="user_id" v-model="form.user_id" class="w-full border rounded px-3 py-2">
-          <option value="">Seleccione un veterinario</option>
-          <option v-for="user in props.users" :key="user.id" :value="user.id">
-            {{ user.name }} {{ user.apellidos }}
-          </option>
-        </select>
-      </div>
+      <div class="relative">
+    <select
+      id="user_id"
+      name="user_id"
+      v-model="form.user_id"
+      class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6"
+    >
+      <option value="" disabled selected>Seleccione un veterinario</option>
+      <!-- Filtrem per tipo 'veterinario' -->
+      <option v-for="user in props.users.filter(user => user.tipo === 'veterinario')" :key="user.id" :value="user.id">
+        {{ user.name }} {{ user.apellidos }}
+      </option>
+    </select>
+    <label for="user_id" class="absolute left-0 top-1 text-gray-500 ml-2 text-sm transition-all peer-focus:text-blue-600">
+      Veterinario
+    </label>
+  </div>
+
+
 
       <!-- Fecha -->
-      <div>
-        <label for="fecha" class="block mb-1 font-semibold">Fecha</label>
-        <input id="fecha" name="fecha" type="date" v-model="form.fecha" class="w-full border rounded px-3 py-2" />
+      <div class="relative">
+        <input
+          type="date"
+          id="fecha"
+          name="fecha"
+          v-model="form.fecha"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6"
+        />
+        <label for="fecha" class="absolute left-0 top-1 ml-2 text-gray-500 text-sm transition-all peer-focus:text-blue-600">
+          Fecha
+        </label>
       </div>
 
       <!-- Hora -->
-      <div>
-        <label for="hora" class="block mb-1 font-semibold">Hora</label>
-        <input id="hora" name="hora" type="time" v-model="form.hora" class="w-full border rounded px-3 py-2" />
+      <div class="relative">
+        <input
+          type="time"
+          id="hora"
+          name="hora"
+          v-model="form.hora"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6"
+        />
+        <label for="hora" class="absolute left-0 top-1 ml-2 text-gray-500 text-sm transition-all peer-focus:text-blue-600">
+          Hora
+        </label>
       </div>
 
       <!-- Lugar -->
-      <div>
-        <label for="lugar" class="block mb-1 font-semibold">Lugar</label>
-        <input id="lugar" name="lugar" type="text" v-model="form.lugar" class="w-full border rounded px-3 py-2" />
+      <div class="relative">
+        <input
+          type="text"
+          id="lugar"
+          name="lugar"
+          v-model="form.lugar"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6"
+        />
+        <label for="lugar" class="absolute left-0 top-1 ml-2 text-gray-500 text-sm transition-all peer-focus:text-blue-600">
+          Lugar
+        </label>
       </div>
 
       <!-- Peso -->
-      <div>
-        <label for="peso" class="block mb-1 font-semibold">Peso (kg)</label>
-        <input id="peso" name="peso" type="number" step="0.01" v-model="form.peso" class="w-full border rounded px-3 py-2"  />
+      <div class="relative">
+        <input
+          type="number"
+          step="0.01"
+          id="peso"
+          name="peso"
+          v-model="form.peso"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6"
+        />
+        <label for="peso" class="absolute left-0 top-1 ml-2 text-gray-500 text-sm transition-all peer-focus:text-blue-600">
+          Peso (kg)
+        </label>
       </div>
 
       <!-- Tipo de Animal -->
-      <div>
-        <label for="tipo_animal" class="block mb-1 font-semibold">Tipo de Animal</label>
-        <input id="tipo_animal" name="tipo_animal" type="text" v-model="form.tipo_animal" class="w-full border rounded px-3 py-2 bg-gray-100" readonly />
+      <div class="relative">
+        <input
+          type="text"
+          id="tipo_animal"
+          name="tipo_animal"
+          v-model="form.tipo_animal"
+          class="peer w-full bg-gray-100 border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6"
+          readonly
+        />
+        <label for="tipo_animal" class="absolute left-0 top-1 ml-2 text-gray-500 text-sm transition-all">
+          Tipo de Animal
+        </label>
       </div>
 
       <!-- Raza -->
-      <div>
-        <label for="raza" class="block mb-1 font-semibold">Raza</label>
-        <input id="raza" name="raza" type="text" v-model="form.raza" class="w-full border rounded px-3 py-2 bg-gray-100" readonly />
+      <div class="relative">
+        <input
+          type="text"
+          id="raza"
+          name="raza"
+          v-model="form.raza"
+          class="peer w-full bg-gray-100 border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6"
+          readonly
+        />
+        <label for="raza" class="absolute left-0 top-1 ml-2 text-gray-500 text-sm transition-all">
+          Raza
+        </label>
       </div>
 
       <!-- Motivo -->
-      <div class="md:col-span-2">
-        <label for="motivo" class="block mb-1 font-semibold">Motivo</label>
-        <textarea id="motivo" name="motivo" v-model="form.motivo" class="w-full border rounded px-3 py-2" rows="2"></textarea>
+      <div class="md:col-span-2 relative">
+        <textarea
+          id="motivo"
+          name="motivo"
+          rows="2"
+          v-model="form.motivo"
+          @input="autoResize"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6 pb-2 resize-none transition-all"
+        ></textarea>
+        <label for="motivo" class="absolute left-0 top-0 ml-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:text-xs peer-focus:top-0 peer-focus:text-blue-600">
+          Motivo
+        </label>
       </div>
 
       <!-- Anamnesis -->
-      <div class="md:col-span-2">
-        <label for="anamnesis" class="block mb-1 font-semibold">Anamnesis</label>
-        <textarea id="anamnesis" name="anamnesis" v-model="form.anamnesis" class="w-full border rounded px-3 py-2" rows="2"></textarea>
+      <div class="md:col-span-2 relative">
+        <textarea
+          id="anamnesis"
+          name="anamnesis"
+          rows="2"
+          v-model="form.anamnesis"
+          @input="autoResize"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6 pb-2 resize-none transition-all"
+        ></textarea>
+        <label for="anamnesis" class="absolute left-0 top-0 ml-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:text-xs peer-focus:top-0 peer-focus:text-blue-600">
+          Anamnesis
+        </label>
       </div>
 
       <!-- Examen Físico -->
-      <div class="md:col-span-2">
-        <label for="examen_fisico" class="block mb-1 font-semibold">Examen Físico</label>
-        <textarea id="examen_fisico" name="examen_fisico" v-model="form.examen_fisico" class="w-full border rounded px-3 py-2" rows="2"></textarea>
+      <div class="md:col-span-2 relative">
+        <textarea
+          id="examen_fisico"
+          name="examen_fisico"
+          rows="2"
+          v-model="form.examen_fisico"
+          @input="autoResize"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6 pb-2 resize-none transition-all"
+        ></textarea>
+        <label for="examen_fisico" class="absolute left-0 top-0 ml-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:text-xs peer-focus:top-0 peer-focus:text-blue-600">
+          Examen Físico
+        </label>
       </div>
 
       <!-- Diagnóstico -->
-      <div class="md:col-span-2">
-        <label for="diagnostico" class="block mb-1 font-semibold">Diagnóstico</label>
-        <textarea id="diagnostico" name="diagnostico" v-model="form.diagnostico" class="w-full border rounded px-3 py-2" rows="2"></textarea>
+      <div class="md:col-span-2 relative">
+        <textarea
+          id="diagnostico"
+          name="diagnostico"
+          rows="2"
+          v-model="form.diagnostico"
+          @input="autoResize"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6 pb-2 resize-none transition-all"
+        ></textarea>
+        <label for="diagnostico" class="absolute left-0 top-0 ml-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:text-xs peer-focus:top-0 peer-focus:text-blue-600">
+          Diagnóstico
+        </label>
       </div>
 
       <!-- Tratamiento -->
-      <div class="md:col-span-2">
-        <label for="tratamiento" class="block mb-1 font-semibold">Tratamiento</label>
-        <textarea id="tratamiento" name="tratamiento" v-model="form.tratamiento" class="w-full border rounded px-3 py-2" rows="2"></textarea>
+      <div class="md:col-span-2 relative">
+        <textarea
+          id="tratamiento"
+          name="tratamiento"
+          rows="2"
+          v-model="form.tratamiento"
+          @input="autoResize"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6 pb-2 resize-none transition-all"
+        ></textarea>
+        <label for="tratamiento" class="absolute left-0 top-0 ml-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:text-xs peer-focus:top-0 peer-focus:text-blue-600">
+          Tratamiento
+        </label>
       </div>
 
       <!-- Observaciones -->
-      <div class="md:col-span-2">
-        <label for="observaciones" class="block mb-1 font-semibold">Observaciones</label>
-        <textarea id="observaciones" name="observaciones" v-model="form.observaciones" class="w-full border rounded px-3 py-2" rows="2"></textarea>
+      <div class="md:col-span-2 relative">
+        <textarea
+          id="observaciones"
+          name="observaciones"
+          rows="2"
+          v-model="form.observaciones"
+          @input="autoResize"
+          class="peer w-full bg-transparent border-b-2 border-gray-300 focus:border-blue-600 outline-none pt-6 pb-2 resize-none transition-all"
+        ></textarea>
+        <label for="observaciones" class="absolute left-0 top-0 ml-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:text-xs peer-focus:top-0 peer-focus:text-blue-600">
+          Observaciones
+        </label>
       </div>
 
-      <!-- Precio -->
+       <!-- Precio -->
       <div>
-        <label for="precio" class="block mb-1 font-semibold">Precio (€)</label>
+        <label for="precio" class="block mb-1 font-semibold text-gray-500">Precio (€)</label>
         <input id="precio" name="precio" type="number" step="0.01" v-model="form.precio" class="w-full border rounded px-3 py-2" />
       </div>
 
-      <!-- Botón -->
-      <div class="md:col-span-2 text-center mt-4">
-        <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
-          Guardar Consulta
+
+      <!-- Botón de envío -->
+      <div class="md:col-span-2 flex justify-end">
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+        >
+          Guardar
         </button>
       </div>
     </form>
-  </template>
+  </div>
+</template>
+
+<style scoped>
+  textarea {
+    min-height: 40px;
+    resize: none;
+  }
+</style>

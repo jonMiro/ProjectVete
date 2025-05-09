@@ -22,6 +22,13 @@ class PostController extends Controller
         ]);
     }
 
+    public function show(Post $post)
+{
+    return Inertia::render('Posts/Show', [
+        'post' => $post->load('user'),
+    ]);
+}
+
     public function myPosts()
 {
     $guias = Post::where('tipo', 'guia')->where('user_id', Auth::id())->with('user')->get();
@@ -48,12 +55,12 @@ class PostController extends Controller
             'titulo' => 'required|string|max:255',
             'contenido' => 'required|string',
             'tipo' => 'required|in:guia,anuncio,experiencia',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Si deseas incluir imagen
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Si se sube una imagen, la guardamos
+        // imatge no va
         if ($request->hasFile('imagen')) {
-            $imagenPath = $request->file('imagen')->store('images', 'public'); // Cambia el destino si es necesario
+            $imagenPath = $request->file('imagen')->store('images', 'public');
         }
 
         Post::create([
@@ -72,6 +79,40 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success', '¡Post eliminado correctamente!');
+        return redirect()->route('posts.myposts')->with('success', '¡Post eliminado correctamente!');
+
+
+    }
+    public function edit(Post $post)
+    {
+        return Inertia::render('Posts/Edit', [
+            'post' => $post,
+        ]);
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'contenido' => 'required|string',
+            'tipo' => 'required|in:guia,anuncio,experiencia',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', //no va no hi ha manera
+        ]);
+
+    // imatge no va
+    if ($request->hasFile('imagen')) {
+        $imagenPath = $request->file('imagen')->store('images', 'public');
+    }
+
+
+
+        $post->update([
+            'titulo' => $request->titulo,
+            'contenido' => $request->contenido,
+            'tipo' => $request->tipo,
+            'imagen' => $imagenPath ?? $post->imagen,
+        ]);
+
+        return redirect()->route('posts.myposts')->with('success', '¡Post actualizado exitosamente!');
     }
 }

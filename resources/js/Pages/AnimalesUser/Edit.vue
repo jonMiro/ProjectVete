@@ -1,14 +1,15 @@
 <template>
     <AppLayout title="Editar Animal">
         <template #header>
-        </template>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+         Editar Animal
+        </h2>        </template>
 
         <div class="container mx-auto my-12">
             <div class="max-w-3xl mx-auto bg-white p-8 shadow-lg rounded-lg">
-                <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Editar Animal</h2>
+
 
                 <form @submit.prevent="submit">
-                    <!-- Campos del formulario -->
                     <div class="mb-4">
                         <label for="nombre" class="block text-gray-700 font-medium">Nombre</label>
                         <input v-model="form.nombre" type="text" id="nombre" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" required />
@@ -64,6 +65,7 @@
                 </form>
             </div>
         </div>
+        <FooterWorkers />
     </AppLayout>
 </template>
 
@@ -72,10 +74,12 @@ import NavBar from '@/Components/NavBar.vue';
 import { defineProps } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
+
 
 const props = defineProps({
-    user: Object, // Lista de usuarios
-    animal: Object, // Recibe el objeto animal para editar
+    user: Object,
+    animal: Object, 
 });
 
 const form = useForm({
@@ -84,8 +88,8 @@ const form = useForm({
     raza: props.animal.raza || '',
     sexo: props.animal.sexo || '',
     fechaNacimiento: props.animal.fechaNacimiento || '',
-    user_id: props.animal.user_id || '', // ID del usuario asociado al animal
-    imagen: null, // No cargamos la imagen automáticamente
+    user_id: props.animal.user_id || '',
+    imagen: null,
     observaciones: props.animal.observaciones || '',
 });
 

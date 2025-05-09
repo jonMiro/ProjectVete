@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Footer from '@/Components/Footer.vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
 import PostsBar from '@/Components/PostsBar.vue';
 
 const form = useForm({
@@ -14,17 +14,16 @@ const form = useForm({
 
 const tipos = ['guia', 'anuncio', 'experiencia'];
 
-// Función para manejar la creación de un post
+// submit crear
 const submit = () => {
   form.post(route('posts.store'), {
     onSuccess: () => {
-      // Redirige a la página de posts luego de crear el post
       window.location.href = '/clients/posts/myposts';
     },
   });
 };
 
-// Función para manejar la carga de la imagen
+// event imagen
 const handleFileChange = (event) => {
   form.imagen = event.target.files[0];
 };
@@ -33,13 +32,15 @@ const handleFileChange = (event) => {
 <template>
     <AppLayout title="Panel de Posts">
       <template #header>
+        <h2 class="font-semibold text-lg sm:text-xl text-gray-800 leading-tight px-4 sm:px-6">
+          Nuevo Post
+        </h2>
       </template>
 
       <div class="container mx-auto mt-4 px-4">
         <PostsBar />
-    <h2 class="text-center text-3xl font-semibold mb-8">Crear Post</h2>
 
-    <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg mt-4">
       <form @submit.prevent="submit">
         <div class="mb-4">
           <label for="titulo" class="block text-sm font-semibold text-gray-700">Título</label>
@@ -97,6 +98,6 @@ const handleFileChange = (event) => {
       </form>
     </div>
   </div>
-  <Footer />
+  <FooterWorkers />
 </AppLayout>
 </template>

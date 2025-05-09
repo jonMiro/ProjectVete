@@ -4,23 +4,40 @@
         <NavBar />
       </template>
 
-      <!-- Controles -->
-      <div class="flex flex-col items-center mt-8 space-y-4">
-        <input
-          v-model="searchQuery"
-          @input="handleSearch"
-          type="text"
-          class="w-1/2 p-3 border border-gray-300 rounded-lg"
-          placeholder="Buscar usuarios, clientes, animales..."
-        />
-        <label class="inline-flex items-center space-x-2">
+      <div class="flex justify-between items-center px-4 mt-6">
+        <!-- Enlaces-->
+        <div class="flex flex-col space-y-2">
+          <Link :href="route('animales.index')" class="text-sm text-blue-600 hover:underline">
+            Listado animales
+          </Link>
+          <Link :href="route('users.index')" class="text-sm text-blue-600 hover:underline">
+            Listado usuarios
+          </Link>
+          <Link :href="route('postsworkers.index')" class="text-sm text-blue-600 hover:underline">
+            Listado posts
+          </Link>
+        </div>
+      </div>
+
+      <!-- buscador -->
+      <div class="flex justify-center mt-0">
+        <div class="w-full max-w-lg">
           <input
-            type="checkbox"
-            v-model="mostrarTodos"
-            class="form-checkbox h-5 w-5 text-blue-600"
+            v-model="searchQuery"
+            @input="handleSearch"
+            type="text"
+            class="w-full p-3 border border-gray-300 rounded-lg"
+            placeholder="Buscar usuarios, clientes, animales..."
           />
-          <span class="text-gray-700 text-sm">Mostrar todos los registros</span>
-        </label>
+          <label class="inline-flex items-center text-center space-x-2 mt-4">
+            <input
+              type="checkbox"
+              v-model="mostrarTodos"
+              class="form-checkbox h-5 w-5 text-blue-600"
+            />
+            <span class="text-gray-700 text-sm">Mostrar todos los registros</span>
+          </label>
+        </div>
       </div>
 
       <!-- Tabla de Resultados -->
@@ -89,29 +106,29 @@
   const mostrarTodos = ref(false);
   const handleSearch = () => {};
 
-  // Unificar y etiquetar todos los resultados
+
   const filteredResults = computed(() => {
-  const query = searchQuery.value.toLowerCase();
+    const query = searchQuery.value.toLowerCase();
 
-  const format = (items, tipo, nombreKey, routeName) =>
-    items
-      .map(i => ({
-        ...i,
-        tipo,
-        nombre_completo: `${i[nombreKey] || ''} ${i.apellidos || ''}`.trim(),
-        route: route(routeName, i.id),
-      }))
-      .filter(i => query === '' || i.nombre_completo.toLowerCase().includes(query));
+    const format = (items, tipo, nombreKey, routeName) =>
+      items
+        .map(i => ({
+          ...i,
+          tipo,
+          nombre_completo: `${i[nombreKey] || ''} ${i.apellidos || ''}`.trim(),
+          route: route(routeName, i.id),
+        }))
+        .filter(i => query === '' || i.nombre_completo.toLowerCase().includes(query));
 
-  const allItems = [
-    ...format(props.clientes, 'Cliente', 'name', 'users.show'),
-    ...format(props.veterinarios, 'Veterinario', 'name', 'users.show'),
-    ...format(props.auxiliares, 'Auxiliar', 'name', 'users.show'),
-    ...format(props.animales, 'Animal', 'nombre', 'animales.show'),
-  ];
+    const allItems = [
+      ...format(props.clientes, 'Cliente', 'name', 'users.show'),
+      ...format(props.veterinarios, 'Veterinario', 'name', 'users.show'),
+      ...format(props.auxiliares, 'Auxiliar', 'name', 'users.show'),
+      ...format(props.animales, 'Animal', 'nombre', 'animales.show'),
+    ];
 
-  return mostrarTodos.value || query !== ''
-    ? allItems
-    : [];
-});
+    return mostrarTodos.value || query !== ''
+      ? allItems
+      : [];
+  });
   </script>

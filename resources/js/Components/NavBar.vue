@@ -1,5 +1,5 @@
 <template>
-    <nav class="bg-gray-600 p-3">
+    <nav class="bg-gray-700 text-white p-3">
       <div class="container mx-auto flex justify-between items-center">
         <ul class="flex space-x-10 justify-center w-full">
             <li class="nav-item">

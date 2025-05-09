@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Controllers/FacturacionController.php
 
 namespace App\Http\Controllers;
 
@@ -12,11 +11,10 @@ class FacturacionController extends Controller
 {
     public function index()
     {
-        // Cargar los servicios y consultas con las relaciones necesarias
         $servicios = Servicio::with(['user', 'animal.user'])->get();
         $consultas = Consulta::with(['user', 'animal.user'])->get();
 
-        // Calcular los totales
+        // totals
         $totalServicios = $servicios->sum('precio');
         $totalConsultas = $consultas->sum('precio');
         $totalGeneral = $totalServicios + $totalConsultas;

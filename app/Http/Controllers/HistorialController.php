@@ -1,8 +1,8 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Event;
 use App\Models\Consulta;
 use App\Models\Servicio;
@@ -14,32 +14,37 @@ class HistorialController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
+        $user = Auth::user();
         $hoy = Carbon::now();
 
-        // Eventos genéricos futuros (no consulta ni servicio)
-        $otrosEventos = Event::where('user_id', $userId)
+        // a partir de la id del user auth traem el animal
+        $animalIds = DB::table('animales')
+            ->where('user_id', $user->id)
+            ->pluck('id');
+
+        // consultes asociades al animal
+        $consultas = Consulta::whereIn('animal_id', $animalIds)
+            ->with('animal')
+            ->get();
+
+        //Servicis asociats al animal
+        $servicios = Servicio::whereIn('animal_id', $animalIds)
+            ->with('animal')
+            ->get();
+
+        // Events de user
+        $eventos = Event::where('user_id', $user->id)
             ->whereDate('fecha', '>=', $hoy)
             ->whereNotIn('tipo', ['consulta', 'servicio'])
             ->get();
 
-        // Consultas futuras del usuario
-        $consultas = Consulta::where('user_id', $userId)
-            ->with(['animal'])
-            ->get();
-
-        // Servicios futuros del usuario
-        $servicios = Servicio::where('user_id', $userId)
-            ->with(['animal'])
-            ->get();
-
-            return Inertia::render('Historial/Index', [
-            'otrosEventos' => $otrosEventos,
+        return Inertia::render('Historial/Index', [
             'consultas' => $consultas,
             'servicios' => $servicios,
+            'eventos' => $eventos,
         ]);
     }
-    // app/Http/Controllers/HistorialController.php
+
     public function showConsulta($id)
     {
         $consulta = Consulta::with(['user', 'animal'])->findOrFail($id);
@@ -49,7 +54,6 @@ class HistorialController extends Controller
         ]);
     }
 
-    // Mostrar detalles del servicio
     public function showServicio($id)
     {
         $servicio = Servicio::with(['user', 'animal'])->findOrFail($id);
@@ -58,38 +62,13 @@ class HistorialController extends Controller
             'servicio' => $servicio,
         ]);
     }
-    // Mostrar detalles del evento
 
     public function showEvento($id)
     {
-        $evento = Event::with(['user'])->findOrFail($id);
+        $evento = Event::with('user')->findOrFail($id);
 
         return Inertia::render('Historial/EventoShow', [
             'evento' => $evento,
         ]);
     }
-
-    public function destroyConsulta($id)
-{
-    $consulta = Consulta::findOrFail($id);
-    $consulta->delete();
-
-    return redirect()->route('clients.historial.index')->with('success', 'Consulta eliminada correctamente.');
 }
-public function destroyServicio($id)
-{
-    $servicio = Servicio::findOrFail($id);
-    $servicio->delete();
-
-    return redirect()->route('clients.historial.index')->with('success', 'Servicio eliminada correctamente.');
-}
-public function destroyEvento($id)
-{
-    $evento = Event::findOrFail($id);
-    $evento->delete();
-
-    return redirect()->route('clients.historial.index')->with('success', 'Evento eliminada correctamente.');
-}
-
-}
-

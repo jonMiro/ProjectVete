@@ -2,7 +2,7 @@
     <div class="calendar-container">
       <FullCalendar :options="calendarOptions" />
 
-      <!-- Modal para mostrar los eventos del día -->
+      <!-- finestra que s'obri (modal) -->
       <div v-if="showModal" class="modal-overlay" @click="closeModal">
         <div class="modal-content" @click.stop>
           <h3>Eventos para el día {{ selectedDate }}</h3>
@@ -31,64 +31,65 @@
       FullCalendar
     },
     setup() {
-      const events = ref([])  // Declaramos los eventos
-      const showModal = ref(false)  // Para mostrar/ocultar el modal
+      const events = ref([])  // Declarem events
+      const showModal = ref(false)  // modal
       const selectedDate = ref('')  // Fecha seleccionada
-      const eventsOnSelectedDate = ref([])  // Eventos del día seleccionado
+      const eventsOnSelectedDate = ref([])  // Events del día seleccionat
 
-      // Función para obtener los eventos desde la API
+      // arrepleguem els props de la api
       const fetchEvents = async () => {
         try {
-          const response = await fetch('/api/events')  // Llamada a la API
+          const response = await fetch('/api/events')
           const data = await response.json()
-          // Formateamos los datos para FullCalendar
+
           events.value = data.map(event => ({
             id: event.id,
             title: event.title,
             start: event.start,
-            end: event.end || event.start,  // Si no hay "end", lo usamos como "start"
-            description: event.descripcion,  // Puedes agregar otros campos si los necesitas
-            tipo: event.tipo,  // El tipo de evento
-            precio: event.precio  // El precio
+            end: event.end || event.start,
+            description: event.descripcion,
+            tipo: event.tipo,
+            precio: event.precio
           }))
         } catch (error) {
           console.error('Error fetching events:', error)
         }
       }
 
-      // Llamamos a la API cuando se monta el componente
+      // crida a la api
       onMounted(fetchEvents)
+
 
       const calendarOptions = ref({
         plugins: [dayGridPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
-        events: [],  // Inicializamos eventos como un array vacío
-        eventClick: handleEventClick,  // Manejar clic en evento
-        dateClick: handleDateClick,  // Manejar clic en fecha
+        events: [],
+        eventClick: handleEventClick,
+        dateClick: handleDateClick,
       })
 
-      // Actualizar los eventos cuando se obtienen nuevos datos
+      // actualitzar el conjust de events si es crea un event nou
       watch(events, (newEvents) => {
-        calendarOptions.value.events = newEvents  // Actualizamos los eventos en calendarOptions
+        calendarOptions.value.events = newEvents
       })
 
-      // Función cuando se hace clic en un evento
+
       function handleEventClick(info) {
         alert(`Evento: ${info.event.title}\nTipo: ${info.event.extendedProps.tipo}\nPrecio: ${info.event.extendedProps.precio || 'Por determinar'}`)
       }
 
-      // Función cuando se hace clic en una fecha
+
+      //al clicar guarda la fecha, y apareixen els events diaris en el modal (no funciona?)
       function handleDateClick(arg) {
-        selectedDate.value = arg.dateStr  // Guardamos la fecha seleccionada
-        // Filtramos los eventos para mostrar solo los que ocurren en esta fecha
+        selectedDate.value = arg.dateStr
         eventsOnSelectedDate.value = events.value.filter(event => {
           const eventDate = new Date(event.start).toLocaleDateString()
           return eventDate === arg.dateStr
         })
-        showModal.value = true  // Mostramos el modal
+        showModal.value = true
       }
 
-      // Función para cerrar el modal
+
       function closeModal() {
         showModal.value = false
       }

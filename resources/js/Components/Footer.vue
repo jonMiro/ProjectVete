@@ -1,7 +1,7 @@
 <template>
     <footer class="bg-gray-800 text-white py-6">
         <div class="max-w-6xl mx-auto text-center px-4">
-            <!-- Imagen de copyright y bandera -->
+            <!-- Imagen de copyright-->
             <div class="mb-4">
                 <img src="/images/legal.jpg" alt="Copyright" class="mx-auto mb-2 max-w-full object-contain" />
             </div>

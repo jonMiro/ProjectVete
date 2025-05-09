@@ -16,6 +16,8 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\AnimalUserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HistorialController;
+use App\Http\Controllers\PostsWorkersController;
+
 
 
 
@@ -42,57 +44,63 @@ Route::middleware([
 });
 
 
-
+// CLIENTES
 Route::prefix('clients')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Clients/ClientsDashboard');
     })->name('clients');
 
+      //events
     Route::resource('eventos', EventController::class);
 
-      // Mostrar los animales asociados al cliente
-      Route::get('animales', [AnimalUserController::class, 'index'])->name('clients.animales.index');
+      // animals
+    Route::get('animales', [AnimalUserController::class, 'index'])->name('clients.animales.index');
+    Route::get('animales/{animal}/edit', [AnimalUserController::class, 'edit'])->name('clients.animales.edit');
+    Route::put('animales/{animal}', [AnimalUserController::class, 'update'])->name('clients.animales.update');
+    Route::get('animales/create', [AnimalUserController::class, 'create'])->name('clients.animales.create');
+    Route::post('animales', [AnimalUserController::class, 'store'])->name('clients.animales.store');
+    Route::get('animales/{animal}', [AnimalUserController::class, 'show'])->name('clients.animales.show');
+    Route::delete('animales/{animal}', [AnimalUserController::class, 'destroy'])->name('clients.animales.destroy');
 
-      // Editar, crear un animal
-      Route::get('animales/{animal}/edit', [AnimalUserController::class, 'edit'])->name('clients.animales.edit');
-      Route::put('animales/{animal}', [AnimalUserController::class, 'update'])->name('clients.animales.update');
-      Route::get('animales/create', [AnimalUserController::class, 'create'])->name('clients.animales.create');
-      Route::post('animales', [AnimalUserController::class, 'store'])->name('clients.animales.store');
+    // historial
+    Route::get('historial', [HistorialController::class, 'index'])->name('clients.historial.index');
+    Route::get('historial/consulta/{id}', [HistorialController::class, 'showConsulta'])->name('clients.historial.showConsulta');
+    Route::get('historial/servicio/{id}', [HistorialController::class, 'showServicio'])->name('clients.historial.showServicio');
+    Route::get('historial/evento/{id}', [HistorialController::class, 'showEvento'])->name('clients.historial.showEvento');
 
-      Route::get('historial', [HistorialController::class, 'index'])->name('clients.historial.index');
-      Route::get('historial/consulta/{id}', [HistorialController::class, 'showConsulta'])->name('clients.historial.showConsulta');
-      Route::get('historial/servicio/{id}', [HistorialController::class, 'showServicio'])->name('clients.historial.showServicio');
-      Route::get('historial/evento/{id}', [HistorialController::class, 'showEvento'])->name('clients.historial.showEvento');
+    Route::delete('historial/consulta/{id}', [HistorialController::class, 'destroyConsulta'])->name('clients.historial.destroyConsulta');
+    Route::delete('historial/servicio/{id}', [HistorialController::class, 'destroyServicio'])->name('clients.historial.destroyServicio');
+    Route::delete('historial/evento/{id}', [HistorialController::class, 'destroyEvento'])->name('clients.historial.destroyEvento');
 
-      Route::delete('historial/consulta/{id}', [HistorialController::class, 'destroyConsulta'])->name('clients.historial.destroyConsulta');
-      Route::delete('historial/servicio/{id}', [HistorialController::class, 'destroyServicio'])->name('clients.historial.destroyServicio');
-      Route::delete('historial/evento/{id}', [HistorialController::class, 'destroyEvento'])->name('clients.historial.destroyEvento');
+    // posts
+    Route::middleware('auth')->get('posts/myposts', [PostController::class, 'myPosts'])->name('posts.myposts');
+    Route::get('posts/myposts', [PostController::class, 'myPosts'])->name('posts.myposts');
+    Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+    Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+});
 
 
 
-      Route::middleware('auth')->get('posts/myposts', [PostController::class, 'myPosts'])->name('posts.myposts');
-      Route::resource('posts', PostController::class);
-    });
-
-
-    // Crear un evento
-   // Route::get('/eventos/create', [EventController::class, 'create'])->name('clients.events.create');
-    //Route::post('/eventos', [EventController::class, 'store'])->name('clients.storeEvent');
-
+ // WORKERS
 
 Route::prefix('workers')->group(function () {
-    // Dashboard
+
     Route::get('/', function () {
         return Inertia::render('Workers/WorkersDashboard');
     })->name('workers');
 
-    // Búsqueda
+    // search
     Route::resource('search', SearchController::class)->only(['index']);
 
-    // Animales
+    // animals
     Route::resource('animales', AnimalController::class);
 
-    // Usuarios
+    // users
     Route::resource('users', UserController::class);
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
@@ -104,17 +112,20 @@ Route::prefix('workers')->group(function () {
 
     // Servicios
     Route::resource('servicios', ServicioController::class);
-    // routes/web.php
-Route::delete('/servicios/{servicio}', [ServicioController::class, 'destroy'])->name('servicios.destroy');
+    Route::delete('/servicios/{servicio}', [ServicioController::class, 'destroy'])->name('servicios.destroy');
 
 
-    // Facturación
+    //Facturación
     Route::get('facturacion', [FacturacionController::class, 'index'])->name('facturacion.index');
 
+    //stats
     Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas.index');
 
+    //posts
+    Route::get('posts', [PostsWorkersController::class, 'index'])->name('postsworkers.index');
+    Route::delete('posts/{post}', [PostsWorkersController::class, 'destroy'])->name('postsworkers.destroy');
 
-
+    //alta
     Route::get('alta', [AltaController::class, 'index'])->name('alta.index');
     Route::post('alta/user', [AltaController::class, 'storeUser'])->name('alta.storeUser');
     Route::post('alta/animal', [AltaController::class, 'storeAnimal'])->name('alta.storeAnimal');
@@ -126,51 +137,10 @@ Route::delete('/servicios/{servicio}', [ServicioController::class, 'destroy'])->
 });
 
 
-
+//no auth
 
 Route::get('/aviso-legal', [PageController::class, 'avisoLegal'])->name('aviso-legal');
 Route::get('/politica-privacidad', [PageController::class, 'politicaPrivacidad'])->name('politica-privacidad');
 Route::get('/politica-cookies', [PageController::class, 'politicaCookies'])->name('politica-cookies');
 Route::get('/accesibilidad', [PageController::class, 'accesibilidad'])->name('accesibilidad');
 
-//Route::get('/workers/search', function () {
- //   return Inertia::render('Workers/Search');
-//})->name('workers.search');
-
-
-
-
-/*Route::prefix('workers')->group(function () {
-    // Rutas para el Dashboard de Workers
-    Route::get('/', function () {
-        return Inertia::render('Workers/WorkersDashboard');
-    })->name('workers');
-
-
-    Route::resource('search', SearchController::class); // CRUD completo
-    Route::get('search', [SearchController::class, 'index'])->name('search.index');
-
-
-    // Rutas para el CRUD de Animales dentro de /workers
-    Route::resource('animales', AnimalController::class); // CRUD completo
-
-    // Rutas específicas para mostrar y eliminar
-    Route::get('animales/{id}', [AnimalController::class, 'show'])->name('animales.show');
-    Route::delete('animales/{id}', [AnimalController::class, 'destroy'])->name('animales.destroy');
-
-    Route::resource('users', UserController::class);
-
-    Route::resource('consultas', ConsultaController::class);
-    Route::get('/consultas', [ConsultaController::class, 'index'])->name('consultas.index');
-    // Ruta para mostrar los detalles de una consulta
-    Route::get('/consultas/{id}', [ConsultaController::class, 'show'])->name('consultas.show');
-
-    // routes/web.php
-
-    Route::resource('servicios', ServicioController::class);
-
-    // routes/web.php
-
-Route::get('/facturacion', [App\Http\Controllers\FacturacionController::class, 'index'])->name('facturacion.index');
-
-});*/

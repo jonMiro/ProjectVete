@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBarVolver from '@/Components/NavBarVolver.vue';
-import Footer from '@/Components/Footer.vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
 import Contacto from '@/Components/Contacto.vue';
 import { Link } from '@inertiajs/vue3';
 
@@ -144,6 +144,6 @@ defineProps({
     </div>
 </div>
 
-    <Footer />
+    <FooterWorkers />
 
 </template>

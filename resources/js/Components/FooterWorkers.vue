@@ -10,9 +10,8 @@
           </Link>
         </div>
 
-        <!-- Iconos centrados -->
+        <!-- Iconos redes sociales -->
         <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-10">
-          <!-- Redes sociales -->
           <div class="flex space-x-4 text-gray-400">
             <a href="https://www.facebook.com/" target="_blank" class="hover:text-indigo-500">
               <i class="fab fa-facebook-square text-xl"></i>

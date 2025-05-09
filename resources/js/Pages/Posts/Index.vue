@@ -1,9 +1,9 @@
 <script setup>
-import NavBar from '@/Components/NavBar.vue';
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { ref } from 'vue';
 import PostsBar from '@/Components/PostsBar.vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
 
 defineProps({
   guias: Array,
@@ -11,154 +11,67 @@ defineProps({
   experiencias: Array,
 });
 
-// limit 15 paraules
 const truncateContent = (content, wordLimit = 15) => {
   const words = content.split(' ');
   return words.length > wordLimit ? words.slice(0, wordLimit).join(' ') + '...' : content;
 };
 
-// Tabla/grid
-const isListView = ref(false);
+const formatFecha = (fechaStr) => {
+  const fecha = new Date(fechaStr);
+  return fecha.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+};
+
+
+const categorias = [
+  { nombre: 'Guías', posts: __props.guias, color: 'blue', tailwindColor: '#3B82F6' },
+  { nombre: 'Anuncios', posts: __props.anuncios, color: 'yellow', tailwindColor: '#F59E0B' },
+  { nombre: 'Experiencias', posts: __props.experiencias, color: 'green', tailwindColor: '#10B981' },
+];
 </script>
 
 <template>
   <AppLayout title="Panel de Posts">
     <template #header>
+      <h2 class="font-semibold text-lg sm:text-xl text-gray-800 leading-tight px-4 sm:px-6">
+        Comunidad
+      </h2>
     </template>
 
-    <div class="container mx-auto mt-4 px-4">
-      <PostsBar />
-      <!-- Checkbox para cambiar entre modo grid (tarjetas) y tabla -->
-      <div class="flex items-center justify-center mb-6">
-        <label for="toggle-view" class="mr-2 text-lg">Modo de vista</label>
-        <input
-          type="checkbox"
-          id="toggle-view"
-          v-model="isListView"
-          class="h-4 w-4"
-        />
-        <span class="ml-2">Modo Grid / Modo Tabla</span>
-      </div>
+    <div class="min-h-screen flex flex-col">
+      <div class="flex-grow container max-w-7xl mx-auto mt-4 px-4 sm:px-6 lg:px-8">
+        <PostsBar />
 
-      <!-- Mostrar los posts en modo grid -->
-      <div v-if="isListView && (guias.length > 0 || anuncios.length > 0 || experiencias.length > 0)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Guias -->
-        <div v-for="post in guias" :key="post.id" class="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div class="p-6">
-            <h5 class="text-xl font-semibold text-blue-500 mb-4">ID Post: {{ post.id }}</h5>
-            <p class="text-lg"><strong>Título:</strong> {{ post.titulo }}</p>
-            <p class="text-lg"><strong>Tipo:</strong> {{ post.tipo }}</p>
-            <p class="text-lg"><strong>Contenido:</strong> {{ truncateContent(post.contenido) }}</p>
-
-            <!-- Información del autor -->
-            <p class="text-lg"><strong>Autor:</strong> {{ post.user.name }} {{ post.user.apellidos }}</p>
-
-            <!-- Imagen del post -->
-            <div v-if="post.imagen" class="mt-4">
-              <img :src="`/storage/${post.imagen}`" alt="Imagen del post" class="w-full h-48 object-cover rounded-lg shadow-md" />
+        <div v-if="categorias.some(cat => cat.posts.length > 0)"
+             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-6">
+          <template v-for="(categoria, catIndex) in categorias" :key="catIndex">
+            <div v-for="post in categoria.posts" :key="post.id"
+                 class="border-l-4 sm:border-l-8 bg-gray-50 shadow rounded-lg p-4 sm:p-5 relative flex flex-col justify-between"
+                 :style="{ borderLeftColor: categoria.tailwindColor }">
+              <div>
+                <h5 class="text-base sm:text-lg font-bold text-gray-800 mb-1 sm:mb-2">{{ post.titulo }}</h5>
+                <p class="text-xs sm:text-sm text-gray-600 mb-1"><strong>Tipo:</strong> {{ post.tipo }}</p>
+                <p class="text-xs sm:text-sm text-gray-600 mb-2"><strong>Autor:</strong> {{ post.user.name }} {{ post.user.apellidos }}</p>
+                <p class="text-xs sm:text-sm text-gray-600 mb-2"><strong>Fecha:</strong> {{ formatFecha(post.created_at) }}</p>
+                <p class="text-sm text-gray-700 mb-3">{{ truncateContent(post.contenido) }}</p>
+                <div v-if="post.imagen">
+                  <img :src="`/storage/${post.imagen}`" alt="Imagen del post"
+                       class="w-full aspect-video object-cover rounded" />
+                </div>
+              </div>
+              <div class="mt-4 sm:mt-0 text-right">
+                <Link :href="route('posts.show', post.id)"
+                      class="text-sm text-blue-600 font-medium hover:underline">
+                  Leer más →
+                </Link>
+              </div>
             </div>
-          </div>
-
-          <div class="bg-gray-100 text-center py-4">
-            <Link :href="route('posts.show', post.id)" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Mostrar</Link>
-          </div>
+          </template>
         </div>
 
-        <!-- Anuncios -->
-        <div v-for="post in anuncios" :key="post.id" class="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div class="p-6">
-            <h5 class="text-xl font-semibold text-blue-500 mb-4">ID Post: {{ post.id }}</h5>
-            <p class="text-lg"><strong>Título:</strong> {{ post.titulo }}</p>
-            <p class="text-lg"><strong>Tipo:</strong> {{ post.tipo }}</p>
-            <p class="text-lg"><strong>Contenido:</strong> {{ truncateContent(post.contenido) }}</p>
-
-            <!-- Información del autor -->
-            <p class="text-lg"><strong>Autor:</strong> {{ post.user.name }} {{ post.user.apellidos }}</p>
-
-            <!-- Imagen del post -->
-            <div v-if="post.imagen" class="mt-4">
-              <img :src="`/storage/${post.imagen}`" alt="Imagen del post" class="w-full h-48 object-cover rounded-lg shadow-md" />
-            </div>
-          </div>
-
-          <div class="bg-gray-100 text-center py-4">
-            <Link :href="route('posts.show', post.id)" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Mostrar</Link>
-          </div>
-        </div>
-
-        <!-- Experiencias -->
-        <div v-for="post in experiencias" :key="post.id" class="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div class="p-6">
-            <h5 class="text-xl font-semibold text-blue-500 mb-4">ID Post: {{ post.id }}</h5>
-            <p class="text-lg"><strong>Título:</strong> {{ post.titulo }}</p>
-            <p class="text-lg"><strong>Tipo:</strong> {{ post.tipo }}</p>
-            <p class="text-lg"><strong>Contenido:</strong> {{ truncateContent(post.contenido) }}</p>
-
-            <!-- Información del autor -->
-            <p class="text-lg"><strong>Autor:</strong> {{ post.user.name }} {{ post.user.apellidos }}</p>
-
-            <!-- Imagen del post -->
-            <div v-if="post.imagen" class="mt-4">
-              <img :src="`/storage/${post.imagen}`" alt="Imagen del post" class="w-full h-48 object-cover rounded-lg shadow-md" />
-            </div>
-          </div>
-
-          <div class="bg-gray-100 text-center py-4">
-            <Link :href="route('posts.show', post.id)" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Mostrar</Link>
-          </div>
-        </div>
+        <p v-else class="text-center text-base sm:text-lg text-gray-500 mt-10">No hay posts registrados.</p>
       </div>
 
-      <!-- Modo Tabla -->
-      <div v-else-if="!isListView && (guias.length > 0 || anuncios.length > 0 || experiencias.length > 0)">
-        <table class="table-auto w-full text-center border-collapse">
-          <thead class="bg-blue-100">
-            <tr>
-              <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">ID Post</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Título</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Tipo</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Contenido</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Autor</th>
-              <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="post in guias" :key="post.id" class="hover:bg-blue-50">
-              <td class="border px-4 py-2">{{ post.id }}</td>
-              <td class="border px-4 py-2">{{ post.titulo }}</td>
-              <td class="border px-4 py-2">{{ post.tipo }}</td>
-              <td class="border px-4 py-2">{{ truncateContent(post.contenido) }}</td>
-              <td class="border px-4 py-2">{{ post.user.name }} {{ post.user.apellidos }}</td>
-              <td class="border px-4 py-2">
-                <Link :href="route('posts.show', post.id)" class="bg-blue-500 text-white text-sm py-1 px-1 rounded-lg hover:bg-blue-600">Mostrar</Link>
-              </td>
-            </tr>
-            <tr v-for="post in anuncios" :key="post.id" class="hover:bg-blue-50">
-              <td class="border px-4 py-2">{{ post.id }}</td>
-              <td class="border px-4 py-2">{{ post.titulo }}</td>
-              <td class="border px-4 py-2">{{ post.tipo }}</td>
-              <td class="border px-4 py-2">{{ post.contenido }}</td>
-              <td class="border px-4 py-2">{{ post.user.name }} {{ post.user.apellidos }}</td>
-              <td class="border px-4 py-2">
-                <Link :href="route('posts.show', post.id)" class="bg-blue-500 text-white text-sm py-1 px-1 rounded-lg hover:bg-blue-600">Mostrar</Link>
-              </td>
-            </tr>
-            <tr v-for="post in experiencias" :key="post.id" class="hover:bg-blue-50">
-              <td class="border px-4 py-2">{{ post.id }}</td>
-              <td class="border px-4 py-2">{{ post.titulo }}</td>
-              <td class="border px-4 py-2">{{ post.tipo }}</td>
-              <td class="border px-4 py-2">{{ truncateContent(post.contenido) }}</td>
-              <td class="border px-4 py-2">{{ post.user.name }} {{ post.user.apellidos }}</td>
-              <td class="border px-4 py-2">
-                <Link :href="route('posts.show', post.id)" class="bg-blue-500 text-white text-sm py-1 px-1 rounded-lg hover:bg-blue-600">Mostrar</Link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Si no hay posts...-->
-      <p v-else class="text-center text-lg text-gray-500">No hay posts registrados.</p>
+      <FooterWorkers />
     </div>
   </AppLayout>
 </template>

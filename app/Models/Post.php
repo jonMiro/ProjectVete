@@ -17,6 +17,9 @@ class Post extends Model
         'user_id',
     ];
 
+    /**
+     * Post perteneix a user (qualsevol tipo)
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

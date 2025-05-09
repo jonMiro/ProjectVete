@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 
 class EventController extends Controller
 {
-    // Render calendario
+    // Render calendari
     public function index()
     {
         return Inertia::render('Calendario/Index');
@@ -49,7 +49,10 @@ class EventController extends Controller
     // Create view render
     public function create()
     {
-        return Inertia::render('Eventos/Create');
+        $userName = Auth::user()->name;
+        return Inertia::render('Eventos/Create', [
+            'userName' => $userName,
+        ]);
 
     }
 
@@ -58,7 +61,7 @@ class EventController extends Controller
 {
     $request->validate([
         'title' => 'required|string',
-        'fecha' => 'required|date_format:d-m-Y', // formato dd-mm-yyyy
+        'fecha' => 'required|date_format:d-m-Y', 
         'start' => 'required|date',
         'end' => 'nullable|date',
         'tipo' => 'required|string',
@@ -67,12 +70,12 @@ class EventController extends Controller
         'precio' => 'nullable|numeric',
     ]);
 
-    $fecha = \Carbon\Carbon::createFromFormat('d-m-Y', $request->fecha)->format('Y-m-d');
+    $fecha = Carbon::createFromFormat('d-m-Y', $request->fecha)->format('Y-m-d');
 
     $event = Event::create([
         'user_id'    => Auth::user()->id,
         'title'      => $request->title,
-        'fecha'      => $fecha, 
+        'fecha'      => $fecha,
         'start'      => $request->start,
         'end'        => $request->end,
         'tipo'       => $request->tipo,
@@ -81,7 +84,7 @@ class EventController extends Controller
         'precio'     => $request->precio,
     ]);
 
-    return redirect()->route('clients')->with('success', 'Servicio contratado con éxito');
+    return redirect()->route('clients')->with('success', 'Cita reservada');
 }
 
 }

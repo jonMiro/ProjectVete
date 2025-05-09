@@ -1,5 +1,5 @@
 <?php
-// app/Models/Animales.php
+
 
 namespace App\Models;
 
@@ -18,14 +18,14 @@ class Animal extends Model
     ];
 
 
-     /* Relación de pertenencia a un Cliente*/
+     /* Animal pertenenix a usuari (tipo client)*/
     public function user()
     {
         return $this->belongsTo(User::class,'user_id');
     }
 
     /**
-     * Relación de un animal con las consultas
+     * Animal te moltes consultes
      */
     public function consultas()
     {
@@ -33,7 +33,7 @@ class Animal extends Model
     }
 
     /**
-     * Relación de un animal con los servicios
+     * Animal te molts servicis
      */
     public function servicios()
     {

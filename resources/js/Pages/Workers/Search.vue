@@ -2,8 +2,6 @@
 <template>
     <AppLayout title="Panel de Trabajadores">
         <template #header>
-
-            <!--NavBar component-->
         <NavBar/>
         </template>
 
@@ -96,7 +94,6 @@ import NavBar from '@/Components/NavBar.vue';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
 
 
-// Recibimos los props
 const props = defineProps({
   search: String,
   animales: Array,
@@ -105,10 +102,8 @@ const props = defineProps({
   clientes: Array,
 });
 
-// Estado para la búsqueda
+// props de la busqueda
 const searchQuery = ref(props.search);
-
-// Función de búsqueda
 const handleSearch = () => {};
 
 // Filtros computados
@@ -138,5 +133,4 @@ const filteredClientes = computed(() => {
 </script>
 
 <style scoped>
-/* Aquí puedes agregar cualquier estilo adicional si es necesario */
 </style>

@@ -1,14 +1,14 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import NavBarClients from '@/Components/NavBarClients.vue';
-import Footer from '@/Components/Footer.vue';
+import FooterWorkers from '@/Components/FooterWorkers.vue';
 import Contacto from '@/Components/Contacto.vue';
+import NavBarMainPage from '@/Components/NavBarMainPage.vue';
 </script>
 
 <template>
   <AppLayout title="Vet&Care - Bienvenido">
     <template #header>
-      <NavBarClients />
+        <NavBarMainPage />
     </template>
 
     <!-- BIENVENIDA -->
@@ -194,7 +194,7 @@ import Contacto from '@/Components/Contacto.vue';
                   <textarea id="message" name="message" rows="3" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></textarea>
                 </div>
                 <div class="flex justify-center">
-                  <button type="submit" class="w-full md:w-auto py-2 px-6 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  <button type="submit" class="w-full md:w-auto py-2 px-6 bg-blue-400 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     Enviar
                   </button>
                 </div>
@@ -264,8 +264,6 @@ import Contacto from '@/Components/Contacto.vue';
         </div>
       </div>
     </section>
-
-    <!-- Footer -->
-    <Footer />
+    <FooterWorkers />
   </AppLayout>
 </template>

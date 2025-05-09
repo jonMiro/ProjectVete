@@ -23,7 +23,7 @@ const form = useForm({
   cliente: '',
 });
 
-// Watcher para actualizar el campo user_id y cliente según el animal seleccionado
+// Watcher actualitzar el campo user_id y cliente según el animal
 watch(() => form.animal_id, (animalId) => {
   const selected = props.animales.find(animal => animal.id === parseInt(animalId));
   if (selected && selected.user) {
@@ -35,7 +35,7 @@ watch(() => form.animal_id, (animalId) => {
   }
 });
 
-// Watcher para actualizar la descripción, duración y precio según el tipo de servicio seleccionado
+// Watcher actualitzar descripció, duració y preu
 watch(() => form.tipo_servicio, (newTipoServicio) => {
   switch (newTipoServicio) {
     case 'pedicura':
@@ -89,7 +89,7 @@ watch(() => form.tipo_servicio, (newTipoServicio) => {
           </select>
         </div>
 
-        <!-- Cliente (nombre y apellidos) -->
+        <!-- Cliente  -->
         <div>
           <label class="block mb-1 font-semibold">Cliente</label>
           <input type="text" v-model="form.cliente" class="w-full border rounded px-3 py-2" readonly />

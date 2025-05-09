@@ -45,7 +45,7 @@ class EstadisticasController extends Controller
 
     private function getFacturacionMensual()
     {
-        // Facturación por consultas
+        // Facturació consulta
         $consultas = Consulta::selectRaw('YEAR(fecha) as year, MONTH(fecha) as month, SUM(precio) as total')
             ->groupBy('year', 'month')
             ->get()
@@ -54,7 +54,7 @@ class EstadisticasController extends Controller
                 return [$date => ['consulta' => $item->total, 'servicio' => 0]];
             });
 
-        // Facturación por servicios
+        // Facturació servicis
         $servicios = Servicio::selectRaw('YEAR(fecha) as year, MONTH(fecha) as month, SUM(precio) as total')
             ->groupBy('year', 'month')
             ->get()
@@ -63,10 +63,9 @@ class EstadisticasController extends Controller
                 return [$date => ['consulta' => 0, 'servicio' => $item->total]];
             });
 
-        // Fechas únicas
         $fechas = $consultas->keys()->merge($servicios->keys())->unique()->sort();
 
-        // Combinar facturación mensual
+        // Combinem facturacio mensual a partir de la fecha
         $facturacionMensual = $fechas->map(function ($fecha) use ($consultas, $servicios) {
             return [
                 'date' => $fecha,

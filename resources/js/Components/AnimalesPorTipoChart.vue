@@ -16,9 +16,9 @@
   });
 
   const chart = ref(null);
-  let chartInstance = null; // Para almacenar la instancia del gráfico
+  let chartInstance = null; // Emmagatzemar instancia de tabla
 
-  // Registrar los elementos de Chart.js
+  // registrar chart js elements
   Chart.register(
     CategoryScale,
     LinearScale,
@@ -26,20 +26,20 @@
     Title,
     Tooltip,
     Legend,
-    BarController  // Registrar el controlador de 'bar'
+    BarController
   );
 
-  // Función para renderizar el gráfico
+  //renderiyzem el grafic en 2D
   const renderChart = () => {
     const ctx = chart.value.getContext('2d');
 
-    // Destruir el gráfico anterior si ya existe
+    // Actualitzem el chart (destruint el anterior)
     if (chartInstance) {
       chartInstance.destroy();
     }
 
     chartInstance = new Chart(ctx, {
-      type: 'bar', // Gráfico de barras
+      type: 'bar',
       data: {
         labels: props.animalesPorTipo.map(item => item.tipo),
         datasets: [{
@@ -62,12 +62,12 @@
     });
   };
 
-  // Inicializar el gráfico cuando el componente se monte
+  // renderitzem el chart
   onMounted(() => {
     renderChart();
   });
 
-  // Observar cambios en los datos y actualizar el gráfico si es necesario
+  // Este watch compara la info actual en la antiga i la actualitza
   watch(() => props.animalesPorTipo, (newValue, oldValue) => {
     if (newValue !== oldValue) {
       renderChart();

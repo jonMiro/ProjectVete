@@ -1,7 +1,7 @@
 <script setup>
     import { Head, Link } from '@inertiajs/vue3';
-    import Footer from '@/Components/Footer.vue';
-    import NavBarClients from '@/Components/NavBarClients.vue';
+    import FooterWorkers from '@/Components/FooterWorkers.vue';
+    import NavBarClients from '@/Components/NavBarMainPage.vue';
 
     defineProps({
         canLogin: {
@@ -78,7 +78,7 @@
     </nav>
 
     <div>
-        <nav class="bg-gray-600 p-3 mt-6 max-w-[70rem] mx-auto">
+        <nav class="bg-gray-700 p-3 mt-6 max-w-[70rem] mx-auto">
       <div class="container mx-auto flex justify-between items-center">
         <ul class="flex space-x-10 justify-center w-full">
           <li class="nav-item">
@@ -269,9 +269,7 @@
           </div>
         </div>
       </section>
-
-      <!-- Footer -->
-      <Footer />
+      <FooterWorkers />
 
     </div>
   </template>

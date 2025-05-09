@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function index()
     {
-        // Filtrar usuarios por tipo
+        // Filtrem usuaris per tipo
         $veterinarios = User::where('tipo', 'veterinario')->get();
         $auxiliares   = User::where('tipo', 'auxiliar')->get();
         $clientes     = User::where('tipo', 'cliente')->get();
@@ -62,7 +62,7 @@ class UserController extends Controller
 
     $user->update($validated);
 
-    return redirect()->route('clients')->with('success', 'Usuario editado');}
+    return redirect()->route('users.index')->with('success', 'Usuario editado');}
 
     public function destroy(User $user)
     {

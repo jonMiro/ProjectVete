@@ -17,7 +17,7 @@ class Consulta extends Model
     ];
 
     /**
-     * Relación de una consulta con el veterinario
+     * Consulta perteneix a user (tipo auxiliar)
      */
     public function user()
     {
@@ -25,7 +25,7 @@ class Consulta extends Model
     }
 
     /**
-     * Relación de una consulta con el animal
+     * Consulta perteneix a animal
      */
     public function animal()
     {

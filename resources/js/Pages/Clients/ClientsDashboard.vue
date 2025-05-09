@@ -25,9 +25,8 @@ import { ref, onMounted } from 'vue';
         </template>
 
         <div class="p-6 text-gray-700">
-            <!-- Contenedor de las secciones -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Sección 1: Mi perfil-->
+                <!--  Mi perfil-->
                 <Link href="user/profile" class="block">
 
                 <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full">
@@ -39,7 +38,7 @@ import { ref, onMounted } from 'vue';
                 </div>
             </Link>
 
-      <!-- Sección 2: Administrar mascotas -->
+      <!-- Administrar mascotas -->
 <Link :href="route('clients.animales.index')" class="block">
     <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full cursor-pointer hover:shadow-lg transition-shadow">
         <img src="/icons/pet.png" alt="Logo Mascota" class="w-16 h-16 mb-4">
@@ -51,7 +50,7 @@ import { ref, onMounted } from 'vue';
 </Link>
 
 
-                <!-- Sección 3: Comunidad -->
+                <!--Comunidad -->
                 <Link :href="route('posts.index')" class="block">
                 <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full">
                     <img src="/icons/social.png" alt="Logo Comunidad" class="w-16 h-16 mb-4">
@@ -61,7 +60,7 @@ import { ref, onMounted } from 'vue';
                     </div>
                 </div>
             </Link>
-                <!-- Sección 4: Servicios -->
+                <!--Servicios -->
                 <Link href="clients/eventos/create" class="block">
     <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full cursor-pointer hover:shadow-lg transition-shadow">
         <img src="/icons/social.png" alt="Logo Servicios" class="w-16 h-16 mb-4">
@@ -73,7 +72,7 @@ import { ref, onMounted } from 'vue';
     </Link>
 
 
-                <!-- Sección 5: Consulta -->
+                <!--Consulta -->
                 <Link :href="route('clients.historial.index')" class="block">
 
                 <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full">
@@ -85,7 +84,7 @@ import { ref, onMounted } from 'vue';
                 </div>
             </Link>
 
-                <!-- Sección 6: Tienda -->
+                <!-- Tienda -->
                 <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full">
                     <img src="/icons/tiendas.png" alt="Logo Tienda" class="w-16 h-16 mb-4">
                     <div class="text-center">

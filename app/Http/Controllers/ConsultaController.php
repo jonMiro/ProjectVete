@@ -100,7 +100,7 @@ class ConsultaController extends Controller
             'observaciones' => 'nullable|string',
         ]);
 
-        // Asignar la hora desde el backend
+        // Asignar hora
         $consulta->hora = now()->format('H:i');
 
 

@@ -4,6 +4,8 @@ import { useForm } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
+import NavBar from '@/Components/NavBar.vue';
+
 
 
 const props = defineProps({
@@ -12,7 +14,6 @@ const props = defineProps({
   animales: Array,
 });
 
-// Asegúrate de que los datos están presentes antes de inicializar el formulario
 const form = useForm({
   user_id: props.servicio?.user_id || null,
   animal_id: props.servicio?.animal_id || null,
@@ -24,7 +25,7 @@ const form = useForm({
   hora: props.servicio.hora,
 });
 
-// Enviar el formulario
+// submit form
 const submit = () => {
   form.put(route('servicios.update', props.servicio.id), {
     onSuccess: () => {
@@ -37,7 +38,7 @@ const submit = () => {
 <template>
   <AppLayout title="Editar Servicio">
     <template #header>
-      <h2 class="text-2xl font-semibold text-gray-800">Editar Servicio</h2>
+    <NavBar />
     </template>
 
     <div class="max-w-4xl mx-auto px-6 py-10 mt-8 bg-white rounded-lg shadow">
@@ -46,8 +47,8 @@ const submit = () => {
       <form @submit.prevent="submit" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Auxiliar -->
         <div>
-          <label class="block mb-1 font-semibold">Auxiliar</label>
-          <select v-if="props.users && props.users.length" v-model="form.user_id" class="w-full border rounded px-3 py-2">
+          <label class="block mb-1 text-sm font-medium text-gray-700">Auxiliar</label>
+          <select v-if="props.users && props.users.length" v-model="form.user_id" class="w-full border-b-2 border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none text-gray-800">
             <option v-for="user in props.users" :key="user.id" :value="user.id">
               {{ user.name }} {{ user.apellidos }}
             </option>
@@ -56,8 +57,8 @@ const submit = () => {
 
         <!-- Animal -->
         <div>
-          <label class="block mb-1 font-semibold">Animal</label>
-          <select v-if="props.animales && props.animales.length" v-model="form.animal_id" class="w-full border rounded px-3 py-2">
+          <label class="block mb-1 text-sm font-medium text-gray-700">Animal</label>
+          <select v-if="props.animales && props.animales.length" v-model="form.animal_id" class="w-full border-b-2 border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none text-gray-800">
             <option v-for="animal in props.animales" :key="animal.id" :value="animal.id">
               {{ animal.nombre }}
             </option>
@@ -66,61 +67,61 @@ const submit = () => {
 
         <!-- Tipo de Servicio -->
         <div>
-          <label class="block mb-1 font-semibold">Tipo de Servicio</label>
+          <label class="block mb-1 text-sm font-medium text-gray-700">Tipo de Servicio</label>
           <input
             v-model="form.tipo_servicio"
             type="text"
-            class="w-full border rounded px-3 py-2"
+            class="w-full border-b-2 border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none text-gray-800"
             required
           />
         </div>
 
         <!-- Descripción -->
         <div class="md:col-span-2">
-          <label class="block mb-1 font-semibold">Descripción</label>
+          <label class="block mb-1 text-sm font-medium text-gray-700">Descripción</label>
           <textarea
             v-model="form.descripcion"
-            class="w-full border rounded px-3 py-2"
+            class="w-full border-b-2 border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none text-gray-800"
             rows="2"
           ></textarea>
         </div>
 
         <!-- Duración -->
         <div>
-          <label class="block mb-1 font-semibold">Duración (minutos)</label>
+          <label class="block mb-1 text-sm font-medium text-gray-700">Duración (minutos)</label>
           <input
             v-model="form.duracion"
             type="number"
-            class="w-full border rounded px-3 py-2"
+            class="w-full border-b-2 border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none text-gray-800"
             required
           />
         </div>
 
         <!-- Precio -->
         <div>
-          <label class="block mb-1 font-semibold">Precio (€)</label>
+          <label class="block mb-1 text-sm font-medium text-gray-700">Precio (€)</label>
           <input
             v-model="form.precio"
             type="number"
-            class="w-full border rounded px-3 py-2"
+            class="w-full border-b-2 border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none text-gray-800"
             required
           />
         </div>
 
         <!-- Fecha -->
         <div>
-          <label class="block mb-1 font-semibold">Fecha</label>
+          <label class="block mb-1 text-sm font-medium text-gray-700">Fecha</label>
           <input
             v-model="form.fecha"
             type="date"
-            class="w-full border rounded px-3 py-2"
+            class="w-full border-b-2 border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none text-gray-800"
             required
           />
         </div>
 
         <div class="mt-4">
   <label class="block text-sm font-medium text-gray-700">Hora :</label>
-  <p class="text-gray-900">{{ form.hora }}</p>
+  <p class="border-b-2 border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none text-gray-800">{{ form.hora }}</p>
 </div>
 
         <!-- Botón -->
@@ -133,7 +134,7 @@ const submit = () => {
           </button>
         </div>
 
-        <!-- Enlace de cancelación -->
+        <!-- cancelar -->
         <div class="md:col-span-2 text-center mt-4">
           <Link :href="route('servicios.index')" class="text-blue-500">Cancelar</Link>
         </div>

@@ -137,11 +137,27 @@ const logout = () => {
                                     <template #content>
                                         <!-- Account Management -->
                                         <div class="block px-4 py-2 text-xs text-gray-400">
-                                            Manage Account
+                                            Ajustes
                                         </div>
 
                                         <DropdownLink :href="route('profile.show')">
                                             Mi Perfil
+                                        </DropdownLink>
+
+                                        <DropdownLink :href="route('clients.animales.index')">
+                                            Mis Mascotas
+                                        </DropdownLink>
+
+                                        <DropdownLink href="/clients/eventos/create">
+                                           Servicios
+                                        </DropdownLink>
+
+                                        <DropdownLink :href="route('clients.historial.index')">
+                                           Consultas
+                                        </DropdownLink>
+
+                                        <DropdownLink :href="route('posts.index')">
+                                            Comunidad
                                         </DropdownLink>
 
                                         <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
@@ -217,8 +233,28 @@ const logout = () => {
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
-                                Profile
+                                Perfil
                             </ResponsiveNavLink>
+
+                            <DropdownLink :href="route('clients.animales.index')">
+        Mis Mascotas
+    </DropdownLink>
+
+    <!-- Servicios -->
+    <DropdownLink  href="/clients/eventos/create">
+        Servicios
+    </DropdownLink>
+
+    <!-- Consultas -->
+    <DropdownLink :href="route('clients.historial.index')">
+        Consultas
+    </DropdownLink>
+
+    <!-- Comunidad -->
+    <DropdownLink :href="route('posts.index')">
+        Comunidad
+    </DropdownLink>
+
 
                             <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')" :active="route().current('api-tokens.index')">
                                 API Tokens
@@ -227,7 +263,7 @@ const logout = () => {
                             <!-- Authentication -->
                             <form method="POST" @submit.prevent="logout">
                                 <ResponsiveNavLink as="button">
-                                    Log Out
+                                    Salir
                                 </ResponsiveNavLink>
                             </form>
 

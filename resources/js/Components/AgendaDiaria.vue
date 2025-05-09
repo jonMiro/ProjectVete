@@ -98,7 +98,7 @@
     return horas.slice(start, start + porPagina)
   })
 
-  // Función para ver los detalles del evento
+  // ver detalles del evento
   function verEvento(evento) {
     eventoSeleccionado.value = evento
   }

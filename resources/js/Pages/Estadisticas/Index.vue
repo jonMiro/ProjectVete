@@ -7,7 +7,7 @@
       <div class="max-w-7xl mx-auto p-6">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-10">Estadísticas de Consultas y Servicios</h1>
 
-        <!-- Contadores Generales -->
+        <!-- Contadores -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 mb-10">
           <div class="bg-white p-6 rounded-lg shadow-lg text-center">
             <h2 class="text-xl font-bold">Consultas</h2>

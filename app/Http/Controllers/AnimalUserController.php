@@ -56,6 +56,15 @@ public function destroy($id)
     $animal->delete();
     return redirect()->route('clients.animales.index');
 }
+
+public function show($id)
+{
+    $animal = Animal::findOrFail($id);
+    return Inertia::render('AnimalesUser/Show', [
+        'animal' => $animal,
+    ]);
+}
+
 public function create()
 {
     $clientes = User::where('tipo', 'cliente')->get();

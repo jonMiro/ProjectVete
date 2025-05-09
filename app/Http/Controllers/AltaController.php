@@ -132,7 +132,7 @@ public function storeConsulta(Request $request)
 
     Consulta::create($validated);
 
-    return redirect()->route('alta.index')->with('success', 'Consulta creada correctamente.');
+    return redirect()->route('consultas.index')->with('success', 'Consulta creada correctamente.');
 }
 
 }

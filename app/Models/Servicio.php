@@ -16,7 +16,7 @@ class Servicio extends Model
     ];
 
     /**
-     * Relación de un servicio con el auxiliar
+     * Servici perteneix a usuari (tipo auxiliar)
      */
     public function user()
     {
@@ -24,7 +24,7 @@ class Servicio extends Model
     }
 
     /**
-     * Relación de un servicio con el animal
+     * servici perteneix a animal
      */
     public function animal()
     {
