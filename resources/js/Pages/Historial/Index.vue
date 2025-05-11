@@ -84,7 +84,6 @@ defineProps({
             <thead class="bg-blue-100">
               <tr>
                 <th class="px-4 py-2 border-b-2 border-blue-400">Fecha</th>
-                <th class="px-4 py-2 border-b-2 border-blue-400">Título</th>
                 <th class="px-4 py-2 border-b-2 border-blue-400">Tipo</th>
                 <th class="px-4 py-2 border-b-2 border-blue-400">Acción</th>
               </tr>
@@ -92,7 +91,6 @@ defineProps({
             <tbody>
               <tr v-for="evento in eventos" :key="evento.id" class="hover:bg-blue-50">
                 <td class="border px-4 py-2">{{ evento.fecha }}</td>
-                <td class="border px-4 py-2">{{ evento.title }}</td>
                 <td class="border px-4 py-2">{{ evento.tipo }}</td>
                 <td class="border px-4 py-2">
                   <Link :href="route('clients.historial.showEvento', evento.id)" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600 text-sm">

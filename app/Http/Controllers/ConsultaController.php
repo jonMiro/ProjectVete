@@ -9,12 +9,18 @@ use Inertia\Inertia;
 
 class ConsultaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $consultas = Consulta::with(['animal', 'user'])->latest()->paginate(10);
+        $order = $request->input('order', 'desc');
+
+        $consultas = Consulta::with(['animal', 'user'])
+            ->orderBy('fecha', $order)
+            ->paginate(10)
+            ->withQueryString();
 
         return Inertia::render('Consultas/Index', [
-            'consultas' => $consultas
+            'consultas' => $consultas,
+            'currentOrder' => $order,  
         ]);
     }
 

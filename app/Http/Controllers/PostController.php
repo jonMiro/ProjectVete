@@ -9,18 +9,31 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    public function index()
-    {
-        $guias = Post::where('tipo', 'guia')->with('user')->get();
-        $anuncios = Post::where('tipo', 'anuncio')->with('user')->get();
-        $experiencias = Post::where('tipo', 'experiencia')->with('user')->get();
+  public function index(Request $request)
+{
+    $query = Post::with('user');
 
-        return Inertia::render('Posts/Index', [
-            'guias' => $guias,
-            'anuncios' => $anuncios,
-            'experiencias' => $experiencias,
-        ]);
+    // Filtro tipo
+    if ($request->has('tipo') && in_array($request->tipo, ['guia', 'anuncio', 'experiencia'])) {
+        $query->where('tipo', $request->tipo);
     }
+
+    // filtro fecha
+    if ($request->has('orden') && $request->orden === 'antiguas') {
+        $query->orderBy('created_at', 'asc');
+    } else {
+        $query->orderBy('created_at', 'desc');
+    }
+
+    $posts = $query->get();
+
+    return Inertia::render('Posts/Index', [
+        'posts' => $posts,
+        'filtroTipo' => $request->tipo ?? null,
+        'filtroOrden' => $request->orden ?? 'recientes',
+    ]);
+}
+
 
     public function show(Post $post)
 {
@@ -29,16 +42,28 @@ class PostController extends Controller
     ]);
 }
 
-    public function myPosts()
+    public function myPosts(Request $request)
 {
-    $guias = Post::where('tipo', 'guia')->where('user_id', Auth::id())->with('user')->get();
-    $anuncios = Post::where('tipo', 'anuncio')->where('user_id', Auth::id())->with('user')->get();
-    $experiencias = Post::where('tipo', 'experiencia')->where('user_id', Auth::id())->with('user')->get();
+    $query = Post::where('user_id', Auth::id())->with('user');
+
+    // filtro tipo
+    if ($request->has('tipo') && in_array($request->tipo, ['guia', 'anuncio', 'experiencia'])) {
+        $query->where('tipo', $request->tipo);
+    }
+
+    // filtro fecha
+    if ($request->has('orden') && $request->orden === 'antiguas') {
+        $query->orderBy('created_at', 'asc');
+    } else {
+        $query->orderBy('created_at', 'desc');
+    }
+
+    $posts = $query->get();
 
     return Inertia::render('Posts/Mypost', [
-        'guias' => $guias,
-        'anuncios' => $anuncios,
-        'experiencias' => $experiencias,
+        'posts' => $posts,
+        'filtroTipo' => $request->tipo ?? null,
+        'filtroOrden' => $request->orden ?? 'recientes',
     ]);
 }
 

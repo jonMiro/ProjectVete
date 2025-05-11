@@ -11,12 +11,15 @@
                 <p class="mb-2 text-base"><strong>Raza:</strong> {{ animal.raza }}</p>
                 <p class="mb-2 text-base"><strong>Sexo:</strong> {{ animal.sexo }}</p>
                 <p class="mb-2 text-base"><strong>Fecha de Nacimiento:</strong> {{ animal.fechaNacimiento }}</p>
-                <p class="mb-2 text-base"><strong>Cliente:</strong>
-                    <span v-if="animal.user">
-                        {{ animal.user.name }} {{ animal.user.apellidos }}
-                    </span>
-                    <span v-else>No asignado</span>
-                </p>
+                <p class="mb-2 text-base"><strong>Cliente: </strong>
+    <span v-if="animal.user">
+        <Link :href="route('users.show', animal.user.id)" class="text-blue-600 hover:underline">
+            {{ animal.user.name }} {{ animal.user.apellidos }}
+        </Link>
+    </span>
+    <span v-else>No asignado</span>
+</p>
+
                 <p class="mb-2 text-base"><strong>Observaciones:</strong> {{ animal.observaciones || 'No hay observaciones' }}</p>
             </div>
             <div v-if="animal.imagen" class="lg:w-1/2 mt-6 lg:mt-0">

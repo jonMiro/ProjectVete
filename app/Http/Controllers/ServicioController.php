@@ -10,17 +10,21 @@ use Inertia\Inertia;
 
 class ServicioController extends Controller
 {
-    public function index()
-    {
-        $servicios = Servicio::with(['user', 'animal'])
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+    public function index(Request $request)
+{
+    $order = $request->input('order', 'desc');
 
-        return Inertia::render('Servicios/Index', [
-            'servicios' => $servicios,
-        ]);
-    }
+    $servicios = Servicio::with(['user', 'animal'])
+        ->orderBy('fecha', $order)
+        ->paginate(10)
+        ->withQueryString();
+
+    return Inertia::render('Servicios/Index', [
+        'servicios' => $servicios,
+        'currentOrder' => $order,
+    ]);
+}
+
 
     public function show($id)
     {

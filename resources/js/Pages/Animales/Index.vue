@@ -92,7 +92,13 @@ const formatDate = (date) => {
               <td class="border px-4 py-2">{{ animal.raza }}</td>
               <td class="border px-4 py-2">{{ animal.sexo }}</td>
               <td class="border px-4 py-2">{{ formatDate(animal.fechaNacimiento) }}</td>
-              <td class="border px-4 py-2">{{ animal.user.name }} {{ animal.user.apellidos }}</td>
+              <td class="border px-4 py-2"><span v-if="animal.user">
+        <Link :href="route('users.show', animal.user.id)" class="text-blue-600 hover:underline">
+            {{ animal.user.name }} {{ animal.user.apellidos }}
+        </Link>
+    </span>
+    <span v-else>No asignado</span>
+</td>
               <td class="border px-4 py-2">
                 <Link :href="route('animales.show', animal.id)" class="bg-blue-100 text-blue-800 text-sm py-1 px-2 rounded-lg hover:bg-blue-200">Mostrar</Link>
               </td>

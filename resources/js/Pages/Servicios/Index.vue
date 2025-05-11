@@ -4,12 +4,19 @@ import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Inertia } from '@inertiajs/inertia';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
+import { router } from '@inertiajs/vue3';
 
-
-
-defineProps({
+const props = defineProps({
   servicios: Object,
+  currentOrder: String,
 });
+
+const changeOrder = (order) => {
+  router.get(route('servicios.index'), { order }, {
+    preserveState: true,
+    preserveScroll: true,
+  });
+};
 
 //formatejar fecha
 const formatDate = (date) => {
@@ -47,6 +54,23 @@ const deleteServicio = (id) => {
       <div class="container mx-auto mt-2 px-4 mb-2">
         <h2 class="text-center text-3xl font-semibold text-gray-700 mb-6 mt-6">Listado de Servicios</h2>
 
+        <!-- Botones de orden -->
+<div class="flex justify-center items-center flex-wrap gap-2 mb-6">
+  <button
+    class="px-4 py-1.5 rounded-full border text-sm font-medium transition"
+    :class="currentOrder === 'desc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
+    @click="changeOrder('desc')"
+  >
+    Más recientes
+  </button>
+  <button
+    class="px-4 py-1.5 rounded-full border text-sm font-medium transition"
+    :class="currentOrder === 'asc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
+    @click="changeOrder('asc')"
+  >
+    Más antiguos
+  </button>
+</div>
         <div v-if="servicios.data.length > 0">
           <table class="table-auto w-full text-center border-collapse">
             <thead class="bg-blue-100">
@@ -82,54 +106,54 @@ const deleteServicio = (id) => {
             </tbody>
           </table>
 
-          <!-- Paginación-->
-          <div class="flex justify-center mt-6 space-x-2">
-            <!-- Anterior -->
-            <Link
-              v-if="servicios.prev_page_url"
-              :href="servicios.prev_page_url"
-              class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600"
-            >
-              Anterior
-            </Link>
-            <span
-              v-else
-              class="px-3 py-1 border rounded text-sm text-gray-500 cursor-default"
-            >
-              Anterior
-            </span>
+          <!-- Paginación -->
+        <div class="flex justify-center mt-6 space-x-2">
+          <!-- Anterior -->
+          <Link
+            v-if="servicios.prev_page_url"
+            :href="servicios.prev_page_url"
+            class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600"
+          >
+            Anterior
+          </Link>
+          <span
+            v-else
+            class="px-3 py-1 border rounded text-sm text-gray-500 cursor-default"
+          >
+            Anterior
+          </span>
 
-            <!-- Págines-->
-            <span v-for="(link, index) in servicios.links" :key="index">
-              <Link
-                v-if="link.url"
-                :href="link.url"
-                class="px-3 py-1 border rounded text-sm"
-                :class="{
-                  'bg-blue-500 text-white': link.active,
-                  'text-gray-500 cursor-default': !link.url
-                }"
-              >
-                {{ link.label }}
-              </Link>
-            </span>
-
-            <!-- Siguiente ARREGLAR -->
+          <!-- Páginas -->
+          <span v-for="(link, index) in servicios.links" :key="index">
             <Link
-              v-if="servicios.next_page_url"
-              :href="servicios.next_page_url"
-              class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600"
+              v-if="link.url"
+              :href="link.url"
+              class="px-3 py-1 border rounded text-sm"
+              :class="{
+                'bg-blue-500 text-white': link.active,
+                'text-gray-500 cursor-default': !link.url
+              }"
             >
-              Siguiente
+              {{ link.label }}
             </Link>
-            <span
-              v-else
-              class="px-3 py-1 border rounded text-sm text-gray-500 cursor-default"
-            >
-              Siguiente
-            </span>
-          </div>
+          </span>
+
+          <!-- Siguiente -->
+          <Link
+            v-if="servicios.next_page_url"
+            :href="servicios.next_page_url"
+            class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600"
+          >
+            Siguiente
+          </Link>
+          <span
+            v-else
+            class="px-3 py-1 border rounded text-sm text-gray-500 cursor-default"
+          >
+            Siguiente
+          </span>
         </div>
+      </div>
 
         <p v-else class="text-center text-lg text-gray-500">No hay servicios registrados.</p>
       </div>
