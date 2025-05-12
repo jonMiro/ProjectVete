@@ -12,16 +12,14 @@ class ServicioController extends Controller
 {
     public function index(Request $request)
 {
-    $order = $request->input('order', 'desc');
 
-    $servicios = Servicio::with(['user', 'animal'])
-        ->orderBy('fecha', $order)
-        ->paginate(10)
-        ->withQueryString();
+
+    $servicios = Servicio::with(['user', 'animal'])->get();
+
+
 
     return Inertia::render('Servicios/Index', [
         'servicios' => $servicios,
-        'currentOrder' => $order,
     ]);
 }
 

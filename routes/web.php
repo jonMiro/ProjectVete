@@ -99,6 +99,8 @@ Route::prefix('workers')->group(function () {
 
     // animals
     Route::resource('animales', AnimalController::class);
+    Route::get('/animales/{animal}/historial', [AnimalController::class, 'historial'])->name('animales.historial');
+
 
     // users
     Route::resource('users', UserController::class);

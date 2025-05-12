@@ -37,7 +37,7 @@ import NavBarMainPage from '@/Components/NavBarMainPage.vue';
     </section>
 
 
-    <section class="py-8 bg-white text-center">
+    <section class=" bg-white text-center">
   <h2 class="text-2xl font-semibold text-gray-800 mb-6">¿Qué puedes hacer en Vet&Care?</h2>
 
   <div class="px-6 sm:px-8">

@@ -9,6 +9,8 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Event;
+
 
 class AnimalController extends Controller
 {
@@ -122,8 +124,24 @@ class AnimalController extends Controller
         }
 
         return Inertia::render('Animales/ShowForUser', [
-            'animal' => $animal, 
+            'animal' => $animal,
         ]);
     }
+
+    public function historial(Animal $animal)
+{
+    $animal->load([
+        'consultas.user',
+        'servicios.user'
+    ]);
+
+
+    return Inertia::render('Animales/Historial', [
+        'animal' => $animal,
+        'consultas' => $animal->consultas,
+        'servicios' => $animal->servicios,
+    ]);
+}
+
 
 }

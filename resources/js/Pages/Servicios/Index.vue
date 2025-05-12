@@ -5,18 +5,37 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Inertia } from '@inertiajs/inertia';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
 import { router } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
   servicios: Object,
-  currentOrder: String,
 });
 
-const changeOrder = (order) => {
-  router.get(route('servicios.index'), { order }, {
-    preserveState: true,
-    preserveScroll: true,
-  });
+const changeOrder = (newOrder) => {
+ order.value = newOrder;
+ currentPage.value = 1;
 };
+
+const order = ref('desc');
+const currentPage = ref(1);
+const perPage = 10;
+
+
+const sortedServicios = computed(() => {
+  return [...props.servicios].sort((a, b) => {
+    const dateA = new Date(a.fecha);
+    const dateB = new Date(b.fecha);
+    return order.value === 'asc' ? dateA - dateB : dateB - dateA;
+  });
+});
+
+const paginatedServicios = computed(() => {
+  const start = (currentPage.value - 1) * perPage;
+  return sortedServicios.value.slice(start, start + perPage);
+});
+
+const totalPages = computed(() => Math.ceil(sortedServicios.value.length / perPage))
+
 
 //formatejar fecha
 const formatDate = (date) => {
@@ -37,7 +56,7 @@ const deleteServicio = (id) => {
   if (confirm('¿Estás seguro de que deseas eliminar este servicio?')) {
     Inertia.delete(route('servicios.destroy', id),{
     onSuccess: () => {
-        Inertia.visit(route('sevicios.index'));
+        Inertia.visit(route('servicios.index'));
       }
     });
   }
@@ -58,20 +77,20 @@ const deleteServicio = (id) => {
 <div class="flex justify-center items-center flex-wrap gap-2 mb-6">
   <button
     class="px-4 py-1.5 rounded-full border text-sm font-medium transition"
-    :class="currentOrder === 'desc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
+    :class="order === 'desc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
     @click="changeOrder('desc')"
   >
     Más recientes
   </button>
   <button
     class="px-4 py-1.5 rounded-full border text-sm font-medium transition"
-    :class="currentOrder === 'asc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
+    :class="order === 'asc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
     @click="changeOrder('asc')"
   >
     Más antiguos
   </button>
 </div>
-        <div v-if="servicios.data.length > 0">
+        <div v-if="paginatedServicios.length > 0">
           <table class="table-auto w-full text-center border-collapse">
             <thead class="bg-blue-100">
               <tr>
@@ -86,7 +105,7 @@ const deleteServicio = (id) => {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="servicio in servicios.data" :key="servicio.id" class="hover:bg-blue-50">
+              <tr v-for="servicio in paginatedServicios" :key="servicio.id" class="hover:bg-blue-50">
                 <td class="border px-4 py-2">{{ servicio.id }}</td>
                 <td class="border px-4 py-2">{{ formatDate(servicio.fecha) }}</td>
                 <td class="border px-4 py-2">{{ servicio.tipo_servicio }}</td>
@@ -108,50 +127,34 @@ const deleteServicio = (id) => {
 
           <!-- Paginación -->
         <div class="flex justify-center mt-6 space-x-2">
-          <!-- Anterior -->
-          <Link
-            v-if="servicios.prev_page_url"
-            :href="servicios.prev_page_url"
-            class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600"
+          <button
+            @click="currentPage--"
+            :disabled="currentPage === 1"
+            class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50"
           >
             Anterior
-          </Link>
+          </button>
+
           <span
-            v-else
-            class="px-3 py-1 border rounded text-sm text-gray-500 cursor-default"
+            v-for="page in totalPages"
+            :key="page"
+            class="px-3 py-1 border rounded text-sm cursor-pointer"
+            :class="{
+              'bg-blue-500 text-white': page === currentPage,
+              'hover:bg-gray-100': page !== currentPage
+            }"
+            @click="currentPage = page"
           >
-            Anterior
+            {{ page }}
           </span>
 
-          <!-- Páginas -->
-          <span v-for="(link, index) in servicios.links" :key="index">
-            <Link
-              v-if="link.url"
-              :href="link.url"
-              class="px-3 py-1 border rounded text-sm"
-              :class="{
-                'bg-blue-500 text-white': link.active,
-                'text-gray-500 cursor-default': !link.url
-              }"
-            >
-              {{ link.label }}
-            </Link>
-          </span>
-
-          <!-- Siguiente -->
-          <Link
-            v-if="servicios.next_page_url"
-            :href="servicios.next_page_url"
-            class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600"
+          <button
+            @click="currentPage++"
+            :disabled="currentPage === totalPages"
+            class="px-3 py-1 border rounded text-sm bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50"
           >
             Siguiente
-          </Link>
-          <span
-            v-else
-            class="px-3 py-1 border rounded text-sm text-gray-500 cursor-default"
-          >
-            Siguiente
-          </span>
+          </button>
         </div>
       </div>
 

@@ -26,13 +26,18 @@
                 <img :src="animal.imagen" alt="Imagen del animal" class="w-full h-auto rounded-lg shadow-md">
             </div>
         </div>
+
+
         <div class="flex justify-center gap-4 mt-4">
+             <Link :href="route('animales.historial', animal.id)" class="bg-green-200 text-green-800 mb-4 py-2 px-4 rounded-lg hover:bg-green-400 text-sm">
+    Historial
+</Link>
             <Link :href="route('animales.edit', animal.id)" class="bg-gray-200 text-gray-800 mb-4 py-2 px-4 rounded-lg hover:bg-gray-400 text-sm">
                 Editar
             </Link>
 
             <button @click="eliminarAnimal" class="bg-red-200 text-red-800 py-2 px-4 mb-4 rounded-lg hover:bg-red-400 text-sm">
-                Eliminar
+                Baja
             </button>
 
             <Link :href="route('animales.index')" class="bg-blue-200 text-blue-800 mb-4 py-2 px-4 rounded-lg hover:bg-blue-400 text-sm">

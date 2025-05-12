@@ -22,10 +22,114 @@
     {
       "nombre": "Max",
       "tipo": "Perro",
-      "raza": "Bulldog Francés",
+      "raza": "Bulldog Frances",
       "sexo": "Macho",
       "fechaNacimiento": "2019-11-07",
       "imagen": "/images/3.jpg",
       "observaciones": "Le gusta jugar con otros perros.",
       "user_id": 6
-    }]
+    },
+    {
+      "nombre": "Tommy",
+      "tipo": "Perro",
+      "raza": "San Bernardo",
+      "sexo": "Macho",
+      "fechaNacimiento": "2021-05-14",
+      "imagen": "/images/4.jpg",
+      "observaciones": "Controlar azucar (posible diabético)",
+      "user_id": 7
+    },
+    {
+      "nombre": "Kitty",
+      "tipo": "Gato",
+      "raza": "Persa albino",
+      "sexo": "Hembra",
+      "fechaNacimiento": "2023-07-18",
+      "imagen": "/images/5.jepg",
+      "observaciones": "Suele tener problemas digestivos",
+      "user_id": 8
+    },
+    {
+      "nombre": "Linda",
+      "tipo": "Gato",
+      "raza": "Mestizo",
+      "sexo": "Macho",
+      "fechaNacimiento": "2024-08-17",
+      "imagen": "/images/6.jpg",
+      "observaciones": "Bajo peso al nacer, control mensual",
+      "user_id": 8
+    },
+    {
+      "nombre": "Chloe",
+      "tipo": "Conejo",
+      "raza": "Enano",
+      "sexo": "Hembra",
+      "fechaNacimiento": "2023-06-11",
+      "imagen": "/images/10.jpg",
+      "observaciones": "Problemas respiratorios por enanismo",
+      "user_id": 9
+    },
+    {
+      "nombre": "Randalf",
+      "tipo": "Conejo",
+      "raza": "Krill zorro negro",
+      "sexo": "Macho",
+      "fechaNacimiento": "2023-07-19",
+      "imagen": "/images/8.jpg",
+      "observaciones": "Salta muchisimo!!",
+      "user_id": 9
+    },
+    {
+      "nombre": "Elder",
+      "tipo": "Tortuga",
+      "raza": "Tortuga de Pascua",
+      "sexo": "Hembra",
+      "fechaNacimiento": "2020-02-12",
+      "imagen": "/images/12.jpg",
+      "observaciones": "Dieta balanceada, problemas gastrointestinales",
+      "user_id": 10
+    },
+    {
+      "nombre": "Koko",
+      "tipo": "Loro",
+      "raza": "Tropical",
+      "sexo": "Macho",
+      "fechaNacimiento": "2024-06-29",
+      "imagen": "/images/11.jpg",
+      "observaciones": "Buen estado físico",
+      "user_id": 11
+    },
+    {
+      "nombre": "Skittens",
+      "tipo": "Cobaya",
+      "raza": "Cobaya Indoeuropea",
+      "sexo": "Hembra",
+      "fechaNacimiento": "2025-01-20",
+      "imagen": "/images/13.webp",
+      "observaciones": "Problemas capilares",
+      "user_id": 12
+    },
+    {
+      "nombre": "Junior",
+      "tipo": "Perro",
+      "raza": "Beagle",
+      "sexo": "Macho",
+      "fechaNacimiento": "2023-08-22",
+      "imagen": "/images/big.webp",
+      "observaciones": "Perfectas condiciones",
+      "user_id": 13
+    },
+    {
+      "nombre": "Oli",
+      "tipo": "Perro",
+      "raza": "Hasky Siberiano",
+      "sexo": "Hembra",
+      "fechaNacimiento": "2024-08-12",
+      "imagen": "/images/pluto.webp",
+      "observaciones": "Problemas con las altas temperaturas, adaptar",
+      "user_id": 14
+    }
+
+
+
+]

@@ -41,7 +41,7 @@ const formatDate = (date) => {
       <div class="flex flex-col min-h-screen">
         <!-- Contenido principal -->
         <div class="flex-grow">
-          <div class="flex justify-end px-4 mt-6">
+          <div class="flex justify-center px-4 mt-6">
             <Link
               :href="route('clients.animales.create')"
               class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-4 mr-2"
@@ -55,37 +55,38 @@ const formatDate = (date) => {
               <p class="text-lg text-gray-600">¡No tienes mascotas asociadas! ¿Te gustaría añadir una?</p>
             </div>
 
-            <div v-else class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              <div v-for="animal in animales" :key="animal.id">
-                <Link
-                  :href="route('clients.animales.show', animal.id)"
-                  class="bg-gradient-to-br from-blue-50 to-white shadow-xl rounded-xl overflow-hidden hover:shadow-2xl transition duration-300 flex"
-                >
-                  <div class="p-4 w-3/5 pl-6 space-y-1">
-                    <h5 class="text-lg font-semibold text-blue-700 uppercase tracking-wide">
-                      {{ animal.nombre }} #{{ animal.id }}
-                    </h5>
-                    <p class="text-gray-700"><strong>Nombre:</strong> {{ animal.nombre }}</p>
-                    <p class="text-gray-700"><strong>Tipo:</strong> {{ animal.tipo }}</p>
-                    <p class="text-gray-700"><strong>Raza:</strong> {{ animal.raza }}</p>
-                    <p class="text-gray-700"><strong>Sexo:</strong> {{ animal.sexo }}</p>
-                    <p class="text-gray-700"><strong>Fecha Nac.:</strong> {{ formatDate(animal.fechaNacimiento) }}</p>
-                  </div>
-
-                  <div v-if="animal.imagen" class="w-2/5 flex items-center justify-center pr-4">
-                    <img
-                      :src="animal.imagen"
-                      alt="Imagen del animal"
-                      class="rounded-lg max-h-48 object-cover w-full shadow-md"
-                    />
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
+           <div v-else class="flex flex-col gap-4">
+  <div v-for="animal in animales" :key="animal.id">
+    <Link
+      :href="route('clients.animales.show', animal.id)"
+      class="bg-gradient-to-br from-blue-50 to-white shadow-xl rounded-xl overflow-hidden hover:shadow-2xl transition duration-300 flex w-full"
+    >
+      <div class="p-4 w-full flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="md:w-2/3 pl-4 space-y-1">
+          <h5 class="text-xl font-bold text-blue-700 uppercase">
+            {{ animal.nombre }} #{{ animal.id }}
+          </h5>
+          <p class="text-gray-700"><strong>Tipo:</strong> {{ animal.tipo }}</p>
+          <p class="text-gray-700"><strong>Raza:</strong> {{ animal.raza }}</p>
+          <p class="text-gray-700"><strong>Sexo:</strong> {{ animal.sexo }}</p>
+          <p class="text-gray-700"><strong>Fecha Nac.:</strong> {{ formatDate(animal.fechaNacimiento) }}</p>
         </div>
 
-        
+        <div v-if="animal.imagen" class="md:w-1/3 px-4">
+          <img
+            :src="animal.imagen"
+            alt="Imagen del animal"
+            class="rounded-lg max-h-48 object-cover w-full shadow-md"
+          />
+        </div>
+      </div>
+    </Link>
+  </div>
+</div>
+        </div>
+         </div>
+
+
         <FooterWorkers />
       </div>
     </AppLayout>
