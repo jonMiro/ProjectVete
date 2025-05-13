@@ -3,9 +3,21 @@ import FooterWorkers from '@/Components/FooterWorkers.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref, watch, computed, onMounted } from 'vue';
+import NavClientsDashboard from '@/Components/NavClientsDashboard.vue'
+
 
 const { props } = usePage();
 const userName = props?.userName || '';
+
+const scrollToFormularioCita = () => {
+  const element = document.getElementById('formulario-cita');
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+};
 
 // Form
 const form = useForm({
@@ -108,13 +120,106 @@ onMounted(() => {
 <template>
     <AppLayout title="Nuevo Evento">
       <template #header>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Reservar cita
-        </h2>
+        <h2 class="hidden lg:block font-semibold text-xl text-gray-800 leading-tight">
+        Eventos
+      </h2>
+      <NavClientsDashboard />
       </template>
+       <!-- Sección de Servicios -->
+    <div class="max-w-7xl mx-auto px-4 py-10">
+      <h2 class="text-3xl font-bold text-center text-blue-700 mb-4">
+        Servicios ofrecidos por nuestras clínicas
+      </h2>
+      <p class="text-gray-600 text-center mb-10">
+        En Vet&Care ofrecemos una amplia gama de servicios veterinarios, estéticos y preventivos para garantizar el bienestar de tus mascotas. Consulta nuestros precios y beneficios para afiliados.
+      </p>
+      <p class="text-gray-600 text-center mb-4">
+  ¿Estás listo para reservar tu cita? Haz clic en el siguiente botón para acceder al formulario de reserva.
+</p>
+<div class="text-center mb-10">
+  <button
+    class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+   @click="scrollToFormularioCita"
+  >
+    Reservar Cita
+  </button>
+</div>
 
-      <div class="max-w-4xl mx-auto px-6 py-10 bg-white rounded-lg shadow mt-8">
+
+      <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Pedicura</h3>
+          <p class="text-gray-700 text-sm mb-4">Corte y limado de uñas para perro, incluye limpieza de almohadillas.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: 10€</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Peluquería</h3>
+          <p class="text-gray-700 text-sm mb-4">Corte de pelo profesional, incluye baño con productos especiales y secado.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: 30€</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Lavado</h3>
+          <p class="text-gray-700 text-sm mb-4">Baño con shampoo dermatológico especial para pieles sensibles. Incluye secado.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: 25€</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Vacunación</h3>
+          <p class="text-gray-700 text-sm mb-4">Vacunas esenciales y complementarias. Consulta con nuestros especialistas para el calendario personalizado.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: Desde 30€</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Cita veterinaria</h3>
+          <p class="text-gray-700 text-sm mb-4">Consulta general. Revisión completa del estado de salud, control de peso, piel, ojos, oído, exploración abdominal y más.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: Desde 30€</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Castraciones</h3>
+          <p class="text-gray-700 text-sm mb-4">Intervención segura con anestesia. Incluye seguimiento postoperatorio.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: Desde 90€</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Esterilizaciones</h3>
+          <p class="text-gray-700 text-sm mb-4">Cirugía preventiva para hembras. Incluye anestesia, hospitalización y medicación.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: Desde 120€</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Eutanasia</h3>
+          <p class="text-gray-700 text-sm mb-4">Procedimiento compasivo y respetuoso para garantizar una despedida tranquila.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: Desde 70€</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Hospitalización</h3>
+          <p class="text-gray-700 text-sm mb-4">Cuidado postoperatorio o en tratamientos intensivos. Supervisión continua y atención veterinaria.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: Desde 40€/día</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Diagnóstico</h3>
+          <p class="text-gray-700 text-sm mb-4">Ecografías, radiografías, análisis clínicos, citología y ECG para un diagnóstico preciso.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio: Desde 25€</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">Odontología canina</h3>
+          <p class="text-gray-700 text-sm mb-4">Limpieza dental con ultrasonidos, revisión bucal, extracciones si son necesarias.</p>
+          <p class="text-sm text-gray-500 font-semibold">Precio:Desde 60€</p>
+</div>
+</div>
+</div>
+
+      <div id="formulario-cita" class="max-w-4xl mx-auto px-6 py-10 bg-white rounded-lg shadow mt-8">
+  <h1 class="text-xl text-gray-500 font-semibold mb-6">Reservar Cita</h1>
+
         <form @submit.prevent="form.post(route('eventos.store'))">
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <!-- Fecha -->
@@ -223,6 +328,9 @@ onMounted(() => {
             >
               Reservar
             </button>
+            <p class="text-gray-600 text-center mt-6">
+ Recordatorio: La reserva de cita no es definitiva, una vez realizada se informará al cliente a traves de watsapp o llamada sobre la confirmación de la cita</p>
+
           </div>
         </form>
       </div>

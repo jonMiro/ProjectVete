@@ -61,7 +61,7 @@ class EventController extends Controller
 {
     $request->validate([
         'title' => 'required|string',
-        'fecha' => 'required|date_format:d-m-Y', 
+        'fecha' => 'required|date_format:d-m-Y',
         'start' => 'required|date',
         'end' => 'nullable|date',
         'tipo' => 'required|string',
@@ -86,7 +86,6 @@ class EventController extends Controller
 
     return redirect()->route('clients')->with('success', 'Cita reservada');
 }
-
 }
 
 

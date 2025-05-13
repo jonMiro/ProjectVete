@@ -1,7 +1,9 @@
 <script setup>
+import NavClientsDashboard from '@/Components/NavClientsDashboard.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+
 
   const menuOpen = ref(false)
 
@@ -66,7 +68,7 @@ import { ref, onMounted } from 'vue';
         <img src="/icons/social.png" alt="Logo Servicios" class="w-16 h-16 mb-4">
         <div class="text-center">
             <h3 class="text-xl font-semibold">Servicios</h3>
-            <p class="text-gray-600">Explora los servicios que ofrecemos para ti y tus mascotas.</p>
+            <p class="text-gray-600">Reserva cita para disfrutar de nuestros servicios.</p>
         </div>
     </div>
     </Link>
@@ -78,8 +80,8 @@ import { ref, onMounted } from 'vue';
                 <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md h-full">
                     <img src="/icons/consultas.png" alt="Logo Consulta" class="w-16 h-16 mb-4">
                     <div class="text-center">
-                        <h3 class="text-xl font-semibold">Consulta</h3>
-                        <p class="text-gray-600">Realiza consultas sobre tu cuenta y servicios.</p>
+                        <h3 class="text-xl font-semibold">Historial</h3>
+                        <p class="text-gray-600">Accede a tus citas y servicios.</p>
                     </div>
                 </div>
             </Link>

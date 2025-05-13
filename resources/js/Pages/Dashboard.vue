@@ -8,7 +8,27 @@ import NavBarMainPage from '@/Components/NavBarMainPage.vue';
 <template>
   <AppLayout title="Vet&Care - Bienvenido">
     <template #header>
-        <NavBarMainPage />
+        <div>
+        <nav class="bg-gray-700 p-3 mt-6 max-w-[70rem] mx-auto">
+      <div class="container mx-auto flex justify-center items-center">
+        <ul class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base">
+          <li class="nav-item">
+            <a href="#portal" class="nav-link text-white hover:text-blue-400 text-lg">Portal</a>
+          </li>
+          <li class="nav-item">
+            <a href="#servicios" class="nav-link text-white hover:text-blue-400 text-lg">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a href="#horarios" class="nav-link text-white hover:text-blue-400 text-lg">Horarios</a>
+          </li>
+          <li class="nav-item">
+            <a href="#contacto" class="nav-link text-white hover:text-blue-400 text-lg">Contacto</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    </div>
+
     </template>
 
     <!-- BIENVENIDA -->

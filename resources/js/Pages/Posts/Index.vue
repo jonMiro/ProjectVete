@@ -1,9 +1,10 @@
 <template>
   <AppLayout title="Panel de Posts">
     <template #header>
-      <h2 class="font-semibold text-lg sm:text-xl text-gray-800 leading-tight px-4 sm:px-6">
+      <h2 class="hidden lg:block font-semibold text-xl text-gray-800 leading-tight">
         Comunidad
       </h2>
+      <NavClientsDashboard />
     </template>
 
     <div class="min-h-screen flex flex-col">
@@ -92,6 +93,8 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { ref, computed } from 'vue';
 import PostsBar from '@/Components/PostsBar.vue';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
+import NavClientsDashboard from '@/Components/NavClientsDashboard.vue'
+
 
 const props = defineProps({
   posts: Array,

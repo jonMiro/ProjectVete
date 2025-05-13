@@ -7,6 +7,8 @@ import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthe
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
+import NavClientsDashboard from '@/Components/NavClientsDashboard.vue'
+
 
 
 
@@ -19,9 +21,10 @@ defineProps({
 <template>
     <AppLayout title="Profile">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Perfil
-            </h2>
+           <h2 class="hidden lg:block font-semibold text-xl text-gray-800 leading-tight">
+        Mi perfil
+      </h2>
+      <NavClientsDashboard />
         </template>
 
         <div>

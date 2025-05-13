@@ -50,6 +50,9 @@ Route::prefix('clients')->group(function () {
         return Inertia::render('Clients/ClientsDashboard');
     })->name('clients');
 
+    Route::get('user/profile', [UserController::class, 'profile'])->name('user.profile');
+
+
       //events
     Route::resource('eventos', EventController::class);
 
@@ -82,6 +85,12 @@ Route::prefix('clients')->group(function () {
     Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+
+    Route::get('eventos/create', [EventController::class, 'create'])->name('eventos.create');
+    Route::get('eventos/index', [EventController::class, 'indexEventosClient'])->name('eventos.indexClient');
+
+
 });
 
 
@@ -105,6 +114,7 @@ Route::prefix('workers')->group(function () {
     // users
     Route::resource('users', UserController::class);
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
 
     // Consultas
     Route::resource('consultas', ConsultaController::class);

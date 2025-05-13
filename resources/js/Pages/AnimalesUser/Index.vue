@@ -4,6 +4,8 @@ import { Inertia } from '@inertiajs/inertia';
 import NavBar from '@/Components/NavBar.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
+import NavClientsDashboard from '@/Components/NavClientsDashboard.vue'
+
 
 defineProps({
   animales: Array,
@@ -33,9 +35,10 @@ const formatDate = (date) => {
 <template>
     <AppLayout title="Panel de Animales">
       <template #header>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Tus Mascotas
-        </h2>
+        <h2 class="hidden lg:block font-semibold text-xl text-gray-800 leading-tight">
+        Mis Mascotas
+      </h2>
+      <NavClientsDashboard />
       </template>
 
       <div class="flex flex-col min-h-screen">

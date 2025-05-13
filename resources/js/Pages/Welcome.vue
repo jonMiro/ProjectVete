@@ -69,7 +69,7 @@
                 :href="route('register')"
                 class="rounded-md px-4 py-2 text-gray-400 hover:text-gray-600 transition"
               >
-                Register
+                Registrar
               </Link>
             </template>
           </div>
@@ -78,57 +78,94 @@
     </nav>
 
     <div>
-        <nav class="bg-gray-700 p-3 mt-6 max-w-[70rem] mx-auto">
-      <div class="container mx-auto flex justify-between items-center">
-        <ul class="flex space-x-10 justify-center w-full">
-          <li class="nav-item">
-            <a href="#portal" class="nav-link text-white hover:text-blue-400 text-lg">Portal</a>
-          </li>
-          <li class="nav-item">
-            <a href="#servicios" class="nav-link text-white hover:text-blue-400 text-lg">Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a href="#horarios" class="nav-link text-white hover:text-blue-400 text-lg">Horarios</a>
-          </li>
-          <li class="nav-item">
-            <a href="#contacto" class="nav-link text-white hover:text-blue-400 text-lg">Contacto</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+
     </div>
 
 
 
-    <!-- BIENVENIDA -->
-      <section id="portal" class="py-24 bg-white min-h-screen mt-8"> <!-- Aquí añadí el margen superior -->
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center md:items-start gap-10">
-          <!--image-->
-          <div class="md:w-1/2 w-full">
-            <img src="/images/work.jpg" alt="Equipo Vet&Care" class="w-full rounded-lg shadow-md object-cover h-full" />
-          </div>
-
           <!--texto bienvenida -->
-          <div class="md:w-1/2 w-full text-left">
-            <h1 class="text-4xl font-bold text-gray-800 mb-6">Bienvenido a Vet&Care</h1>
-            <p class="text-lg text-gray-600 mb-4">
-              En <strong>Vet&Care</strong> nos apasiona el cuidado animal. Somos una clínica veterinaria centrada en el bienestar integral de tus mascotas,
-              combinando profesionalismo, cariño y tecnología para ofrecerte una experiencia única.
-            </p>
-            <p class="text-gray-600">
-              Nuestro equipo está formado por veterinarios, auxiliares y especialistas que te acompañarán en cada etapa: desde el nacimiento de tu mascota
-              hasta su cuidado diario, su alimentación, sus consultas y más.
-            </p>
-          </div>
-        </div>
-      </section>
+          <!-- BIENVENIDA -->
+<section id="portal" class="py-12 bg-white min-h-screen">
+
+     <h1 class="text-4xl font-bold text-gray-800 mb-6 text-center ">Bienvenido a Vet&Care</h1>
+  <div class="container mx-auto px-4 flex flex-col md:flex-row items-center md:items-start gap-10">
+    <!-- Imagen -->
+    <div class="md:w-1/2 w-full">
+      <img src="/images/vete.jpg" alt="Equipo Vet&Care" class="w-full rounded-lg shadow-md object-cover h-full" />
+    </div>
+
+
+
+    <!-- Primer bloque de texto -->
+    <div class="md:w-1/2 w-full">
+
+
+      <p class="text-lg text-gray-600 mb-4">
+        Las clínicas veterinarias cada vez más tienen la necesidad de ofrecer un servicio más ágil, modernizado, accesible y adaptado a las nuevas necesidades de sus clientes.
+      </p>
+      <p class="text-lg text-gray-600 mb-6">
+        Bajo este contexto se crea nuestra empresa Vet&Care para marcar la diferencia. Nuestra plataforma no es una simple página web, sino una solución integral que permite a las clínicas veterinarias digitalizar su negocio, conectando el sistema de gestión con un portal intuitivo, útil e inmersivo para los clientes.
+      </p>
+
+    </div>
+  </div>
+
+  <div class="w-full px-8 mt-16">
+  <p class="text-lg text-gray-600 mb-6 text-center">
+    Le invitamos a descubrir nuestro proyecto a través de este modelo demostrativo, que refleja las capacidades y funcionalidades que podemos ofrecer. Puede registrarse como nuevo usuario o acceder con las credenciales de nuestro cliente piloto: <strong>cliente1@example.com</strong>
+  </p>
+  <p class="text-lg text-gray-600 mb-6 text-center">
+    <strong>Usuario: cliente1@example.com</strong>
+  </p>
+   <p class="text-lg text-gray-600 mb-6 text-center">
+    <strong>Contraseña: 12345678</strong>
+
+  </p>
+  <div class="flex justify-center space-x-4 mt-8">
+  <Link
+    :href="route('login')"
+    class="rounded-md px-6 py-2 bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+  >
+    Log in
+  </Link>
+
+  <Link
+    v-if="canRegister"
+    :href="route('register')"
+    class="rounded-md px-6 py-2 bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+  >
+    Registrar
+  </Link>
+</div>
+
+
+</div>
+
+  <!-- Segundo bloque de texto -->
+  <div class="w-full px-8 mt-16">
+    <p class="text-xl text-gray-600 mb-6 text-center">
+        <strong>Vet&Care está dividida en dos áreas principales:</strong>
+      </p>
+    <ul class="list-disc list-inside text-lg text-gray-600 mb-6 text-center">
+      <li><strong>Área cerrada de gestión para las clínicas veterinarias</strong></li>
+      <p class="text-lg text-gray-600 mb-6">
+        Esta sección está destinada para gestionar todos los tipos de datos, desde usuarios, clientes, animales hasta consultas, servicios, facturación y acceso a gráficas personalizadas.
+      </p>
+      <li><strong>Área abierta para clientes</strong></li>
+      <p class="text-lg text-gray-600 mb-6">
+        Esta sección está orientada a los clientes y usuarios de la veterinaria. Contiene acceso al historial de los servicios o consultas realizados a nuestras mascotas, permite conectarnos con la comunidad y realizar diversas tareas como comprar en tienda online y reservas de citas.
+      </p>
+    </ul>
+  </div>
+</section>
+
 
       <!-- ¿Qué puedes hacer en Vet&Care? -->
       <section class="py-8 bg-white text-center">
         <h2 class="text-2xl font-semibold text-gray-800 mb-6">¿Qué puedes hacer en Vet&Care?</h2>
 
         <div class="px-6 sm:px-8">
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 px-2 sm:px-6 md:grid-cols-3 gap-6">
             <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
               <img src="/icons/profile.png" alt="Icono Perfil" class="w-16 h-16 mb-4" />
               <h3 class="text-xl font-semibold">Mi perfil</h3>
@@ -168,76 +205,7 @@
         </div>
       </section>
 
-      <!-- Servicios Concertados -->
-      <section id="servicios" class="py-12 bg-gray-50 text-center">
-        <div class="max-w-4xl mx-auto px-4">
-          <h2 class="text-2xl font-semibold text-gray-800 mb-6">Servicios ofrecidos por nuestras clínicas</h2>
-          <p class="text-gray-600 mb-8">
-            Ofrecemos una variedad de servicios especializados para garantizar el cuidado integral de tus mascotas, con condiciones especiales para afiliados.
-          </p>
 
-          <div class="grid gap-4 text-left sm:grid-cols-2 md:grid-cols-3">
-            <div class="bg-white rounded-lg shadow p-4"><h3 class="font-bold text-blue-700 mb-1">Castraciones</h3><p class="text-sm text-gray-700">Castraciones</p></div>
-            <div class="bg-white rounded-lg shadow p-4"><h3 class="font-bold text-blue-700 mb-1">Esterilizaciones</h3><p class="text-sm text-gray-700">Esterilizaciones</p></div>
-            <div class="bg-white rounded-lg shadow p-4"><h3 class="font-bold text-blue-700 mb-1">Eutanasia</h3><p class="text-sm text-gray-700">Eutanasia ética y compasiva</p></div>
-            <div class="bg-white rounded-lg shadow p-4"><h3 class="font-bold text-blue-700 mb-1">Hospitalización</h3><p class="text-sm text-gray-700">Monitoreo y cuidado durante recuperación</p></div>
-            <div class="bg-white rounded-lg shadow p-4"><h3 class="font-bold text-blue-700 mb-1">Medios de diagnóstico</h3><p class="text-sm text-gray-700">Análisis clínicos, citología, ecografías,<br />ECG, radiografías</p></div>
-            <div class="bg-white rounded-lg shadow p-4"><h3 class="font-bold text-blue-700 mb-1">Odontología canina</h3><p class="text-sm text-gray-700">Limpieza dental, extracciones, revisión bucal</p></div>
-            <div class="bg-white rounded-lg shadow p-4"><h3 class="font-bold text-blue-700 mb-1">Tratamientos</h3><p class="text-sm text-gray-700">Fluidoterapia</p></div>
-            <div class="bg-white rounded-lg shadow p-4"><h3 class="font-bold text-blue-700 mb-1">Vacunaciones</h3><p class="text-sm text-gray-700">Vacunas esenciales y complementarias</p></div>
-            <div class="bg-white rounded-lg shadow p-4"><h3 class="font-bold text-blue-700 mb-1">Veterinaria</h3><p class="text-sm text-gray-700">Consultas y visitas generales</p></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Horarios -->
-      <section id="horarios" class="relative bg-gray-100">
-        <div class="relative h-96 md:h-[500px]">
-          <img src="/images/gato1.png" alt="Horario Vet&Care" class="w-full h-full object-cover" />
-          <div class="absolute top-1/2 right-6 transform -translate-y-1/2 bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-2/3 max-w-sm">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">HORARIO</h3>
-            <ul class="space-y-2 text-gray-700 text-base text-center">
-              <li><strong>Lunes:</strong> 10:00 - 20:00</li>
-              <li><strong>Martes:</strong> 10:00 - 20:00</li>
-              <li><strong>Miércoles:</strong> 10:00 - 20:00</li>
-              <li><strong>Jueves:</strong> 10:00 - 20:00</li>
-              <li><strong>Viernes:</strong> 10:00 - 20:00</li>
-              <li><strong>Sábado:</strong> 10:30 - 13:30</li>
-              <li><strong>Domingo:</strong> Cerrado</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Formulario de contacto -->
-      <section class="bg-white py-12">
-        <div class="container mx-auto px-4">
-          <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col md:flex-row items-center md:items-start gap-8">
-            <div class="w-full md:w-1/2">
-              <div class="bg-gray-100 p-6 rounded-md shadow-inner">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center md:text-left">¿Tienes alguna duda?</h3>
-                <form action="#" method="POST" class="space-y-4">
-                  <div><label for="name" class="block text-sm font-medium text-gray-700">Nombre</label><input type="text" id="name" name="name" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm" /></div>
-                  <div><label for="pet_name" class="block text-sm font-medium text-gray-700">Nombre de tu mascota</label><input type="text" id="pet_name" name="pet_name" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm" /></div>
-                  <div><label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label><input type="tel" id="phone" name="phone" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm" /></div>
-                  <div><label for="pet_type" class="block text-sm font-medium text-gray-700">¿Para quién necesitas la consulta?</label>
-                    <select id="pet_type" name="pet_type" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm">
-                      <option value="dog">Perro</option>
-                      <option value="cat">Gato</option>
-                      <option value="other">Otro</option>
-                    </select>
-                  </div>
-                  <div><label for="message" class="block text-sm font-medium text-gray-700">Mensaje</label><textarea id="message" name="message" rows="3" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm"></textarea></div>
-                  <div class="flex justify-center"><button type="submit" class="w-full md:w-auto py-2 px-6 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Enviar</button></div>
-                </form>
-              </div>
-            </div>
-            <div class="w-full md:w-1/2 flex justify-center">
-              <img src="/images/perro1.jpg" alt="Veterinaria feliz con perro" class="w-full max-w-sm rounded-lg shadow-md object-cover" />
-            </div>
-          </div>
-        </div>
-      </section>
 
       <!-- Contacto -->
       <section id="contacto" class="py-12 bg-white relative">
