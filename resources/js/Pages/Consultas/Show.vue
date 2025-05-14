@@ -87,8 +87,8 @@
 
     //logo
     //const logoPath = 'http://localhost:8000/images/logo.webp';
-    //const logoPath = 'https://vetandcare-main-lks3tp.laravel.cloud/images/logo.webp';
- //   doc.addImage(logoPath, 'WEBP', 10, 10, 30, 30);
+    const logoPath = 'https://vetandcare-main-lks3tp.laravel.cloud/images/logo.webp';
+   doc.addImage(logoPath, 'WEBP', 10, 10, 30, 30);
 
     // Títol
     doc.setFontSize(20);
