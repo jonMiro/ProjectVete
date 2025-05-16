@@ -33,7 +33,7 @@ const generatePDF = () => {
   const doc = new jsPDF();
 
   //logo
-  const logoPath = 'http://localhost:8000/images/logo.webp';
+  const logoPath = 'https://vetandcare-main-lks3tp.laravel.cloud/images/logo.webp';
   doc.addImage(logoPath, 'WEBP', 10, 10, 30, 30);
 
   // Títol
@@ -127,7 +127,7 @@ const generatePDF = () => {
           <p class="text-lg text-gray-700 text-center"><strong>Tipo de Servicio:</strong> {{ servicio.tipo_servicio }}</p>
           <p class="text-lg text-gray-700 text-center"><strong>Descripción:</strong> {{ servicio.descripcion }}</p>
           <p class="text-lg text-gray-700 text-center"><strong>Duración:</strong> {{ servicio.duracion }} minutos</p>
-          <p class="text-lg text-gray-700 text-center"><strong>Precio:</strong> ${{ servicio.precio }}</p>
+          <p class="text-lg text-gray-700 text-center"><strong>Precio:</strong> {{ servicio.precio }}€</p>
         </div>
 
         <div class="text-center">

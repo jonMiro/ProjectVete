@@ -20,7 +20,7 @@
           </span>
           <span>
             <strong class="font-semibold">Animal:</strong>
-            {{ consulta?.animal?.nombre ?? 'N/A' }} (ID: {{ consulta?.animal?.id ?? 'N/A' }})
+            {{ consulta?.animal?.nombre ?? 'N/A' }}
           </span>
           <span><strong class="font-semibold">Tipo de animal:</strong> {{ consulta?.tipo_animal ?? 'No disponible' }}</span>
           <span><strong class="font-semibold">Raza:</strong> {{ consulta?.raza ?? 'No disponible' }}</span>
@@ -88,7 +88,7 @@
     //logo
     //const logoPath = 'http://localhost:8000/images/logo.webp';
     const logoPath = 'https://vetandcare-main-lks3tp.laravel.cloud/images/logo.webp';
-   doc.addImage(logoPath, 'WEBP', 10, 10, 30, 30);
+    doc.addImage(logoPath, 'WEBP', 10, 10, 30, 30);
 
     // Títol
     doc.setFontSize(20);

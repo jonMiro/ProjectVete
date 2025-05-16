@@ -20,7 +20,7 @@
       </div>
 
       <!-- buscador -->
-      <div class="flex justify-center mt-0">
+      <div class="flex justify-center -mt-16">
         <div class="w-full max-w-lg">
           <input
             v-model="searchQuery"

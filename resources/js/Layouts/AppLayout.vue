@@ -47,7 +47,7 @@ const logout = () => {
                                 </Link>
                                 <span class="text-xl font-semibold text-gray-800">Vet&Care</span>
                                 <Link :href="route('workers')" class="text-blue-600 hover:underline text-lg block text-center">
-    Workers
+    Empresa
 </Link>
 <Link :href="route('clients')" class="text-green-600 hover:underline text-lg block text-center">
     Clientes

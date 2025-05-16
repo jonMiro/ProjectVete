@@ -70,7 +70,7 @@
                 <td class="p-2 border">{{ formatDate(s.fecha) }}</td>
                 <td class="p-2 border">{{ s.animal?.nombre || 'N/A' }}</td>
                 <td class="p-2 border">{{ s.animal?.user?.name || 'N/A' }} {{ s.animal?.user?.apellidos || 'N/A' }}</td>
-                <td class="p-2 border">{{ s.precio }} €</td>
+                <td class="p-2 border">{{ (parseFloat(s.precio) || 0).toFixed(2) }} €</td>
                 <td class="border px-4 py-2">
                 <div class="flex space-x-2 justify-center">
                 <Link :href="route('servicios.show', s.id)" class="bg-blue-500 text-white text-sm py-1 px-1 rounded-lg hover:bg-blue-600">Mostrar</Link>
@@ -104,8 +104,8 @@
                 <td class="p-2 border">{{ formatDate(c.fecha) }}</td>
                 <td class="p-2 border">{{ c.animal?.nombre || 'N/A' }}</td>
                 <td class="p-2 border">{{ c.animal?.user?.name || 'N/A' }} {{ c.animal?.user?.apellidos || 'N/A' }}</td>
-                <td class="p-2 border">{{ c.precio }} €</td>
-                <td class="border px-4 py-2">
+                <td class="p-2 border">{{ (parseFloat(c.precio) || 0).toFixed(2) }} €</td>
+                    <td class="border px-4 py-2">
                 <div class="flex space-x-2 justify-center">
                 <Link :href="route('consultas.show', c.id)" class="bg-blue-500 text-white text-sm py-1 px-1 rounded-lg hover:bg-blue-600">Mostrar</Link>
              </div></td>
@@ -185,14 +185,14 @@ const meses = [
 const mesSeleccionado = ref('')
 
 const totalServiciosFiltrados = computed(() => {
-  return sortedServicios.value.reduce((acc, s) => acc + parseFloat(s.precio), 0)
+  return sortedServicios.value.reduce((acc, s) => acc + parseFloat(s.precio), 0).toFixed(2)
 })
 
 const totalConsultasFiltradas = computed(() => {
-  return sortedConsultas.value.reduce((acc, c) => acc + parseFloat(c.precio), 0)
+  return sortedConsultas.value.reduce((acc, c) => acc + parseFloat(c.precio), 0).toFixed(2)
 })
 
 const totalGeneralFiltrado = computed(() => {
-  return totalServiciosFiltrados.value + totalConsultasFiltradas.value
+  return (parseFloat(totalServiciosFiltrados.value) + parseFloat(totalConsultasFiltradas.value)).toFixed(2)
 })
 </script>

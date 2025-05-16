@@ -52,7 +52,10 @@
             <h2 class="text-xl font-semibold text-center mb-4">Facturación Mensual</h2>
             <FacturacionMensualChart :facturacionMensual="facturacionMensual" class="h-64" />
           </div>
+
         </div>
+             <h3 class="text-lg font-bold text-center text-gray-800 mb-10 text-center">¿Te gustaría añadir más estadísticas o gráficos personalizados? ¡Podemos crear lo que necesites para mejorar la gestión de tu Centro!</h3>
+
       </div>
 
       <FooterWorkers />

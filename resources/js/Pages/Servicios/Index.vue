@@ -5,7 +5,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Inertia } from '@inertiajs/inertia';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
 import { router } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 const props = defineProps({
   servicios: Object,
@@ -20,13 +20,22 @@ const order = ref('desc');
 const currentPage = ref(1);
 const perPage = 10;
 
+const search = ref('');
+
+watch(search, () => {
+  currentPage.value = 1;
+});
 
 const sortedServicios = computed(() => {
-  return [...props.servicios].sort((a, b) => {
-    const dateA = new Date(a.fecha);
-    const dateB = new Date(b.fecha);
-    return order.value === 'asc' ? dateA - dateB : dateB - dateA;
-  });
+  return [...props.servicios]
+    .filter(servicio =>
+      servicio.animal?.nombre?.toLowerCase().includes(search.value.toLowerCase())
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.fecha);
+      const dateB = new Date(b.fecha);
+      return order.value === 'asc' ? dateA - dateB : dateB - dateA;
+    });
 });
 
 const paginatedServicios = computed(() => {
@@ -70,34 +79,43 @@ const deleteServicio = (id) => {
         <NavBar />
       </template>
 
-      <div class="container mx-auto mt-2 px-4 mb-2">
-        <h2 class="text-center text-3xl font-semibold text-gray-700 mb-6 mt-6">Listado de Servicios</h2>
+      <div class="flex flex-col min-h-screen">
+      <div class="container mx-auto mt-2 px-4 mb-2 flex-grow">
+
+
+        <!-- Búsqueda -->
+        <div class="flex justify-center mb-6 mt-6">
+          <input
+            v-model="search"
+            type="text"
+            placeholder="Buscar por nombre del animal..."
+            class="w-full max-w-md px-4 py-2 border border-blue-200 rounded-lg"
+          />
+        </div>
 
         <!-- Botones de orden -->
-<div class="flex justify-center items-center flex-wrap gap-2 mb-6">
-  <button
-    class="px-4 py-1.5 rounded-full border text-sm font-medium transition"
-    :class="order === 'desc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
-    @click="changeOrder('desc')"
-  >
-    Más recientes
-  </button>
-  <button
-    class="px-4 py-1.5 rounded-full border text-sm font-medium transition"
-    :class="order === 'asc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
-    @click="changeOrder('asc')"
-  >
-    Más antiguos
-  </button>
-</div>
+        <div class="flex justify-center items-center flex-wrap gap-2 mb-6">
+          <button
+            class="px-4 py-1.5 rounded-full border text-sm font-medium transition"
+            :class="order === 'desc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
+            @click="changeOrder('desc')"
+          >
+            Recientes
+          </button>
+          <button
+            class="px-4 py-1.5 rounded-full border text-sm font-medium transition"
+            :class="order === 'asc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'"
+            @click="changeOrder('asc')"
+          >
+            Antiguos
+          </button>
+        </div>
         <div v-if="paginatedServicios.length > 0">
           <table class="table-auto w-full text-center border-collapse">
             <thead class="bg-blue-100">
               <tr>
-                <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">ID</th>
                 <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Fecha</th>
                 <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Tipo de Servicio</th>
-                <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Precio</th>
                 <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Auxiliar</th>
                 <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Animal</th>
                 <th class="px-4 py-2 border-b-2 border-blue-400 text-gray-700">Hora</th>
@@ -106,10 +124,8 @@ const deleteServicio = (id) => {
             </thead>
             <tbody>
               <tr v-for="servicio in paginatedServicios" :key="servicio.id" class="hover:bg-blue-50">
-                <td class="border px-4 py-2">{{ servicio.id }}</td>
                 <td class="border px-4 py-2">{{ formatDate(servicio.fecha) }}</td>
                 <td class="border px-4 py-2">{{ servicio.tipo_servicio }}</td>
-                <td class="border px-4 py-2">${{ servicio.precio }}</td>
                 <td class="border px-4 py-2">{{ servicio.user.name }}</td>
                 <td class="border px-4 py-2">{{ servicio.animal.nombre }}</td>
                 <td class="border px-4 py-2">{{ formatTime(servicio.hora) }}</td>
@@ -158,8 +174,9 @@ const deleteServicio = (id) => {
         </div>
       </div>
 
-        <p v-else class="text-center text-lg text-gray-500">No hay servicios registrados.</p>
+        <div v-else class="text-center text-gray-500 mt-8">No hay servicios disponibles.</div>
       </div>
       <FooterWorkers />
+      </div>
     </AppLayout>
   </template>
