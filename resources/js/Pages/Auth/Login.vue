@@ -60,6 +60,7 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="username"
+                    placeholder="cliente1@example.com"
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
@@ -73,6 +74,7 @@ const submit = () => {
                     class="mt-1 block w-full"
                     required
                     autocomplete="current-password"
+                    placeholder="12345678"
                 />
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>

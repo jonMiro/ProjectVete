@@ -110,36 +110,7 @@
     </div>
   </div>
 
-  <div class="w-full px-8 mt-16">
-  <p class="text-lg text-gray-600 mb-6 text-center">
-    Le invitamos a descubrir nuestro proyecto a través de este modelo demostrativo, que refleja las capacidades y funcionalidades que podemos ofrecer. Puede registrarse como nuevo usuario o acceder con las credenciales de nuestro cliente piloto: <strong>cliente1@example.com</strong>
-  </p>
-  <p class="text-lg text-gray-600 mb-6 text-center">
-    <strong>Usuario: cliente1@example.com</strong>
-  </p>
-   <p class="text-lg text-gray-600 mb-6 text-center">
-    <strong>Contraseña: 12345678</strong>
 
-  </p>
-  <div class="flex justify-center space-x-4 mt-8">
-  <Link
-    :href="route('login')"
-    class="rounded-md px-6 py-2 bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
-  >
-    Log in
-  </Link>
-
-  <Link
-    v-if="canRegister"
-    :href="route('register')"
-    class="rounded-md px-6 py-2 bg-green-600 text-white font-semibold hover:bg-green-700 transition"
-  >
-    Registrar
-  </Link>
-</div>
-
-
-</div>
 
   <!-- Segundo bloque de texto -->
   <div class="w-full px-8 mt-16">
@@ -151,7 +122,52 @@
       <p class="text-lg text-gray-600 mb-6">
         Esta sección está destinada para gestionar todos los tipos de datos, desde usuarios, clientes, animales hasta consultas, servicios, facturación y acceso a gráficas personalizadas.
       </p>
-      <li><strong>Área abierta para clientes</strong></li>
+      <!-- ¿Qué puedes gestionar en Vet&Care? -->
+<section class="py-12 bg-white text-center">
+  <div class="px-6 sm:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+        <img src="/icons/gestion.png" alt="Icono Usuarios" class="w-16 h-16 mb-4" />
+        <h3 class="text-xl font-semibold">Usuarios i animales</h3>
+        <p class="text-gray-600 text-sm">Administra toda la información de trabajadores y propietarios de mascotas.</p>
+      </div>
+
+      <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+        <img src="/icons/calendario.webp" alt="Icono Calendar" class="w-16 h-16 mb-4" />
+        <h3 class="text-xl font-semibold">Calendario</h3>
+        <p class="text-gray-600 text-sm">Gestiona todas tus citas i consultas en un solo lugar</p>
+      </div>
+
+      <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+        <img src="/icons/his.webp" alt="Icono Consultas" class="w-16 h-16 mb-4" />
+        <h3 class="text-xl font-semibold">Consultas</h3>
+        <p class="text-gray-600 text-sm">Lleva un historial médico completo de cada animal atendido.</p>
+      </div>
+
+      <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+        <img src="/icons/service.png" alt="Icono Servicios" class="w-16 h-16 mb-4" />
+        <h3 class="text-xl font-semibold">Servicios</h3>
+        <p class="text-gray-600 text-sm">Gestiona los servicios veterinarios prestados y su disponibilidad.</p>
+      </div>
+
+      <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+        <img src="/icons/credito.webp" alt="Icono Facturación" class="w-16 h-16 mb-4" />
+        <h3 class="text-xl font-semibold">Facturación</h3>
+        <p class="text-gray-600 text-sm">Visualiza ingresos generados y controla tus operaciones económicas.</p>
+      </div>
+
+      <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
+        <img src="/icons/gra.webp" alt="Icono Gráficas" class="w-16 h-16 mb-4" />
+        <h3 class="text-xl font-semibold">Gráficas</h3>
+        <p class="text-gray-600 text-sm">Accede a estadísticas personalizadas para tomar mejores decisiones.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+      <li class="mt-8"><strong>Área abierta para clientes</strong></li>
       <p class="text-lg text-gray-600 mb-6">
         Esta sección está orientada a los clientes y usuarios de la veterinaria. Contiene acceso al historial de los servicios o consultas realizados a nuestras mascotas, permite conectarnos con la comunidad y realizar diversas tareas como comprar en tienda online y reservas de citas.
       </p>
@@ -161,9 +177,7 @@
 
 
       <!-- ¿Qué puedes hacer en Vet&Care? -->
-      <section class="py-8 bg-white text-center">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-6">¿Qué puedes hacer en Vet&Care?</h2>
-
+      <section class=" bg-white text-center">
         <div class="px-6 sm:px-8">
           <div class="grid grid-cols-1 sm:grid-cols-2 px-2 sm:px-6 md:grid-cols-3 gap-6">
             <div class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
@@ -204,6 +218,38 @@
           </div>
         </div>
       </section>
+
+      <div class="w-full px-8 mt-16 bg-gray-800 py-12 shadow-lg mb-12">
+  <p class="text-lg text-gray-200 mb-6 text-center">
+    Le invitamos a descubrir nuestro proyecto a través de este modelo demostrativo, que refleja las capacidades y funcionalidades que podemos ofrecer. Puede registrarse como nuevo usuario o acceder con las credenciales de nuestro cliente piloto:
+  </p>
+
+  <div class="bg-gray-700 rounded-lg p-6 max-w-md mx-auto text-center mb-8">
+    <p class="text-lg text-white mb-2">
+      <strong>Usuario:</strong> cliente1@example.com
+    </p>
+    <p class="text-lg text-white">
+      <strong>Contraseña:</strong> 12345678
+    </p>
+  </div>
+
+  <div class="flex justify-center space-x-4 mt-8">
+    <Link
+      :href="route('login')"
+      class="rounded-md px-6 py-2 bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+    >
+      Log in
+    </Link>
+
+    <Link
+      v-if="canRegister"
+      :href="route('register')"
+      class="rounded-md px-6 py-2 bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+    >
+      Registrar
+    </Link>
+  </div>
+</div>
 
 
 
