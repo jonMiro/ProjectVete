@@ -4,6 +4,8 @@ import { ref, computed, watch } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import FooterWorkers from '@/Components/FooterWorkers.vue';
 import { Link } from '@inertiajs/vue3';
+import { Inertia } from '@inertiajs/inertia';
+
 
 const props = defineProps({
   consultas: Array,
